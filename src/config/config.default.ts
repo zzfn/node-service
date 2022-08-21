@@ -1,5 +1,4 @@
 import { MidwayConfig } from '@midwayjs/core';
-import {User} from '../entity/user'
 export default {
   keys: '1661057321114_1263',
   koa: {
@@ -11,13 +10,22 @@ export default {
         type: 'mysql',
         host: 'rm-uf6b5g31sq0001m6aro.mysql.rds.aliyuncs.com',
         port: 3306,
-        username: 'node',
-        password: 'node123!',
-        database: 'node',
+        username: 'zzf',
+        password: '-bCnr3GU',
+        database: 'zzf',
         synchronize: false,
         logging: true,
-        entities: [User],
-      }
-    }
+        cache: true,
+        dateStrings: true,
+        entities: ['/entity'],
+      },
+    },
+  },
+  jwt: {
+    secret: 'zzfzzf', // fs.readFileSync('xxxxx.key')
+    expiresIn: '2d', // https://github.com/vercel/ms
+  },
+  passport: {
+    session: false,
   },
 } as MidwayConfig;

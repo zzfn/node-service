@@ -1,13 +1,14 @@
-import { Catch } from '@midwayjs/decorator';
+import { Catch, Logger } from '@midwayjs/decorator';
 import { Context } from '@midwayjs/koa';
+import { ResultUtil } from '../util/ResultUtil';
+import { ILogger } from '@midwayjs/logger';
 
 @Catch()
 export class DefaultErrorFilter {
+  @Logger()
+  logger: ILogger;
   async catch(err: Error, ctx: Context) {
-    // 所有的未分类错误会到这里
-    return {
-      success: false,
-      message: err.message,
-    };
+    this.logger.error(err.message, ctx);
+    return ResultUtil.error(err.message);
   }
 }
