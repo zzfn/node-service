@@ -52,8 +52,7 @@ export class AuthMiddleware {
   public match(ctx: Context): boolean {
     const ignore =
       ctx.path.includes('/user/login') ||
-      ctx.path.includes('/user/register')||
-      ctx.path.includes("/article/es")
+      ctx.path.includes('/user/register')
     return !ignore;
   }
 }

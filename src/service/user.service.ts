@@ -5,8 +5,8 @@ import {User} from '../entity/User';
 import {JwtService} from '@midwayjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {CustomError} from '../error/CustomError';
-import {snowflakeIdv1} from "../util/Snowflake";
 import {Context} from "@midwayjs/koa";
+import {SnowflakeIdGenerate} from "./Snowflake";
 
 @Provide()
 export class UserService {
@@ -19,14 +19,14 @@ export class UserService {
   @Inject()
   ctx: Context;
 
-  async register(user: { username: string; password: string }) {
-    let gen1 = new snowflakeIdv1({workerId: 1, seqBitLength: 19})
-    let id1 = gen1.NextId()
+  @Inject()
+  idGenerate: SnowflakeIdGenerate;
 
+  async register(user: { username: string; password: string }) {
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(user.password, salt);
     return await this.userModel.save({
-      id: id1.toString(),
+      id: this.idGenerate.generate().toString(),
       username: user.username,
       password: hash,
     });
@@ -36,6 +36,9 @@ export class UserService {
     const user = await this.userModel.findOne({
       where: {username: username},
     });
+    if(!user){
+      throw new CustomError(username);
+    }
     if (await bcrypt.compare(password, user.password)) {
       return {
         token: await this.JwtService.sign({uid: user.id, username}),

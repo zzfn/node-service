@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Inject, Post, Queries} from '@midwayjs/decorator';
+import {Body, Controller, Get, Inject, Post, Queries, Query} from '@midwayjs/decorator';
 import {ArticleService} from '../service/Article.service';
 import {PageVo} from '../vo/PageVo';
 import {Article} from "../entity/Article";
@@ -23,12 +23,19 @@ export class APIController {
   }
 
   @Get('/es')
-  async es() {
+  async es(@Query("keyword") keyword: string) {
     const result = await this.elasticsearchService.search({
       index: 'blog',
       body: {
-        query: {"bool": {"must": [{"match_all": {}}], "must_not": [], "should": []}},
-        "from":0,"size":100,
+        query: {
+          bool:
+            {must: [{match: {content: keyword}}]}
+        },
+        highlight: {
+          fields : {
+            content : {}
+          }
+        }
       }
     })
     return result.body;

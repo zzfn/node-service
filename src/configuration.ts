@@ -14,6 +14,7 @@ import { AuthMiddleware } from './middleware/auth.middleware';
 import * as swagger from '@midwayjs/swagger';
 import * as crossDomain from '@midwayjs/cross-domain';
 import * as elasticsearch from '@midway/elasticsearch';
+import * as cache from '@midwayjs/cache';
 
 @Configuration({
   imports: [
@@ -29,7 +30,8 @@ import * as elasticsearch from '@midway/elasticsearch';
     passport,
     swagger,
     crossDomain,
-    elasticsearch
+    elasticsearch,
+    cache
   ],
   importConfigs: [join(__dirname, './config')],
 })
