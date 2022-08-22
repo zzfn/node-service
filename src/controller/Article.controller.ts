@@ -48,13 +48,18 @@ export class APIController {
         }
       }
     })
-    const response = result.body.hits.hits.filter(hit=>hit._source.is_release===1&&hit._source.is_delete===0).map(hit =>
-      Object.entries(hit.highlight as Record<string, string[]>).reduce((prev, curr) => {
-        if (curr[1].length) {
-          prev[curr[0]] = curr[1].join(" ")
-        }
-        return prev
-      }, {})
+    const response = result.body.hits.hits.filter(hit=>hit._source.is_release===1&&hit._source.is_delete===0).map(hit =>(
+      {
+        id:hit._id,
+        ...hit._source,
+        ...Object.entries(hit.highlight as Record<string, string[]>).reduce((prev, curr) => {
+            if (curr[1].length) {
+              prev[curr[0]] = curr[1].join(" ")
+            }
+            return prev
+          }, {})
+      }
+      )
     )
     return ResultUtil.success(response);
   }
