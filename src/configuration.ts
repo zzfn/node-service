@@ -13,6 +13,7 @@ import { DefaultErrorFilter } from './filter/default.filter';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import * as swagger from '@midwayjs/swagger';
 import * as crossDomain from '@midwayjs/cross-domain';
+import * as elasticsearch from '@midway/elasticsearch';
 
 @Configuration({
   imports: [
@@ -27,7 +28,8 @@ import * as crossDomain from '@midwayjs/cross-domain';
     jwt,
     passport,
     swagger,
-    crossDomain
+    crossDomain,
+    elasticsearch
   ],
   importConfigs: [join(__dirname, './config')],
 })

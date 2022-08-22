@@ -1,4 +1,5 @@
-import { MidwayConfig } from '@midwayjs/core';
+import {MidwayConfig} from '@midwayjs/core';
+
 export default {
   keys: '1661057321114_1263',
   koa: {
@@ -36,4 +37,15 @@ export default {
   cors: {
     credentials: false,
   },
+  elasticsearch: {
+    client: {
+      node: {
+        url: new URL('http://212.129.237.18:9200'),
+      },
+      auth: {
+        username: 'elastic',
+        password: 'paAd5vXJaZlhYGpmDMcm',
+      }
+    }
+  }
 } as MidwayConfig;

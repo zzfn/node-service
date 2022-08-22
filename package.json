@@ -4,6 +4,8 @@
   "description": "",
   "private": true,
   "dependencies": {
+    "@elastic/elasticsearch": "^7.17.0",
+    "@midway/elasticsearch": "^0.0.1",
     "@midwayjs/bootstrap": "^3.0.0",
     "@midwayjs/core": "^3.0.0",
     "@midwayjs/cross-domain": "^3.4.12",
