@@ -15,8 +15,7 @@
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
     "typeRoots": [ "./typings", "./node_modules/@types"],
-    "outDir": "dist",
-//    "allowSyntheticDefaultImports": true
+    "outDir": "dist"
   },
   "exclude": [
     "dist",
