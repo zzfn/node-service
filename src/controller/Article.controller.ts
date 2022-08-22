@@ -4,6 +4,7 @@ import {PageVo} from '../vo/PageVo';
 import {Article} from "../entity/Article";
 import {ElasticsearchService} from '@midway/elasticsearch';
 import {ResultUtil} from "../util/ResultUtil";
+import {Anonymous} from "../decorator/Auth.decorator";
 
 @Controller('/article')
 export class APIController {
@@ -24,6 +25,7 @@ export class APIController {
   }
 
   @Get('/search')
+  @Anonymous()
   async es(@Query("keyword") keyword: string) {
     const result = await this.elasticsearchService.search({
       index: 'blog',

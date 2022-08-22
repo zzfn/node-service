@@ -16,6 +16,7 @@ export class AuthMiddleware {
 
   resolve() {
     return async (ctx: Context, next: NextFunction) => {
+      console.log(1111,ctx)
       // 判断下有没有校验信息
       if (!ctx.headers['authorization']) {
         throw new httpError.UnauthorizedError();
@@ -49,10 +50,7 @@ export class AuthMiddleware {
   }
 
   // 配置忽略鉴权的路由地址
-  public match(ctx: Context): boolean {
-    const ignore =
-      ctx.path.includes('/user/login') ||
-      ctx.path.includes('/user/register')
-    return !ignore;
+  public ignore(ctx: Context): boolean {
+    return ['/user/login','/user/register','article/search'].some(item=>ctx.path.includes(item))
   }
 }
