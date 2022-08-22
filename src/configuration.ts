@@ -10,7 +10,9 @@ import * as jwt from '@midwayjs/jwt';
 import { ReportMiddleware } from './middleware/report.middleware';
 import { NotFoundFilter } from './filter/notfound.filter';
 import { DefaultErrorFilter } from './filter/default.filter';
-import {AuthMiddleware} from './middleware/auth.middleware'
+import { AuthMiddleware } from './middleware/auth.middleware';
+import * as swagger from '@midwayjs/swagger';
+
 @Configuration({
   imports: [
     koa,
@@ -23,6 +25,7 @@ import {AuthMiddleware} from './middleware/auth.middleware'
     task,
     jwt,
     passport,
+    swagger,
   ],
   importConfigs: [join(__dirname, './config')],
 })
@@ -32,7 +35,7 @@ export class ContainerLifeCycle {
 
   async onReady() {
     // add middleware
-    this.app.useMiddleware([ReportMiddleware,AuthMiddleware]);
+    this.app.useMiddleware([ReportMiddleware, AuthMiddleware]);
     // add filter
     this.app.useFilter([NotFoundFilter, DefaultErrorFilter]);
   }

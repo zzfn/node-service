@@ -10,6 +10,7 @@ import { UserService } from '../service/user.service';
 import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/koa';
 import { ResultUtil } from '../util/ResultUtil';
+import {LoginVo} from "../vo/LoginVo";
 
 @Controller('/user')
 export class APIController {
@@ -22,12 +23,12 @@ export class APIController {
   ctx: Context;
 
   @Post('/register')
-  async register(@Body() user: { username: string; password: string }) {
+  async register(@Body() user: LoginVo) {
     return await this.userService.register(user);
   }
 
   @Post('/login')
-  async saveUser(@Body() user: { username: string; password: string }) {
+  async saveUser(@Body() user: LoginVo) {
     return ResultUtil.success(await this.userService.login(user));
   }
 

@@ -11,6 +11,7 @@ specifiers:
   '@midwayjs/logger': ^2.14.0
   '@midwayjs/mock': ^3.0.0
   '@midwayjs/passport': ^3.4.12
+  '@midwayjs/swagger': '3'
   '@midwayjs/task': '3'
   '@midwayjs/typeorm': '3'
   '@midwayjs/validate': ^3.0.0
@@ -26,6 +27,7 @@ specifiers:
   mwts: ^1.0.5
   mysql2: ^2.3.3
   passport-jwt: ^4.0.0
+  swagger-ui-dist: ^4.14.0
   ts-jest: ^26.2.0
   typeorm: ^0.3.7
   typescript: ~4.6.0
@@ -39,6 +41,7 @@ dependencies:
   '@midwayjs/koa': 3.4.12_@midwayjs+decorator@3.4.11
   '@midwayjs/logger': 2.17.0
   '@midwayjs/passport': 3.4.12
+  '@midwayjs/swagger': 3.4.12
   '@midwayjs/task': 3.4.12
   '@midwayjs/typeorm': 3.4.12
   '@midwayjs/validate': 3.4.12
@@ -59,6 +62,7 @@ devDependencies:
   cross-env: 6.0.3
   jest: 26.6.3
   mwts: 1.3.0_typescript@4.6.4
+  swagger-ui-dist: 4.14.0
   ts-jest: 26.5.6_ip4jai7pxkumsngma2fb7ud2tm
   typescript: 4.6.4
 
@@ -1099,6 +1103,10 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@midwayjs/cookies': 1.0.4
+    dev: false
+
+  /@midwayjs/swagger/3.4.12:
+    resolution: {integrity: sha512-4E/4vWv2oy/cLAw+rFjfqKAicYvOk8tJBou3F/ni2kQt/D0+V1HhChY5Gz2gkj3D9rPlq6URsTXFRqQ72e25XQ==}
     dev: false
 
   /@midwayjs/task/3.4.12:
@@ -6546,6 +6554,10 @@ packages:
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+    dev: true
+
+  /swagger-ui-dist/4.14.0:
+    resolution: {integrity: sha512-TBzhheU15s+o54Cgk9qxuYcZMiqSm/SkvKnapoGHOF66kz0Y5aGjpzj5BT/vpBbn6rTPJ9tUYXQxuDWfsjiGMw==}
     dev: true
 
   /symbol-tree/3.2.4:

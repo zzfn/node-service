@@ -36,7 +36,7 @@ export class AuthMiddleware {
             complete: true,
           });
         } catch (error) {
-          console.log(error)
+          console.log(error);
           //token过期 生成新的token
           // const newToken = getToken(user);
           //将新token放入Authorization中返回给前端
@@ -49,7 +49,9 @@ export class AuthMiddleware {
 
   // 配置忽略鉴权的路由地址
   public match(ctx: Context): boolean {
-    const ignore = ctx.path.includes("/user/login")||ctx.path.includes("/user/register");
+    const ignore =
+      ctx.path.includes('/user/login') ||
+      ctx.path.includes('/user/register')
     return !ignore;
   }
 }

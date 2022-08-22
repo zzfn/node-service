@@ -1,16 +1,27 @@
-import {Column, CreateDateColumn, PrimaryColumn, UpdateDateColumn} from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 export abstract class BaseEntity {
-  @PrimaryColumn({name: 'ID'})
+  @PrimaryColumn({ name: 'ID', length: 32 })
   id: string;
-  @Column({name: 'CREATE_BY'})
+
+  @Column({ name: 'CREATE_BY', width: 32 })
   createBy: string;
-  @Column({name: 'UPDATE_BY'})
+
+  @Column({ name: 'UPDATE_BY', width: 32 })
   updateBy: string;
-  @UpdateDateColumn({name: 'UPDATE_TIME', type: 'timestamp', default: () => "NOW()"})
+
+  @UpdateDateColumn({ name: 'UPDATE_TIME', type: 'timestamp' })
   updateTime: Date;
-  @CreateDateColumn({name: 'CREATE_TIME', type: 'timestamp', default: () => "NOW()"})
+
+  @CreateDateColumn({ name: 'CREATE_TIME', type: 'timestamp' })
   createTime: Date;
-  @Column({name: 'IS_DELETE', default: 0})
-  isDelete: number;
+
+  @DeleteDateColumn({ name: 'DELETE_TIME', type: 'timestamp' })
+  deleteTime: Date;
 }

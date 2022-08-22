@@ -10,10 +10,10 @@ export default {
         type: 'mysql',
         host: 'rm-uf6b5g31sq0001m6aro.mysql.rds.aliyuncs.com',
         port: 3306,
-        username: 'zzf',
-        password: '-bCnr3GU',
-        database: 'zzf',
-        synchronize: false,
+        username: 'node',
+        password: 'node123!',
+        database: 'node',
+        synchronize: true,
         logging: true,
         cache: true,
         dateStrings: true,
@@ -27,5 +27,10 @@ export default {
   },
   passport: {
     session: false,
+  },
+  swagger: {
+    auth: {
+      authType: 'bearer',
+    },
   },
 } as MidwayConfig;
