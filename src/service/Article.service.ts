@@ -23,4 +23,8 @@ export class ArticleService {
     };
     return ResultUtil.success(response);
   }
+
+  async saveArticle(article: Article) {
+    return await this.articleModel.save(article)
+  }
 }

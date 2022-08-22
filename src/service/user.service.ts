@@ -1,11 +1,12 @@
-import { Inject, Provide } from '@midwayjs/decorator';
-import { IUserOptions } from '../interface';
-import { InjectEntityModel } from '@midwayjs/typeorm';
-import { User } from '../entity/User';
-import { JwtService } from '@midwayjs/jwt';
+import {Inject, Provide} from '@midwayjs/decorator';
+import {IUserOptions} from '../interface';
+import {InjectEntityModel} from '@midwayjs/typeorm';
+import {User} from '../entity/User';
+import {JwtService} from '@midwayjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { CustomError } from '../error/CustomError';
+import {CustomError} from '../error/CustomError';
 import {snowflakeIdv1} from "../util/Snowflake";
+import {Context} from "@midwayjs/koa";
 
 @Provide()
 export class UserService {
@@ -15,8 +16,11 @@ export class UserService {
   @InjectEntityModel(User)
   userModel;
 
+  @Inject()
+  ctx: Context;
+
   async register(user: { username: string; password: string }) {
-    let gen1 = new snowflakeIdv1({ workerId: 1,seqBitLength:19})
+    let gen1 = new snowflakeIdv1({workerId: 1, seqBitLength: 19})
     let id1 = gen1.NextId()
 
     const salt = await bcrypt.genSalt();
@@ -28,13 +32,13 @@ export class UserService {
     });
   }
 
-  async login({ username, password }: { username: string; password: string }) {
+  async login({username, password}: { username: string; password: string }) {
     const user = await this.userModel.findOne({
-      where: { username: username },
+      where: {username: username},
     });
     if (await bcrypt.compare(password, user.password)) {
       return {
-        token: await this.JwtService.sign({ uid: user.id, username }),
+        token: await this.JwtService.sign({uid: user.id, username}),
       };
     } else {
       throw new CustomError(username);
@@ -46,7 +50,7 @@ export class UserService {
     user.username = 'Me and Bears';
     user.password = 'I am near polar bears';
     user.avatar = 'photo-with-bears.jpg';
-    user.nickname = '22';
+    user.nickName = '22';
     // const photoResult = await this.userModel.save(user);
     // console.log('photo id = ', photoResult.id);
     return {
@@ -55,6 +59,11 @@ export class UserService {
       phone: '12345678901',
       email: 'xxx.xxx@xxx.com',
     };
+  }
+
+  async getUserInfo() {
+    const {uid}=this.ctx.state.user
+    return await this.userModel.findOneBy({id:uid})
   }
 
   async getUser(options: IUserOptions) {

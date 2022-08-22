@@ -33,4 +33,7 @@ export default {
       authType: 'bearer',
     },
   },
+  cors: {
+    credentials: false,
+  },
 } as MidwayConfig;

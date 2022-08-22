@@ -1,9 +1,9 @@
 // src/middleware/jwt.middleware
 
-import { Inject, Middleware } from '@midwayjs/decorator';
-import { Context, NextFunction } from '@midwayjs/koa';
-import { httpError } from '@midwayjs/core';
-import { JwtService } from '@midwayjs/jwt';
+import {Inject, Middleware} from '@midwayjs/decorator';
+import {Context, NextFunction} from '@midwayjs/koa';
+import {httpError} from '@midwayjs/core';
+import {JwtService} from '@midwayjs/jwt';
 
 @Middleware()
 export class AuthMiddleware {
@@ -35,6 +35,7 @@ export class AuthMiddleware {
           await this.jwtService.verify(token, {
             complete: true,
           });
+          ctx.state = {user: await this.jwtService.decode(token)}
         } catch (error) {
           console.log(error);
           //token过期 生成新的token

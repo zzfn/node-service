@@ -4,6 +4,7 @@ specifiers:
   '@midwayjs/bootstrap': ^3.0.0
   '@midwayjs/cli': ^1.2.90
   '@midwayjs/core': ^3.0.0
+  '@midwayjs/cross-domain': ^3.4.12
   '@midwayjs/decorator': ^3.0.0
   '@midwayjs/info': ^3.0.0
   '@midwayjs/jwt': ^3.4.12
@@ -35,6 +36,7 @@ specifiers:
 dependencies:
   '@midwayjs/bootstrap': 3.4.12
   '@midwayjs/core': 3.4.12_@midwayjs+decorator@3.4.11
+  '@midwayjs/cross-domain': 3.4.12
   '@midwayjs/decorator': 3.4.11
   '@midwayjs/info': 3.4.12
   '@midwayjs/jwt': 3.4.12
@@ -960,6 +962,13 @@ packages:
       '@midwayjs/logger': 2.17.0
       class-transformer: 0.5.1
       picomatch: 2.3.1
+    dev: false
+
+  /@midwayjs/cross-domain/3.4.12:
+    resolution: {integrity: sha512-fOlrTBIijGovEorB1wFtfkS6ZEmBH6Tm9uK9WyHoDvkN83qujTz5M7IX6b+zTTip3m3xySqU4mCOv9zFaFAYiw==}
+    engines: {node: '>=12'}
+    dependencies:
+      vary: 1.1.2
     dev: false
 
   /@midwayjs/debugger/1.0.9:

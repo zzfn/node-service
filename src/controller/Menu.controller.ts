@@ -11,7 +11,7 @@ import { Context } from '@midwayjs/koa';
 import { ResultUtil } from '../util/ResultUtil';
 import {LoginVo} from "../vo/LoginVo";
 
-@Controller('/user')
+@Controller('/menu')
 export class APIController {
   @Inject()
   JwtService: JwtService;
@@ -31,9 +31,9 @@ export class APIController {
   async saveUser(@Body() user: LoginVo) {
     return ResultUtil.success(await this.userService.login(user));
   }
-  @Get('/getUserState')
+  @Get('/list')
   async getUserState() {
-    return ResultUtil.success(true)
+    return ResultUtil.success([])
   }
 
   @Get('/getUserInfo')

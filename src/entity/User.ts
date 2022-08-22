@@ -16,5 +16,5 @@ export class User extends BaseEntity {
   @Column({ name: 'AVATAR' })
   avatar: string;
   @Column({ name: 'NICK_NAME' })
-  nickname: string;
+  nickName: string;
 }
