@@ -5,6 +5,7 @@ import {Article} from "../entity/Article";
 import {ElasticsearchService} from '@midway/elasticsearch';
 import {ResultUtil} from "../util/ResultUtil";
 import {Anonymous} from "../decorator/Auth.decorator";
+import {toHump} from "../util/common";
 
 @Controller('/article')
 export class APIController {
@@ -48,19 +49,19 @@ export class APIController {
         }
       }
     })
-    const response = result.body.hits.hits.filter(hit=>hit._source.is_release===1&&hit._source.is_delete===0).map(hit =>(
-      {
-        id:hit._id,
-        ...hit._source,
-        ...Object.entries(hit.highlight as Record<string, string[]>).reduce((prev, curr) => {
-            if (curr[1].length) {
-              prev[curr[0]] = curr[1].join(" ")
-            }
-            return prev
-          }, {})
+    const response = result.body.hits.hits.filter(hit => hit._source.is_release === 1 && hit._source.is_delete === 0).map(hit => {
+      let article = new Article()
+      article.id = hit._id
+      for (let [key, value] of Object.entries(hit._source)) {
+        article[toHump(key)] = value
       }
-      )
-    )
+      for (let [key, value] of Object.entries(hit.highlight as Record<string, string[]>)) {
+        if (value.length) {
+          article[toHump(key)] = value.join(' ')
+        }
+      }
+      return article
+    })
     return ResultUtil.success(response);
   }
 }
