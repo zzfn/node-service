@@ -9,11 +9,11 @@ export default {
     dataSource: {
       default: {
         type: 'mysql',
-        host: 'rm-uf6b5g31sq0001m6aro.mysql.rds.aliyuncs.com',
+        host: process.env.mysql_url,
         port: 3306,
-        username: 'node',
-        password: 'node123!',
-        database: 'node',
+        username: process.env.mysql_username,
+        password: process.env.mysql_password,
+        database: process.env.mysql_database,
         synchronize: true,
         logging: true,
         cache: true,
@@ -23,8 +23,8 @@ export default {
     },
   },
   jwt: {
-    secret: 'zzfzzf', // fs.readFileSync('xxxxx.key')
-    expiresIn: '2d', // https://github.com/vercel/ms
+    secret: process.env.jwt_secret,
+    expiresIn: '2d',
   },
   passport: {
     session: false,
@@ -40,11 +40,11 @@ export default {
   elasticsearch: {
     client: {
       node: {
-        url: new URL('http://212.129.237.18:9200'),
+        url: new URL(process.env.elasticsearch_url),
       },
       auth: {
-        username: 'elastic',
-        password: 'paAd5vXJaZlhYGpmDMcm',
+        username: process.env.elasticsearch_username,
+        password: process.env.elasticsearch_password,
       }
     }
   }
