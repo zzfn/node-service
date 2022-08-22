@@ -23,7 +23,7 @@ export class APIController {
     return await this.articleService.saveArticle(article);
   }
 
-  @Get('/es')
+  @Get('/search')
   async es(@Query("keyword") keyword: string) {
     const result = await this.elasticsearchService.search({
       index: 'blog',
