@@ -11,11 +11,12 @@ import { ReportMiddleware } from './middleware/report.middleware';
 import { NotFoundFilter } from './filter/notfound.filter';
 import { DefaultErrorFilter } from './filter/default.filter';
 import { AuthMiddleware } from './middleware/auth.middleware';
-import * as swagger from '@midwayjs/swagger';
 import * as crossDomain from '@midwayjs/cross-domain';
 import * as elasticsearch from '@midway/elasticsearch';
 import * as cache from '@midwayjs/cache';
 import * as dotenv from 'dotenv'
+import * as upload from '@midwayjs/upload';
+import * as oss from '@midwayjs/oss';
 
 dotenv.config()
 
@@ -31,10 +32,11 @@ dotenv.config()
     task,
     jwt,
     passport,
-    swagger,
     crossDomain,
     elasticsearch,
-    cache
+    cache,
+    upload,
+    oss
   ],
   importConfigs: [join(__dirname, './config')],
 })

@@ -1,4 +1,5 @@
 import {MidwayConfig} from '@midwayjs/core';
+import * as path from "path";
 
 export default {
   keys: '1661057321114_1263',
@@ -29,11 +30,6 @@ export default {
   passport: {
     session: false,
   },
-  swagger: {
-    auth: {
-      authType: 'bearer',
-    },
-  },
   cors: {
     credentials: false,
   },
@@ -47,5 +43,25 @@ export default {
         password: process.env.elasticsearch_password,
       }
     }
-  }
+  },
+  upload: {
+    // mode: UploadMode, 默认为file，即上传到服务器临时目录，可以配置为 stream
+    mode: 'file',
+    // fileSize: string, 最大上传文件大小，默认为 10mb
+    fileSize: '10mb',
+    // whitelist: string[]，文件扩展名白名单
+    tmpdir: path.join(__dirname, 'files'),
+    cleanTimeout: 10 * 1000,
+    base64: false,
+  },
+  oss: {
+    // normal oss bucket
+    client: {
+      accessKeyId: process.env.oss_accessKeyId,
+      accessKeySecret: process.env.oss_accessKeySecret,
+      bucket: process.env.oss_bucket,
+      endpoint: process.env.oss_endpoint,
+      timeout: '60s',
+    },
+  },
 } as MidwayConfig;

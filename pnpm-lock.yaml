@@ -14,11 +14,11 @@ specifiers:
   '@midwayjs/koa': ^3.4.12
   '@midwayjs/logger': ^2.17.0
   '@midwayjs/mock': ^3.4.12
-  '@midwayjs/oss': ^3.4.12
+  '@midwayjs/oss': '3'
   '@midwayjs/passport': ^3.4.12
-  '@midwayjs/swagger': ^3.4.12
   '@midwayjs/task': ^3.4.12
   '@midwayjs/typeorm': ^3.4.12
+  '@midwayjs/upload': '3'
   '@midwayjs/validate': ^3.4.12
   '@types/ali-oss': ^6.16.4
   '@types/bull': ^3.15.9
@@ -36,7 +36,6 @@ specifiers:
   mwts: ^1.3.0
   mysql2: ^2.3.3
   passport-jwt: ^4.0.0
-  swagger-ui-dist: ^4.14.0
   ts-jest: ^26.5.6
   typeorm: ^0.3.7
   typescript: ~4.6.4
@@ -55,9 +54,9 @@ dependencies:
   '@midwayjs/logger': 2.17.0
   '@midwayjs/oss': 3.4.12
   '@midwayjs/passport': 3.4.12
-  '@midwayjs/swagger': 3.4.12
   '@midwayjs/task': 3.4.12
   '@midwayjs/typeorm': 3.4.12
+  '@midwayjs/upload': 3.4.12
   '@midwayjs/validate': 3.4.12
   bcrypt: 5.0.1
   cache-manager: 4.1.0
@@ -80,7 +79,6 @@ devDependencies:
   cross-env: 6.0.3
   jest: 26.6.3
   mwts: 1.3.0_typescript@4.6.4
-  swagger-ui-dist: 4.14.0
   ts-jest: 26.5.6_ip4jai7pxkumsngma2fb7ud2tm
   typescript: 4.6.4
 
@@ -1167,10 +1165,6 @@ packages:
       '@midwayjs/cookies': 1.0.4
     dev: false
 
-  /@midwayjs/swagger/3.4.12:
-    resolution: {integrity: sha512-4E/4vWv2oy/cLAw+rFjfqKAicYvOk8tJBou3F/ni2kQt/D0+V1HhChY5Gz2gkj3D9rPlq6URsTXFRqQ72e25XQ==}
-    dev: false
-
   /@midwayjs/task/3.4.12:
     resolution: {integrity: sha512-4Fr94Cw+3GYF73jpdX+RegQSt4/aT2XHsfInzm7d01kJVWG6pa1lzQJEa+K3+rt/IGMOaTR8hZb2w7v4dkn3Tw==}
     engines: {node: '>=12'}
@@ -1184,6 +1178,13 @@ packages:
   /@midwayjs/typeorm/3.4.12:
     resolution: {integrity: sha512-gCcD9CYYeejJ5hpFlQIit8d2zOp2WLyzAZHB1FlpBFhs850kApV1LMfIxStfXLNdNkuw783LZutfmxuFkZ8XPg==}
     engines: {node: '>=12'}
+    dev: false
+
+  /@midwayjs/upload/3.4.12:
+    resolution: {integrity: sha512-TG1IBtb3KJ4bO99DyN/4pGRauxoNInBoycQ1VKHPsN4xy3Mq8ICxv14fj7J5noE65SE/ImcaJ+/z1vbftpYb1w==}
+    engines: {node: '>=12'}
+    dependencies:
+      raw-body: 2.5.1
     dev: false
 
   /@midwayjs/validate/3.4.12:
@@ -7019,10 +7020,6 @@ packages:
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
-    dev: true
-
-  /swagger-ui-dist/4.14.0:
-    resolution: {integrity: sha512-TBzhheU15s+o54Cgk9qxuYcZMiqSm/SkvKnapoGHOF66kz0Y5aGjpzj5BT/vpBbn6rTPJ9tUYXQxuDWfsjiGMw==}
     dev: true
 
   /symbol-tree/3.2.4:
