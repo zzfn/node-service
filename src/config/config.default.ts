@@ -55,13 +55,19 @@ export default {
     base64: false,
   },
   oss: {
-    // normal oss bucket
     client: {
       accessKeyId: process.env.oss_accessKeyId,
       accessKeySecret: process.env.oss_accessKeySecret,
       bucket: process.env.oss_bucket,
       endpoint: process.env.oss_endpoint,
       timeout: '60s',
+    },
+  },
+  dns: {
+    client: {
+      accessKeyId: process.env.dns_accessKeyId,
+      accessKeySecret: process.env.dns_accessKeySecret,
+      endpoint: process.env.dns_endpoint,
     },
   },
 } as MidwayConfig;

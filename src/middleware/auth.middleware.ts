@@ -1,12 +1,15 @@
-import { Inject, Middleware } from '@midwayjs/decorator';
+import { Inject, Logger, Middleware } from '@midwayjs/decorator';
 import { Context, NextFunction } from '@midwayjs/koa';
 import { httpError } from '@midwayjs/core';
 import { JwtService } from '@midwayjs/jwt';
+import { ILogger } from '@midwayjs/logger';
 
 @Middleware()
 export class AuthMiddleware {
   @Inject()
   jwtService: JwtService;
+  @Logger()
+  logger: ILogger;
 
   public static getName(): string {
     return 'jwt';
@@ -31,7 +34,7 @@ export class AuthMiddleware {
         try {
           //jwt.verify方法验证token是否有效
           const result = await this.jwtService.verify(token);
-          console.log(result);
+          this.logger.info(result);
           ctx.state = { user: await this.jwtService.decode(token) };
         } catch (error) {
           console.error(error);
