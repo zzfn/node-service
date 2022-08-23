@@ -16,7 +16,6 @@ export class AuthMiddleware {
 
   resolve() {
     return async (ctx: Context, next: NextFunction) => {
-      console.log(1111,ctx)
       // 判断下有没有校验信息
       if (!ctx.headers['authorization']) {
         throw new httpError.UnauthorizedError();
@@ -33,12 +32,12 @@ export class AuthMiddleware {
       if (/^Bearer$/i.test(scheme)) {
         try {
           //jwt.verify方法验证token是否有效
-          await this.jwtService.verify(token, {
-            complete: true,
-          });
+          const result=await this.jwtService.verify(token);
+          console.log(result)
           ctx.state = {user: await this.jwtService.decode(token)}
         } catch (error) {
-          console.log(error);
+          console.error(error);
+          throw new httpError.UnauthorizedError();
           //token过期 生成新的token
           // const newToken = getToken(user);
           //将新token放入Authorization中返回给前端
