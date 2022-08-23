@@ -9,10 +9,7 @@ export class APIController {
 
   @Post('/upload')
   async upload(@Files() files) {
-    console.log(files)
-    files.forEach(file =>{
-      this.ossService.put(`midway/${file.filename}`, file.data)
-    })
-    return { success: true, message: 'OK', data: files };
+    const result=await Promise.all(files.map(file =>this.ossService.put(`midway/${file.filename}`, file.data)))
+    return { success: true, message: 'OK', data: result.map(file=>file.url) };
   }
 }
