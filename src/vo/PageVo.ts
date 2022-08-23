@@ -1,4 +1,4 @@
 export class PageVo {
-  current: number;
-  pageSize: number;
+  current: number=1;
+  pageSize: number=10;
 }

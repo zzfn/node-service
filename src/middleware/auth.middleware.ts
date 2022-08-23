@@ -50,6 +50,6 @@ export class AuthMiddleware {
 
   // 配置忽略鉴权的路由地址
   public ignore(ctx: Context): boolean {
-    return ['/user/login','/user/register','article/search'].some(item=>ctx.path.includes(item))
+    return ['/user/login','/user/register','/search/article'].some(item=>ctx.path.includes(item))
   }
 }
