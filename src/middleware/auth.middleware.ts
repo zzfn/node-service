@@ -1,9 +1,7 @@
-// src/middleware/jwt.middleware
-
-import {Inject, Middleware} from '@midwayjs/decorator';
-import {Context, NextFunction} from '@midwayjs/koa';
-import {httpError} from '@midwayjs/core';
-import {JwtService} from '@midwayjs/jwt';
+import { Inject, Middleware } from '@midwayjs/decorator';
+import { Context, NextFunction } from '@midwayjs/koa';
+import { httpError } from '@midwayjs/core';
+import { JwtService } from '@midwayjs/jwt';
 
 @Middleware()
 export class AuthMiddleware {
@@ -32,9 +30,9 @@ export class AuthMiddleware {
       if (/^Bearer$/i.test(scheme)) {
         try {
           //jwt.verify方法验证token是否有效
-          const result=await this.jwtService.verify(token);
-          console.log(result)
-          ctx.state = {user: await this.jwtService.decode(token)}
+          const result = await this.jwtService.verify(token);
+          console.log(result);
+          ctx.state = { user: await this.jwtService.decode(token) };
         } catch (error) {
           console.error(error);
           throw new httpError.UnauthorizedError();
@@ -50,6 +48,8 @@ export class AuthMiddleware {
 
   // 配置忽略鉴权的路由地址
   public ignore(ctx: Context): boolean {
-    return ['/user/login','/user/register','/search/article'].some(item=>ctx.path.includes(item))
+    return ['/user/login', '/user/register', '/search/article'].some(item =>
+      ctx.path.includes(item)
+    );
   }
 }

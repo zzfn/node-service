@@ -10,15 +10,17 @@ import * as jwt from '@midwayjs/jwt';
 import { ReportMiddleware } from './middleware/report.middleware';
 import { NotFoundFilter } from './filter/notfound.filter';
 import { DefaultErrorFilter } from './filter/default.filter';
+import { UnauthorizedFilter } from './filter/unauthorized.filter';
 import { AuthMiddleware } from './middleware/auth.middleware';
+import { FormatMiddleware } from './middleware/FormatMiddleware';
 import * as crossDomain from '@midwayjs/cross-domain';
 import * as elasticsearch from '@midway/elasticsearch';
 import * as cache from '@midwayjs/cache';
-import * as dotenv from 'dotenv'
+import * as dotenv from 'dotenv';
 import * as upload from '@midwayjs/upload';
 import * as oss from '@midwayjs/oss';
 
-dotenv.config()
+dotenv.config();
 
 @Configuration({
   imports: [
@@ -36,7 +38,7 @@ dotenv.config()
     elasticsearch,
     cache,
     upload,
-    oss
+    oss,
   ],
   importConfigs: [join(__dirname, './config')],
 })
@@ -46,8 +48,16 @@ export class ContainerLifeCycle {
 
   async onReady() {
     // add middleware
-    this.app.useMiddleware([ReportMiddleware,AuthMiddleware]);
+    this.app.useMiddleware([
+      ReportMiddleware,
+      AuthMiddleware,
+      FormatMiddleware,
+    ]);
     // add filter
-    this.app.useFilter([NotFoundFilter, DefaultErrorFilter]);
+    this.app.useFilter([
+      NotFoundFilter,
+      DefaultErrorFilter,
+      UnauthorizedFilter,
+    ]);
   }
 }

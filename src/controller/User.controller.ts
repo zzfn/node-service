@@ -1,15 +1,8 @@
-import {
-  Inject,
-  Controller,
-  Get,
-  Post,
-  Body,
-} from '@midwayjs/decorator';
+import { Inject, Controller, Get, Post, Body } from '@midwayjs/decorator';
 import { UserService } from '../service/user.service';
 import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/koa';
-import { ResultUtil } from '../util/ResultUtil';
-import {LoginVo} from "../vo/LoginVo";
+import { LoginVo } from '../vo/LoginVo';
 
 @Controller('/user')
 export class APIController {
@@ -29,15 +22,15 @@ export class APIController {
 
   @Post('/login')
   async saveUser(@Body() user: LoginVo) {
-    return ResultUtil.success(await this.userService.login(user));
+    return await this.userService.login(user);
   }
   @Get('/getUserState')
   async getUserState() {
-    return ResultUtil.success(true)
+    return true;
   }
 
   @Get('/getUserInfo')
   async getUserInfo() {
-    return ResultUtil.success(await this.userService.getUserInfo());
+    return await this.userService.getUserInfo();
   }
 }

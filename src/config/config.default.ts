@@ -1,5 +1,5 @@
-import {MidwayConfig} from '@midwayjs/core';
-import * as path from "path";
+import { MidwayConfig } from '@midwayjs/core';
+import * as path from 'path';
 
 export default {
   keys: '1661057321114_1263',
@@ -41,8 +41,8 @@ export default {
       auth: {
         username: process.env.elasticsearch_username,
         password: process.env.elasticsearch_password,
-      }
-    }
+      },
+    },
   },
   upload: {
     // mode: UploadMode, 默认为file，即上传到服务器临时目录，可以配置为 stream

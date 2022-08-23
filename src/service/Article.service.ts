@@ -4,7 +4,6 @@ import { Article } from '../entity/Article';
 import { PageVo } from '../vo/PageVo';
 import { ILogger } from '@midwayjs/logger';
 import { page2sql } from '../vo/page2sql';
-import { ResultUtil } from '../util/ResultUtil';
 
 @Provide()
 export class ArticleService {
@@ -17,14 +16,13 @@ export class ArticleService {
     const response = {
       records: await this.articleModel.find({
         ...page2sql(pageVo),
-        where: { isDelete: 0 },
       }),
-      total: await this.articleModel.countBy({ isDelete: 0 }),
+      total: await this.articleModel.count(),
     };
-    return ResultUtil.success(response);
+    return response;
   }
 
   async saveArticle(article: Article) {
-    return await this.articleModel.save(article)
+    return await this.articleModel.save(article);
   }
 }

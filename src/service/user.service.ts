@@ -1,12 +1,12 @@
-import {Inject, Provide} from '@midwayjs/decorator';
-import {IUserOptions} from '../interface';
-import {InjectEntityModel} from '@midwayjs/typeorm';
-import {User} from '../entity/User';
-import {JwtService} from '@midwayjs/jwt';
+import { Inject, Provide } from '@midwayjs/decorator';
+import { IUserOptions } from '../interface';
+import { InjectEntityModel } from '@midwayjs/typeorm';
+import { User } from '../entity/User';
+import { JwtService } from '@midwayjs/jwt';
 import * as bcrypt from 'bcrypt';
-import {CustomError} from '../error/CustomError';
-import {Context} from "@midwayjs/koa";
-import {SnowflakeIdGenerate} from "./Snowflake";
+import { CustomError } from '../error/CustomError';
+import { Context } from '@midwayjs/koa';
+import { SnowflakeIdGenerate } from './Snowflake';
 
 @Provide()
 export class UserService {
@@ -32,16 +32,16 @@ export class UserService {
     });
   }
 
-  async login({username, password}: { username: string; password: string }) {
+  async login({ username, password }: { username: string; password: string }) {
     const user = await this.userModel.findOne({
-      where: {username: username},
+      where: { username: username },
     });
-    if(!user){
+    if (!user) {
       throw new CustomError(username);
     }
     if (await bcrypt.compare(password, user.password)) {
       return {
-        token: await this.JwtService.sign({uid: user.id, username}),
+        token: await this.JwtService.sign({ uid: user.id, username }),
       };
     } else {
       throw new CustomError(username);
@@ -65,8 +65,8 @@ export class UserService {
   }
 
   async getUserInfo() {
-    const {uid}=this.ctx.state.user
-    return await this.userModel.findOneBy({id:uid})
+    const { uid } = this.ctx.state.user;
+    return await this.userModel.findOneBy({ id: uid });
   }
 
   async getUser(options: IUserOptions) {

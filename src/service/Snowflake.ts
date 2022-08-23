@@ -27,11 +27,17 @@ export class SnowflakeIdGenerate {
 
   constructor(_workerId = 0, _dataCenterId = 0, _sequence = 0) {
     if (this.workerId > this.maxWrokerId || this.workerId < 0) {
-      throw new Error('config.worker_id must max than 0 and small than maxWrokerId-[' + this.maxWrokerId + ']');
+      throw new Error(
+        'config.worker_id must max than 0 and small than maxWrokerId-[' +
+          this.maxWrokerId +
+          ']'
+      );
     }
     if (this.dataCenterId > this.maxDataCenterId || this.dataCenterId < 0) {
       throw new Error(
-        'config.data_center_id must max than 0 and small than maxDataCenterId-[' + this.maxDataCenterId + ']',
+        'config.data_center_id must max than 0 and small than maxDataCenterId-[' +
+          this.maxDataCenterId +
+          ']'
       );
     }
     this.workerId = _workerId;
@@ -54,7 +60,10 @@ export class SnowflakeIdGenerate {
   private nextId = (): number => {
     let timestamp: number = this.timeGen();
     if (timestamp < this.lastTimestamp) {
-      throw new Error('Clock moved backwards. Refusing to generate id for ' + (this.lastTimestamp - timestamp));
+      throw new Error(
+        'Clock moved backwards. Refusing to generate id for ' +
+          (this.lastTimestamp - timestamp)
+      );
     }
     if (this.lastTimestamp === timestamp) {
       this.sequence = (this.sequence + 1) & this.sequenceMask;

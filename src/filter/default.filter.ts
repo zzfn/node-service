@@ -1,6 +1,5 @@
 import { Catch, Logger } from '@midwayjs/decorator';
 import { Context } from '@midwayjs/koa';
-import { ResultUtil } from '../util/ResultUtil';
 import { ILogger } from '@midwayjs/logger';
 
 @Catch()
@@ -9,6 +8,6 @@ export class DefaultErrorFilter {
   logger: ILogger;
   async catch(err: Error, ctx: Context) {
     this.logger.error(err.message, ctx);
-    return ResultUtil.error(err.message);
+    return { success: false, code: -1, message: err.message, data: null };
   }
 }

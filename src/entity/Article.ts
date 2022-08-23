@@ -3,7 +3,6 @@ import { BaseEntity } from './BaseEntity';
 
 @Entity('t_article')
 export class Article extends BaseEntity {
-
   @Column({ name: 'LOGO' })
   logo: string;
 
