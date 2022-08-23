@@ -82,7 +82,7 @@ export class APIController {
           time:dayjs(hit._source.time).format("YYYY/MM/DD HH:mm:ss"),
         }
       )),
-      total: result.body.hits.total,
+      total: result.body.hits.total.value,
     };
     return ResultUtil.success(response);
   }
