@@ -19,7 +19,7 @@ import * as cache from '@midwayjs/cache';
 import * as dotenv from 'dotenv';
 import * as upload from '@midwayjs/upload';
 import * as oss from '@midwayjs/oss';
-import {ForbiddenFilter} from "./filter/forbidden.filter";
+import { ForbiddenFilter } from './filter/forbidden.filter';
 
 dotenv.config();
 
@@ -59,7 +59,7 @@ export class ContainerLifeCycle {
       NotFoundFilter,
       DefaultErrorFilter,
       UnauthorizedFilter,
-      ForbiddenFilter
+      ForbiddenFilter,
     ]);
   }
 }

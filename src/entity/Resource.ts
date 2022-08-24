@@ -1,14 +1,14 @@
-import {Column, Entity} from "typeorm"
-import {BaseEntity} from "./BaseEntity";
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from './BaseEntity';
 
 @Entity()
 export class Resource extends BaseEntity {
   @Column()
-  code: string
+  code: string;
 
   @Column()
-  name: string
+  name: string;
 
   @Column()
-  type: string
+  type: string;
 }

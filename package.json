@@ -4,7 +4,6 @@
   "description": "",
   "private": true,
   "dependencies": {
-    "@alicloud/alidns20150109": "3.0.0",
     "@alicloud/openapi-client": "^0.4.1",
     "@alicloud/pop-core": "^1.7.12",
     "@elastic/elasticsearch": "^7.17.0",

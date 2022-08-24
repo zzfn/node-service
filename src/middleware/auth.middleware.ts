@@ -1,9 +1,9 @@
-import {Inject, Logger, Middleware} from '@midwayjs/decorator';
-import {Context, NextFunction} from '@midwayjs/koa';
-import {httpError} from '@midwayjs/core';
-import {JwtService} from '@midwayjs/jwt';
-import {ILogger} from '@midwayjs/logger';
-import {AuthService} from "../service/Auth.service";
+import { Inject, Logger, Middleware } from '@midwayjs/decorator';
+import { Context, NextFunction } from '@midwayjs/koa';
+import { httpError } from '@midwayjs/core';
+import { JwtService } from '@midwayjs/jwt';
+import { ILogger } from '@midwayjs/logger';
+import { AuthService } from '../service/Auth.service';
 
 @Middleware()
 export class AuthMiddleware {
@@ -33,17 +33,17 @@ export class AuthMiddleware {
       const [scheme, token] = parts;
 
       if (/^Bearer$/i.test(scheme)) {
-          const result: any = await this.jwtService.verify(token);
-          this.logger.info(result);
-          const userRoleService = await ctx.requestContext.getAsync(AuthService)
-          const roles = await userRoleService.getRoleByUserId(result.uid)
-          if (roles.some(role => ctx.url.startsWith(role))) {
-            ctx.state = {user: await this.jwtService.decode(token)};
-          } else {
-            throw new httpError.ForbiddenError();
-          }
+        const result: any = await this.jwtService.verify(token);
+        this.logger.info(result);
+        const userRoleService = await ctx.requestContext.getAsync(AuthService);
+        const roles = await userRoleService.getRoleByUserId(result.uid);
+        if (roles.some(role => ctx.url.startsWith(role))) {
+          ctx.state = { user: await this.jwtService.decode(token) };
+        } else {
+          throw new httpError.ForbiddenError();
+        }
         await next();
-      }else {
+      } else {
         throw new httpError.UnauthorizedError();
       }
     };

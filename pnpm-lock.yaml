@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@alicloud/alidns20150109': 3.0.0
   '@alicloud/openapi-client': ^0.4.1
   '@alicloud/pop-core': ^1.7.12
   '@elastic/elasticsearch': ^7.17.0
@@ -46,7 +45,6 @@ specifiers:
   typescript: ~4.6.4
 
 dependencies:
-  '@alicloud/alidns20150109': 3.0.0
   '@alicloud/openapi-client': 0.4.1
   '@alicloud/pop-core': 1.7.12
   '@elastic/elasticsearch': 7.17.0
@@ -94,33 +92,12 @@ devDependencies:
 
 packages:
 
-  /@alicloud/alidns20150109/3.0.0:
-    resolution: {integrity: sha512-dyoPPOPN1sOi4xbNJ6c7Zd5aFx4hkmsU7g8kw90As+VTHUgsPxSVgKrmX9bDpewaxKE6JzJzj+92r7B4loXo3w==}
-    dependencies:
-      '@alicloud/endpoint-util': 0.0.1
-      '@alicloud/openapi-client': 0.4.1
-      '@alicloud/openapi-util': 0.2.9
-      '@alicloud/tea-typescript': 1.7.5
-      '@alicloud/tea-util': 1.4.4
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@alicloud/credentials/2.2.3:
     resolution: {integrity: sha512-h98BZimKCQ5xKiFCdWa2OMYaenEP6g5Fndm/l0zp8iuYWOShnvEwBPFmHyHmwpb60KwEJp0LILl1WiBTS+5a1w==}
     dependencies:
       '@alicloud/tea-typescript': 1.7.5
       httpx: 2.2.7
       ini: 1.3.8
-      kitx: 2.1.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@alicloud/endpoint-util/0.0.1:
-    resolution: {integrity: sha512-+pH7/KEXup84cHzIL6UJAaPqETvln4yXlD9JzlrqioyCSaWxbug5FUobsiI6fuUOpw5WwoB3fWAtGbFnJ1K3Yg==}
-    dependencies:
-      '@alicloud/tea-typescript': 1.7.5
       kitx: 2.1.0
     transitivePeerDependencies:
       - supports-color

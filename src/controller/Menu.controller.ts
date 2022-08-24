@@ -1,11 +1,11 @@
-import {Inject, Controller, Get} from '@midwayjs/decorator';
-import {JwtService} from '@midwayjs/jwt';
-import {Context} from '@midwayjs/koa';
-import {MenuService} from "../service/Menu.service";
-import {SnowflakeIdGenerate} from "../service/Snowflake";
-import {Role} from "../entity/Role";
-import {User} from "../entity/User";
-import {InjectEntityModel} from "@midwayjs/typeorm";
+import { Inject, Controller, Get } from '@midwayjs/decorator';
+import { JwtService } from '@midwayjs/jwt';
+import { Context } from '@midwayjs/koa';
+import { MenuService } from '../service/Menu.service';
+import { SnowflakeIdGenerate } from '../service/Snowflake';
+import { Role } from '../entity/Role';
+import { User } from '../entity/User';
+import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Resource } from '../entity/Resource';
 
 @Controller('/menu')
@@ -25,18 +25,17 @@ export class APIController {
   @Inject()
   ctx: Context;
   @Inject()
-  generateID: SnowflakeIdGenerate
+  generateID: SnowflakeIdGenerate;
 
   @Get('/list')
   async getUserState() {
     return this.userModel.find({
-      select: {
-      },
+      select: {},
       relations: {
         role: {
-          resource:true
+          resource: true,
         },
       },
-    })
+    });
   }
 }

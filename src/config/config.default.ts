@@ -63,7 +63,7 @@ export default {
       password: process.env.redis_password,
       db: 1,
       keyPrefix: 'midway:',
-      ttl: 60 * 30
+      ttl: 60 * 30,
     },
   },
   oss: {
