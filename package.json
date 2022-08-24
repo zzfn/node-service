@@ -1,5 +1,5 @@
 {
-  "name": "my-midway-project",
+  "name": "node-service",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -14,7 +14,7 @@
     "@midwayjs/core": "^3.4.12",
     "@midwayjs/cross-domain": "^3.4.12",
     "@midwayjs/decorator": "^3.4.11",
-    "@midwayjs/info": "^3.4.12",
+    "@midwayjs/info": "3",
     "@midwayjs/jwt": "^3.4.12",
     "@midwayjs/koa": "^3.4.12",
     "@midwayjs/logger": "^2.17.0",
