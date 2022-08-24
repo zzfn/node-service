@@ -7,7 +7,7 @@ specifiers:
   '@elastic/elasticsearch': ^7.17.0
   '@midway/elasticsearch': ^0.0.1
   '@midwayjs/bootstrap': ^3.4.12
-  '@midwayjs/cache': ^3.4.12
+  '@midwayjs/cache': '3'
   '@midwayjs/cli': ^1.3.11
   '@midwayjs/core': ^3.4.12
   '@midwayjs/cross-domain': ^3.4.12
@@ -33,6 +33,7 @@ specifiers:
   '@types/passport-jwt': ^3.0.6
   bcrypt: ^5.0.1
   cache-manager: ^4.1.0
+  cache-manager-ioredis: ^2.1.0
   cross-env: ^6.0.3
   dayjs: ^1.11.5
   dotenv: ^16.0.1
@@ -67,6 +68,7 @@ dependencies:
   '@midwayjs/validate': 3.4.12
   bcrypt: 5.0.1
   cache-manager: 4.1.0
+  cache-manager-ioredis: 2.1.0
   dayjs: 1.11.5
   dotenv: 16.0.1
   mysql2: 2.3.3
@@ -2386,6 +2388,15 @@ packages:
     dependencies:
       mime-types: 2.1.35
       ylru: 1.3.2
+
+  /cache-manager-ioredis/2.1.0:
+    resolution: {integrity: sha512-TCxbp9ceuFveTKWuNaCX8QjoC41rAlHen4s63u9Yd+iXlw3efYmimc/u935PKPxSdhkXpnMes4mxtK3/yb0L4g==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      ioredis: 4.28.5
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /cache-manager/3.6.3:
     resolution: {integrity: sha512-dS4DnV6c6cQcVH5OxzIU1XZaACXwvVIiUPkFytnRmLOACuBGv3GQgRQ1RJGRRw4/9DF14ZK2RFlZu1TUgDniMg==}

@@ -1,13 +1,15 @@
-import { Inject, Logger, Middleware } from '@midwayjs/decorator';
-import { Context, NextFunction } from '@midwayjs/koa';
-import { httpError } from '@midwayjs/core';
-import { JwtService } from '@midwayjs/jwt';
-import { ILogger } from '@midwayjs/logger';
+import {Inject, Logger, Middleware} from '@midwayjs/decorator';
+import {Context, NextFunction} from '@midwayjs/koa';
+import {httpError} from '@midwayjs/core';
+import {JwtService} from '@midwayjs/jwt';
+import {ILogger} from '@midwayjs/logger';
+import {AuthService} from "../service/Auth.service";
 
 @Middleware()
 export class AuthMiddleware {
   @Inject()
   jwtService: JwtService;
+
   @Logger()
   logger: ILogger;
 
@@ -31,20 +33,18 @@ export class AuthMiddleware {
       const [scheme, token] = parts;
 
       if (/^Bearer$/i.test(scheme)) {
-        try {
-          //jwt.verify方法验证token是否有效
-          const result = await this.jwtService.verify(token);
+          const result: any = await this.jwtService.verify(token);
           this.logger.info(result);
-          ctx.state = { user: await this.jwtService.decode(token) };
-        } catch (error) {
-          console.error(error);
-          throw new httpError.UnauthorizedError();
-          //token过期 生成新的token
-          // const newToken = getToken(user);
-          //将新token放入Authorization中返回给前端
-          // ctx.set('Authorization', newToken);
-        }
+          const userRoleService = await ctx.requestContext.getAsync(AuthService)
+          const roles = await userRoleService.getRoleByUserId(result.uid)
+          if (roles.some(role => ctx.url.startsWith(role))) {
+            ctx.state = {user: await this.jwtService.decode(token)};
+          } else {
+            throw new httpError.ForbiddenError();
+          }
         await next();
+      }else {
+        throw new httpError.UnauthorizedError();
       }
     };
   }

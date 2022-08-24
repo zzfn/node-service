@@ -1,29 +1,33 @@
-import { Controller, Get, Inject, Post } from '@midwayjs/decorator';
+import {Controller, Get, Inject, Post, Queries, Query} from '@midwayjs/decorator';
 import { DnsServiceFactory } from '../service/Dns.service';
+import {PageVo} from "../vo/PageVo";
 
 @Controller('/dns')
 export class APIController {
   @Inject()
   dnsService: DnsServiceFactory;
 
-  @Get('/get')
-  async get() {
+  @Get('/list')
+  async get(@Query("url") url:string,@Queries() pageVo:PageVo) {
     const dnsClient = this.dnsService.get();
     const params = {
-      DomainName: 'DomainName',
-      PageNumber: 1,
-      PageSize: 10,
+      DomainName: url,
+      PageNumber: pageVo.current,
+      PageSize: pageVo.pageSize,
     };
     const requestOption = {
       method: 'POST',
     };
-    const r = await dnsClient.request(
+    const r:any = await dnsClient.request(
       'DescribeDomainRecords',
       params,
       requestOption
     );
-    console.log(r);
-    return r;
+    const response={
+      records: r.DomainRecords.Record,
+      total: r.TotalCount
+    }
+    return response;
   }
 
   @Post('/add')

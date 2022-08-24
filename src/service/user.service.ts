@@ -52,8 +52,8 @@ export class UserService {
     const user = new User();
     user.username = 'Me and Bears';
     user.password = 'I am near polar bears';
-    user.avatar = 'photo-with-bears.jpg';
-    user.nickName = '22';
+    // user.avatar = 'photo-with-bears.jpg';
+    // user.nickName = '22';
     // const photoResult = await this.userModel.save(user);
     // console.log('photo id = ', photoResult.id);
     return {

@@ -1,5 +1,6 @@
 import { MidwayConfig } from '@midwayjs/core';
 import * as path from 'path';
+import * as redisStore from 'cache-manager-ioredis';
 
 export default {
   keys: '1661057321114_1263',
@@ -53,6 +54,17 @@ export default {
     tmpdir: path.join(__dirname, 'files'),
     cleanTimeout: 10 * 1000,
     base64: false,
+  },
+  cache: {
+    store: redisStore,
+    options: {
+      host: process.env.redis_host,
+      port: process.env.redis_port,
+      password: process.env.redis_password,
+      db: 1,
+      keyPrefix: 'midway:',
+      ttl: 60 * 30
+    },
   },
   oss: {
     client: {

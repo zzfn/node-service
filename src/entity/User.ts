@@ -1,20 +1,19 @@
-import { Column, Entity } from 'typeorm';
-import { BaseEntity } from './BaseEntity';
+import {Column, Entity, JoinTable, ManyToMany} from 'typeorm';
+import {BaseEntity} from './BaseEntity';
+import {Role} from "./Role";
 
-export enum UserRole {
-  ADMIN = 'admin',
-  EDITOR = 'editor',
-  GHOST = 'ghost',
-}
-
-@Entity('t_user')
+@Entity()
 export class User extends BaseEntity {
-  @Column({ name: 'USERNAME' })
+  @Column()
   username: string;
-  @Column({ name: 'PASSWORD' })
+  @Column()
   password: string;
-  @Column({ name: 'AVATAR' })
+  @Column()
   avatar: string;
-  @Column({ name: 'NICK_NAME' })
-  nickName: string;
+  @Column()
+  nickname: string;
+
+  @ManyToMany(() => Role,{createForeignKeyConstraints:false})
+  @JoinTable({name: 'user_role',joinColumn:{name:'user_id'},inverseJoinColumn:{name:"role_id"}})
+  role: Role[]
 }
