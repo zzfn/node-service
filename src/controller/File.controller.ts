@@ -1,4 +1,11 @@
-import { Controller, Files, Inject, Post } from '@midwayjs/decorator';
+import {
+  Controller,
+  Files,
+  Get,
+  Inject,
+  Post,
+  Query,
+} from '@midwayjs/decorator';
 import { OSSService } from '@midwayjs/oss';
 
 @Controller('/file')
@@ -13,6 +20,21 @@ export class APIController {
         this.ossService.put(`midway/${file.filename}`, file.data)
       )
     );
-    return { success: true, message: 'OK', data: result.map(file => file.url) };
+    return result.map(file => file.url);
+  }
+
+  @Get('/files')
+  async files(@Query('prefix') prefix: string) {
+    const result = await this.ossService.list(
+      { prefix, 'max-keys': '100', delimiter: '/' },
+      {}
+    );
+    return {
+      records: [
+        ...(result.prefixes?.map(item => ({ dir: true, name: item })) ?? []),
+        ...result.objects,
+      ],
+      nextMarker: result.nextMarker,
+    };
   }
 }
