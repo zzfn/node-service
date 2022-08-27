@@ -6,6 +6,7 @@ import { toHump } from '../util/common';
 import { PageVo } from '../vo/PageVo';
 import { page2sql } from '../vo/page2sql';
 import * as dayjs from 'dayjs';
+
 @Controller('/search')
 export class APIController {
   @Inject()
@@ -35,7 +36,7 @@ export class APIController {
         },
       },
     });
-    const response = result.body.hits.hits
+    return result.body.hits.hits
       .filter(
         hit => hit._source.is_release === 1 && hit._source.is_delete === 0
       )
@@ -54,7 +55,6 @@ export class APIController {
         }
         return article;
       });
-    return response;
   }
 
   @Get('/log')
@@ -81,7 +81,7 @@ export class APIController {
         ],
       },
     });
-    const response = {
+    return {
       records: result.body.hits.hits.map(hit => ({
         id: hit._id,
         ...hit._source,
@@ -89,6 +89,47 @@ export class APIController {
       })),
       total: result.body.hits.total.value,
     };
-    return response;
+  }
+
+  @Get('/log/user')
+  @Anonymous()
+  async logUser() {
+    const result = await this.elasticsearchService.search({
+      index: 'log-performance',
+      body: {
+        query: {
+          bool: {
+            should: [
+              { term: { name: 'Next.js-render' } },
+              { term: { name: 'Next.js-hydration' } },
+            ],
+          },
+        },
+        aggs: {
+          records: {
+            date_histogram: {
+              field: 'time',
+              interval: 'day',
+              format: 'yyyy-MM-dd',
+              time_zone: '+08:00',
+            },
+            aggs: {
+              uv: {
+                cardinality: {
+                  field: 'visitorId',
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    console.log(result.body.aggregations.records.buckets)
+    return result.body.aggregations.records.buckets.map(item => ({
+      key: item.key_as_string,
+      pv: item.doc_count,
+      uv: item.uv.value,
+      name: item.key_as_string,
+    }));
   }
 }
