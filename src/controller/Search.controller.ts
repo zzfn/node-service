@@ -6,15 +6,19 @@ import { toHump } from '../util/common';
 import { PageVo } from '../vo/PageVo';
 import { page2sql } from '../vo/page2sql';
 import * as dayjs from 'dayjs';
+import { RedisService } from '@midwayjs/redis';
 
 @Controller('/search')
 export class APIController {
   @Inject()
   elasticsearchService: ElasticsearchService;
+  @Inject()
+  redisService: RedisService;
 
   @Get('/article')
   @Anonymous()
   async searchArticle(@Query('keyword') keyword: string) {
+    this.redisService.zadd('searchKeywords', 'INCR', 1, keyword);
     const result = await this.elasticsearchService.search({
       index: 'blog',
       body: {
@@ -124,7 +128,7 @@ export class APIController {
         },
       },
     });
-    console.log(result.body.aggregations.records.buckets)
+    console.log(result.body.aggregations.records.buckets);
     return result.body.aggregations.records.buckets.map(item => ({
       key: item.key_as_string,
       pv: item.doc_count,

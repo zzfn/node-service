@@ -19,6 +19,7 @@ import * as cache from '@midwayjs/cache';
 import * as dotenv from 'dotenv';
 import * as upload from '@midwayjs/upload';
 import * as oss from '@midwayjs/oss';
+import * as redis from '@midwayjs/redis';
 import { ForbiddenFilter } from './filter/forbidden.filter';
 
 dotenv.config();
@@ -40,6 +41,7 @@ dotenv.config();
     cache,
     upload,
     oss,
+    redis,
   ],
   importConfigs: [join(__dirname, './config')],
 })
