@@ -18,7 +18,7 @@ export class APIController {
   @Get('/article')
   @Anonymous()
   async searchArticle(@Query('keyword') keyword: string) {
-    this.redisService.zadd('searchKeywords', 'INCR', 1, keyword);
+    this.redisService.zadd('searchKeywords', 'INCR', 1, `"${keyword}"`);
     const result = await this.elasticsearchService.search({
       index: 'blog',
       body: {
