@@ -3,12 +3,12 @@ import { BaseEntity } from './BaseEntity';
 
 @Entity()
 export class Menu extends BaseEntity {
-  @Column({ name: 'NAME' })
+  @Column()
   name: string;
-  @Column({ name: 'PATH' })
+  @Column()
   path: string;
-  @Column({ name: 'COMPONENT' })
+  @Column()
   component: string;
-  @Column({ name: 'ICON' })
+  @Column()
   icon: string;
 }

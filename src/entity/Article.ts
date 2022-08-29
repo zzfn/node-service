@@ -1,15 +1,20 @@
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 
-@Entity('article')
+@Entity()
 export class Article extends BaseEntity {
-  @Column({ name: 'LOGO' })
+  @Column()
   logo: string;
-
-  @Column({ name: 'TITLE' })
+  @Column()
   title: string;
-  @Column({ name: 'CONTENT' })
+  @Column()
   content: string;
-  @Column({ name: 'TAG' })
+  @Column()
+  summary: string;
+  @Column()
   tag: string;
+  @Column()
+  orderNum: number;
+  @Column()
+  isRelease: boolean;
 }
