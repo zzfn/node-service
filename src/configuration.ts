@@ -11,6 +11,7 @@ import { ReportMiddleware } from './middleware/report.middleware';
 import { NotFoundFilter } from './filter/notfound.filter';
 import { DefaultErrorFilter } from './filter/default.filter';
 import { UnauthorizedFilter } from './filter/unauthorized.filter';
+import { ForbiddenFilter } from './filter/forbidden.filter';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import { FormatMiddleware } from './middleware/FormatMiddleware';
 import * as crossDomain from '@midwayjs/cross-domain';
@@ -20,7 +21,7 @@ import * as dotenv from 'dotenv';
 import * as upload from '@midwayjs/upload';
 import * as oss from '@midwayjs/oss';
 import * as redis from '@midwayjs/redis';
-import { ForbiddenFilter } from './filter/forbidden.filter';
+import * as rabbitmq from '@midwayjs/rabbitmq';
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ dotenv.config();
     upload,
     oss,
     redis,
+    rabbitmq,
   ],
   importConfigs: [join(__dirname, './config')],
 })

@@ -9,11 +9,14 @@ import {
 import { ArticleService } from '../service/Article.service';
 import { PageVo } from '../vo/PageVo';
 import { Article } from '../entity/Article';
+import { RabbitmqService } from '../service/rabbitmq';
 
 @Controller('/article')
 export class APIController {
   @Inject()
   articleService: ArticleService;
+  @Inject()
+  rabbitmqService: RabbitmqService;
 
   @Get('/list')
   async saveUser(@Queries() pageVo: PageVo) {
@@ -22,6 +25,10 @@ export class APIController {
 
   @Post('/save')
   async saveArticle(@Body() article: Article) {
-    return await this.articleService.saveArticle(article);
+    const r = await this.rabbitmqService.sendToQueue('local', {
+      hello: 'world',
+    });
+    return r;
+    // return await this.articleService.saveArticle(article);
   }
 }

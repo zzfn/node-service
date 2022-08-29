@@ -128,7 +128,6 @@ export class APIController {
         },
       },
     });
-    console.log(result.body.aggregations.records.buckets);
     return result.body.aggregations.records.buckets.map(item => ({
       key: item.key_as_string,
       pv: item.doc_count,
