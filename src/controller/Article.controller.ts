@@ -38,7 +38,7 @@ export class ArticleController {
   async saveArticle(@Body() article: Article) {
     const r = await this.articleService.saveArticle(article);
     await this.rabbitmqService.sendToQueue('local', {
-      hello: 'world',
+      id: r.id,
     });
     return r.id;
     // return await this.articleService.saveArticle(article);
