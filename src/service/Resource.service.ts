@@ -1,14 +1,14 @@
 import { Inject, Provide } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Context } from '@midwayjs/koa';
-import { SnowflakeIdGenerate } from './Snowflake';
-import { Role } from '../entity/Role';
 import { Resource } from '../entity/Resource';
+import { Repository } from 'typeorm';
+import { SnowflakeIdGenerate } from './Snowflake';
 
 @Provide()
 export class ResourceService {
   @InjectEntityModel(Resource)
-  resourceModel;
+  model: Repository<Resource>;
 
   @Inject()
   ctx: Context;
@@ -17,10 +17,25 @@ export class ResourceService {
   idGenerate: SnowflakeIdGenerate;
 
   async resourceList() {
-    return await this.resourceModel.find();
+    return await this.model.find();
   }
 
-  async resourceSave(role: Role) {
-    return await this.resourceModel.save(role);
+  async listById(id: string) {
+    return await this.model.find({
+      select: {
+        role: false,
+      },
+      where: {
+        role: {
+          id,
+        },
+      }
+    });
+  }
+
+  async resourceSave(resource: Resource) {
+    resource.id = this.idGenerate.generate().toString();
+    resource.createBy = this.ctx.state.user.uid;
+    return await this.model.save(resource);
   }
 }
