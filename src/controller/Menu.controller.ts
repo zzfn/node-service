@@ -1,12 +1,12 @@
-import { Inject, Controller, Get } from '@midwayjs/decorator';
+import { Body, Controller, Get, Inject, Post } from '@midwayjs/decorator';
 import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/koa';
 import { MenuService } from '../service/Menu.service';
 import { SnowflakeIdGenerate } from '../service/Snowflake';
 import { Role } from '../entity/Role';
-import { User } from '../entity/User';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Resource } from '../entity/Resource';
+import { Menu } from '../entity/Menu';
 
 @Controller('/menu')
 export class APIController {
@@ -16,8 +16,6 @@ export class APIController {
   @Inject()
   menuService: MenuService;
 
-  @InjectEntityModel(User)
-  userModel;
   @InjectEntityModel(Role)
   profileModel;
   @InjectEntityModel(Resource)
@@ -28,14 +26,12 @@ export class APIController {
   generateID: SnowflakeIdGenerate;
 
   @Get('/list')
-  async getUserState() {
-    return this.userModel.find({
-      select: {},
-      relations: {
-        role: {
-          resource: true,
-        },
-      },
-    });
+  async menuList() {
+    return this.menuService.menuList();
+  }
+
+  @Post('/save')
+  async menuSave(@Body() menu: Menu) {
+    return this.menuService.menuSave(menu);
   }
 }

@@ -1,8 +1,15 @@
-import { Body, Controller, Inject, Post } from '@midwayjs/decorator';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Query,
+} from '@midwayjs/decorator';
 import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/koa';
-import { Role } from '../entity/Role';
 import { ResourceService } from '../service/Resource.service';
+import { Resource } from '../entity/Resource';
 
 @Controller('/resource')
 export class ResourceController {
@@ -15,13 +22,18 @@ export class ResourceController {
   @Inject()
   ctx: Context;
 
-  @Post('/list')
-  async register() {
+  @Get('/list')
+  async list() {
     return await this.resourceService.resourceList();
   }
 
+  @Get('/listById')
+  async listById(@Query('id') id: string) {
+    return await this.resourceService.listById(id);
+  }
+
   @Post('/save')
-  async saveUser(@Body() role: Role) {
-    return await this.resourceService.resourceSave(role);
+  async saveUser(@Body() resource: Resource) {
+    return await this.resourceService.resourceSave(resource);
   }
 }

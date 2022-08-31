@@ -1,7 +1,8 @@
-import { Logger, Provide } from '@midwayjs/decorator';
+import { Inject, Logger, Provide } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { ILogger } from '@midwayjs/logger';
 import { Menu } from '../entity/Menu';
+import { SnowflakeIdGenerate } from './Snowflake';
 
 @Provide()
 export class MenuService {
@@ -9,8 +10,15 @@ export class MenuService {
   menuModel;
   @Logger()
   logger: ILogger;
+  @Inject()
+  idGenerate: SnowflakeIdGenerate;
 
   async menuList() {
     return this.menuModel.find({});
+  }
+
+  async menuSave(menu: Menu) {
+    menu.id = this.idGenerate.generate().toString();
+    return this.menuModel.save(menu);
   }
 }

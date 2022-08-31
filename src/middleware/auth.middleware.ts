@@ -34,7 +34,6 @@ export class AuthMiddleware {
 
       if (/^Bearer$/i.test(scheme)) {
         const result: any = await this.jwtService.verify(token);
-        this.logger.info(result);
         const userRoleService = await ctx.requestContext.getAsync(AuthService);
         const roles = await userRoleService.getRoleByUserId(result.uid);
         if (roles.some(role => ctx.url.startsWith(role))) {

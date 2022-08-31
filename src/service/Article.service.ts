@@ -12,14 +12,16 @@ export class ArticleService {
   @Logger()
   logger: ILogger;
 
-  async getArticle(pageVo: PageVo) {
-    const response = {
+  async getArticle(pageVo: PageVo, id: string = '') {
+    return {
       records: await this.articleModel.find({
         ...page2sql(pageVo),
+        where: {
+          id,
+        },
       }),
-      total: await this.articleModel.count(),
+      total: await this.articleModel.count({ where: { id } }),
     };
-    return response;
   }
 
   async saveArticle(article: Article) {

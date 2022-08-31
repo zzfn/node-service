@@ -19,8 +19,13 @@ export class APIController {
   rabbitmqService: RabbitmqService;
 
   @Get('/list')
-  async saveUser(@Queries() pageVo: PageVo) {
-    return await this.articleService.getArticle(pageVo);
+  async articleList(@Queries() pageVo: PageVo, id: string) {
+    return await this.articleService.getArticle(pageVo, id);
+  }
+
+  @Get('/page')
+  async articlePage(@Queries() pageVo: PageVo, id: string) {
+    return await this.articleService.getArticle(pageVo, id);
   }
 
   @Post('/save')

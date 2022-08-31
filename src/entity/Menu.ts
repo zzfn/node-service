@@ -11,4 +11,10 @@ export class Menu extends BaseEntity {
   component: string;
   @Column()
   icon: string;
+  @Column()
+  orderNum: number;
+  @Column()
+  isShow: boolean;
+  @Column({ nullable: true })
+  parentId: string;
 }

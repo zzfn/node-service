@@ -16,10 +16,16 @@ export class RoleService {
   idGenerate: SnowflakeIdGenerate;
 
   async roleList() {
-    return await this.roleModel.find();
+    return await this.roleModel.find({
+      relations: {
+        resource: true,
+      },
+    });
   }
 
   async roleSave(role: Role) {
+    role.id = this.idGenerate.generate().toString();
+    role.createBy = this.ctx.state.user.uid;
     return await this.roleModel.save(role);
   }
 }

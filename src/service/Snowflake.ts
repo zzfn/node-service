@@ -1,4 +1,4 @@
-import { Provide } from '@midwayjs/decorator';
+import {Provide, Scope, ScopeEnum} from '@midwayjs/decorator';
 
 /**
  * Snowflake主键生成算法
@@ -8,6 +8,7 @@ import { Provide } from '@midwayjs/decorator';
  * 这意味着最多支持两个数据中心，每个数据中心最多支持两台服务器
  */
 @Provide('idGenerate')
+@Scope(ScopeEnum.Request, { allowDowngrade: true })
 export class SnowflakeIdGenerate {
   private twepoch = 0;
   private workerIdBits = 1;

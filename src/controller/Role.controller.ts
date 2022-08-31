@@ -15,17 +15,13 @@ export class RoleController {
   @Inject()
   ctx: Context;
 
-  @Post('/list')
-  async register() {
+  @Get('/list')
+  async roleList() {
     return await this.roleService.roleList();
   }
 
   @Post('/save')
-  async saveUser(@Body() role: Role) {
+  async roleSave(@Body() role: Role) {
     return await this.roleService.roleSave(role);
-  }
-  @Get('/getUserState')
-  async getUserState() {
-    return true;
   }
 }

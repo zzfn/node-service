@@ -22,6 +22,7 @@ import * as upload from '@midwayjs/upload';
 import * as oss from '@midwayjs/oss';
 import * as redis from '@midwayjs/redis';
 import * as rabbitmq from '@midwayjs/rabbitmq';
+import { CustomFilter } from './filter/Custom.filter';
 
 dotenv.config();
 
@@ -60,10 +61,11 @@ export class ContainerLifeCycle {
     ]);
     // add filter
     this.app.useFilter([
-      NotFoundFilter,
       DefaultErrorFilter,
       UnauthorizedFilter,
       ForbiddenFilter,
+      NotFoundFilter,
+      CustomFilter,
     ]);
   }
 }

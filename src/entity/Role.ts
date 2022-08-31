@@ -7,7 +7,9 @@ export class Role extends BaseEntity {
   @Column()
   name: string;
 
-  @ManyToMany(() => Resource, { createForeignKeyConstraints: false })
+  @ManyToMany(() => Resource, resource => resource.role, {
+    createForeignKeyConstraints: false,
+  })
   @JoinTable({
     name: 'role_resource',
     joinColumn: { name: 'role_id' },
