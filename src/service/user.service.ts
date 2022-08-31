@@ -6,9 +6,19 @@ import * as bcrypt from 'bcrypt';
 import { CustomError } from '../error/CustomError';
 import { Context } from '@midwayjs/koa';
 import { SnowflakeIdGenerate } from './Snowflake';
+import { BaseService } from './BaseService';
+import { Repository } from 'typeorm';
 
 @Provide()
-export class UserService {
+// @ts-ignore
+export class UserService extends BaseService<User> {
+  @InjectEntityModel(User)
+  model: Repository<User>;
+
+  getModel(): Repository<User> {
+    return this.model;
+  }
+
   @Inject()
   JwtService: JwtService;
 
@@ -59,18 +69,30 @@ export class UserService {
   }
 
   async infoById(id: string) {
-    const result = await this.userModel.findOne({
+    return await this.userModel.findOne({
       where: { id },
       relations: { role: true },
     });
-    if (result.role) {
-      Reflect.set(
-        result,
-        'role',
-        result.role.map(role => role.id)
-      );
+  }
+
+  async updateRole(userRole: {
+    userId: string;
+    roleId: string;
+    isAdd: boolean;
+  }) {
+    if (userRole.isAdd) {
+      return this.userModel
+        .createQueryBuilder()
+        .relation(User, 'role')
+        .of(userRole.userId)
+        .add(userRole.roleId);
+    } else {
+      return this.userModel
+        .createQueryBuilder()
+        .relation(User, 'role')
+        .of(userRole.userId)
+        .remove(userRole.roleId);
     }
-    return result;
   }
 
   async update(user: User) {
@@ -89,7 +111,6 @@ export class UserService {
           .remove(item.id)
       )
     );
-    console.log(111, user, user.role);
     await Promise.all(
       user.role.map(item =>
         this.userModel

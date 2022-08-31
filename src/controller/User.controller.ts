@@ -5,12 +5,14 @@ import {
   Post,
   Body,
   Query,
+  Queries,
 } from '@midwayjs/decorator';
 import { UserService } from '../service/user.service';
 import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/koa';
 import { LoginVo } from '../vo/LoginVo';
-import {User} from "../entity/User";
+import { User } from '../entity/User';
+import { PageVo } from '../vo/PageVo';
 
 @Controller('/user')
 export class APIController {
@@ -44,13 +46,20 @@ export class APIController {
   }
 
   @Get('/list')
-  async userList() {
-    return await this.userService.list();
+  async userList(@Queries() pageVo: PageVo) {
+    return await this.userService.page({}, pageVo.current, pageVo.pageSize);
   }
 
   @Get('/infoById')
   async infoById(@Query('id') id: string) {
     return await this.userService.infoById(id);
+  }
+
+  @Post('/changeRoleByUserId')
+  async changeRoleByUserId(
+    @Body() userRole: { userId: string; roleId: string; isAdd: boolean }
+  ) {
+    return await this.userService.updateRole(userRole);
   }
 
   @Post('/changeUser')
