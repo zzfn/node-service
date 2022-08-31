@@ -1,8 +1,8 @@
-import { BaseEntity, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { FindOptionsWhere } from 'typeorm/find-options/FindOptionsWhere';
 import { FindOptionsOrder } from 'typeorm/find-options/FindOptionsOrder';
 
-export abstract class BaseService<T extends BaseEntity> {
+export abstract class BaseService<T> {
   abstract getModel(): Repository<T>;
 
   async page(
@@ -27,5 +27,10 @@ export abstract class BaseService<T extends BaseEntity> {
       pageNo,
       pageSize,
     };
+  }
+
+  async getOne(id: string) {
+    // @ts-ignore
+    return await this.getModel().findOneBy({ id });
   }
 }
