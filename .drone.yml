@@ -2,7 +2,7 @@ kind: pipeline
 volumes:
   - name: node_modules
     host:
-      path: /root/zeus/node_modules
+      path: /root/node-service/node_modules
   - name: ssh_keys
     host:
       path: /root/.ssh
@@ -25,7 +25,7 @@ steps:
       - name: ssh_keys
         path: /root/.ssh
     environment:
-      warehouse_name: zeus
+      warehouse_name: node-service
 
     commands:
       - echo $DRONE_GIT_SSH_URL
@@ -49,6 +49,7 @@ steps:
       - ls -a
       - npm install
       - npm run build
+      - ls -a
 
   - name: deploy
     image: appleboy/drone-scp
@@ -61,11 +62,15 @@ steps:
         from_secret: username
       password:
         from_secret: server_password
+      overwrite: true
       target: /root/node-service
       source:
         - dist
+        - .npmrc
         - package.json
         - pnpm-lock.yaml
+        - bootstrap.js
+        - tsconfig.json
 
   - name: ssh
     image: appleboy/drone-ssh
@@ -82,7 +87,6 @@ steps:
       script:
         - echo "Hello World"
         - cd /root/node-service
-        - tar -zxvf dist.tar.gz
         - pnpm i
         - pm2 del node-service
         - pm2 start npm --name node-service -i max -- run "start"
