@@ -16,11 +16,15 @@ export class UserConsumer {
   @Inject()
   articleService: ArticleService;
 
-  @RabbitMQListener('local')
+  @RabbitMQListener(process.env.mq_queue)
   async gotData(msg: ConsumeMessage) {
-    console.log('mq收到队列local消息', msg.content.toString());
-    const article = JSON.parse(msg.content.toString());
-    await this.articleService.db2es(article.id);
+    console.log(
+      `mq收到队列${process.env.mq_queue}消息`,
+      msg.content.toString()
+    );
+    const payload = JSON.parse(msg.content.toString());
+    const { id } = payload;
+    await this.articleService.db2es(id);
     this.ctx.channel.ack(msg);
   }
 }

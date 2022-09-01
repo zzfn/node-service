@@ -1,4 +1,6 @@
 kind: pipeline
+type: docker
+name: ci/cd
 volumes:
   - name: node_modules
     host:
@@ -74,7 +76,7 @@ steps:
 
   - name: ssh
     image: appleboy/drone-ssh
-    depends_on: [ deploy ]
+    depends_on: [deploy]
     settings:
       host:
         from_secret: server_host

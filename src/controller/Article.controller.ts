@@ -10,14 +10,11 @@ import {
 import { ArticleService } from '../service/Article.service';
 import { PageVo } from '../vo/PageVo';
 import { Article } from '../entity/Article';
-import { RabbitmqService } from '../service/rabbitmq';
 
 @Controller('/article')
 export class ArticleController {
   @Inject()
   articleService: ArticleService;
-  @Inject()
-  rabbitmqService: RabbitmqService;
 
   @Get('/list')
   async articleList(@Queries() pageVo: PageVo, id: string) {
@@ -36,11 +33,12 @@ export class ArticleController {
 
   @Post('/save')
   async saveArticle(@Body() article: Article) {
-    const r = await this.articleService.saveArticle(article);
-    await this.rabbitmqService.sendToQueue('local', {
-      id: r.id,
-    });
-    return r.id;
-    // return await this.articleService.saveArticle(article);
+    const result = await this.articleService.saveArticle(article);
+    return result.id;
+  }
+
+  @Post('/resetEs')
+  async resetEs() {
+    return await this.articleService.resetEs();
   }
 }

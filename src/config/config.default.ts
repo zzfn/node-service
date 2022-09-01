@@ -92,6 +92,6 @@ export default {
   },
   rabbitmq: {
     url: process.env.mq_url,
-    queue: 'midway',
+    queue: process.env.mq_queue,
   },
 } as MidwayConfig;

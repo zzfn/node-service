@@ -1,6 +1,6 @@
 import { Controller, Get, Inject, Queries, Query } from '@midwayjs/decorator';
 import { Article } from '../entity/Article';
-import { ElasticsearchService } from '@midway/elasticsearch';
+import { ElasticsearchServiceFactory } from '@midway/elasticsearch';
 import { Anonymous } from '../decorator/Auth.decorator';
 import { toHump } from '../util/common';
 import { PageVo } from '../vo/PageVo';
@@ -11,15 +11,16 @@ import { RedisService } from '@midwayjs/redis';
 @Controller('/search')
 export class APIController {
   @Inject()
-  elasticsearchService: ElasticsearchService;
+  elasticsearchService: ElasticsearchServiceFactory;
   @Inject()
   redisService: RedisService;
 
   @Get('/article')
   @Anonymous()
   async searchArticle(@Query('keyword') keyword: string) {
+    const elasticsearch = this.elasticsearchService.get();
     this.redisService.zadd('searchKeywords', 'INCR', 1, `"${keyword}"`);
-    const result = await this.elasticsearchService.search({
+    const result = await elasticsearch.search({
       index: 'blog',
       body: {
         query: {
@@ -68,7 +69,8 @@ export class APIController {
     @Queries() pageVo: PageVo
   ) {
     const { skip, take } = page2sql(pageVo);
-    const result = await this.elasticsearchService.search({
+    const elasticsearch = this.elasticsearchService.get();
+    const result = await elasticsearch.search({
       index: 'log-performance',
       body: {
         query: {
@@ -98,7 +100,8 @@ export class APIController {
   @Get('/log/user')
   @Anonymous()
   async logUser() {
-    const result = await this.elasticsearchService.search({
+    const elasticsearch = this.elasticsearchService.get();
+    const result = await elasticsearch.search({
       index: 'log-performance',
       body: {
         query: {

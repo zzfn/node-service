@@ -6,8 +6,7 @@
   "dependencies": {
     "@alicloud/openapi-client": "^0.4.1",
     "@alicloud/pop-core": "^1.7.12",
-    "@elastic/elasticsearch": "^7.17.0",
-    "@midway/elasticsearch": "^0.0.1",
+    "@midway/elasticsearch": "^0.0.5",
     "@midwayjs/bootstrap": "^3.4.13",
     "@midwayjs/cache": "^3.4.13",
     "@midwayjs/core": "^3.4.13",
@@ -25,6 +24,7 @@
     "@midwayjs/typeorm": "^3.4.13",
     "@midwayjs/upload": "^3.4.13",
     "@midwayjs/validate": "^3.4.13",
+    "amqp-connection-manager": "^4.1.6",
     "amqplib": "^0.10.2",
     "bcrypt": "^5.0.1",
     "cache-manager": "^4.1.0",
@@ -33,7 +33,6 @@
     "dotenv": "^16.0.1",
     "mysql2": "^2.3.3",
     "passport-jwt": "^4.0.0",
-    "amqp-connection-manager": "^4.1.6",
     "typeorm": "^0.3.8"
   },
   "devDependencies": {

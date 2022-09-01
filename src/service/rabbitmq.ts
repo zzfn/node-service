@@ -24,14 +24,14 @@ export class RabbitmqService {
   async connect() {
     // 创建连接，你可以把配置放在 Config 中，然后注入进来
     this.connection = await amqp.connect(this.mqConfig.url);
-
+    const queue = this.mqConfig.queue;
     // 创建 channel
     this.channelWrapper = this.connection.createChannel({
       json: true,
       setup: function (channel) {
         return Promise.all([
           // 绑定队列
-          channel.assertQueue('local', { durable: true }),
+          channel.assertQueue(queue, { durable: true }),
         ]);
       },
     });
