@@ -10,7 +10,6 @@ volumes:
       path: /root/.ssh
 clone:
   disable: true
-
 steps:
   - name: feishu
     image: registry.cn-shanghai.aliyuncs.com/zzf2001/foo-webhook
@@ -20,7 +19,6 @@ steps:
       secret:
         from_secret: secret
       text: hello
-
   - name: clone
     image: alpine/git
     volumes:
@@ -28,21 +26,15 @@ steps:
         path: /root/.ssh
     environment:
       warehouse_name: node-service
-
     commands:
-      - echo $DRONE_GIT_SSH_URL
-      - ls /root/.ssh/
-      - chmod -R 600 /root/.ssh/
-      - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-      - git clone -b $DRONE_COMMIT_BRANCH --depth=1 $DRONE_GIT_SSH_URL
-      - cd $warehouse_name
-      - pwd
-      - mv -f * .[^.]* /drone/src
-      - ls
-
+      - git init
+      - git remote add origin $DRONE_GIT_SSH_URL
+      - git fetch
+      - git checkout origin/$DRONE_COMMIT_BRANCH -ft
   - name: build
     image: node
-    depends_on: [clone]
+    depends_on:
+      - clone
     volumes:
       - name: node_modules
         path: /drone/src/node_modules
@@ -52,10 +44,10 @@ steps:
       - npm install
       - npm run build
       - ls -a
-
   - name: deploy
     image: appleboy/drone-scp
-    depends_on: [build]
+    depends_on:
+      - build
     settings:
       host:
         from_secret: server_host
@@ -73,10 +65,10 @@ steps:
         - pnpm-lock.yaml
         - bootstrap.js
         - tsconfig.json
-
   - name: ssh
     image: appleboy/drone-ssh
-    depends_on: [deploy]
+    depends_on:
+      - deploy
     settings:
       host:
         from_secret: server_host
