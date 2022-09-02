@@ -33,4 +33,8 @@ export abstract class BaseService<T> {
     // @ts-ignore
     return await this.getModel().findOneBy({ id });
   }
+
+  async list() {
+    return await this.getModel().findBy({});
+  }
 }

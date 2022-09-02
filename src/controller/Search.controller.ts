@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Queries, Query } from '@midwayjs/decorator';
 import { Article } from '../entity/Article';
 import { ElasticsearchServiceFactory } from '@midway/elasticsearch';
-import { Anonymous } from '../decorator/Auth.decorator';
+import { Anonymous } from '../decorator/Anonymous.decorator';
 import { toHump } from '../util/common';
 import { PageVo } from '../vo/PageVo';
 import { page2sql } from '../vo/page2sql';

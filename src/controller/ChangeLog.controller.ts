@@ -1,19 +1,16 @@
-import { Body, Controller, Get, Inject, Post } from '@midwayjs/decorator';
-import { MenuService } from '../service/Menu.service';
-import { Menu } from '../entity/Menu';
+import { Controller, Get, Inject } from '@midwayjs/decorator';
+import { AnonymousMiddleware } from '../middleware/anonymous.middleware';
+import { Cacheable } from '../decorator/Cacheable.decorator';
+import { ChangeLogService } from '../service/ChangeLog.service';
 
 @Controller('/changelog')
 export class ChangeLogController {
   @Inject()
-  menuService: MenuService;
+  changeLogService: ChangeLogService;
 
-  @Get('/list')
+  @Get('/list', { middleware: [AnonymousMiddleware] })
+  @Cacheable('changelogList')
   async menuList() {
-    return this.menuService.menuList();
-  }
-
-  @Post('/save')
-  async menuSave(@Body() menu: Menu) {
-    return this.menuService.menuSave(menu);
+    return this.changeLogService.list();
   }
 }

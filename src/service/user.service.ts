@@ -61,13 +61,6 @@ export class UserService extends BaseService<User> {
     }
   }
 
-  async list() {
-    return {
-      records: await this.userModel.find({}),
-      total: await this.userModel.count(),
-    };
-  }
-
   async infoById(id: string) {
     return await this.userModel.findOne({
       where: { id },
