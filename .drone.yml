@@ -32,7 +32,7 @@ steps:
       - git fetch
       - git checkout origin/$DRONE_COMMIT_BRANCH -ft
   - name: build
-    image: node
+    image: node:lts-alpine
     depends_on:
       - clone
     volumes:

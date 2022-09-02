@@ -85,7 +85,7 @@ export class ContainerLifeCycle {
     this.decoratorService.registerMethodHandler('Cacheable', options => {
       return {
         around: async (joinPoint: JoinPoint) => {
-          const cacheName = options.metadata.cacheName;
+          const cacheName = options.metadata.cacheName || joinPoint.methodName;
           const cache = await this.redisService.get(cacheName);
           if (cache) {
             return JSON.parse(cache);

@@ -7,6 +7,7 @@ import { PageVo } from '../vo/PageVo';
 import { page2sql } from '../vo/page2sql';
 import * as dayjs from 'dayjs';
 import { RedisService } from '@midwayjs/redis';
+import { AnonymousMiddleware } from '../middleware/anonymous.middleware';
 
 @Controller('/search')
 export class APIController {
@@ -15,8 +16,7 @@ export class APIController {
   @Inject()
   redisService: RedisService;
 
-  @Get('/article')
-  @Anonymous()
+  @Get('/article', { middleware: [AnonymousMiddleware] })
   async searchArticle(@Query('keyword') keyword: string) {
     const elasticsearch = this.elasticsearchService.get();
     this.redisService.zadd('searchKeywords', 'INCR', 1, `"${keyword}"`);
@@ -43,7 +43,7 @@ export class APIController {
     });
     return result.body.hits.hits
       .filter(
-        hit => hit._source.is_release === 1 && hit._source.is_delete === 0
+        hit => hit._source.isRelease === true && hit._source.deleteTime === null
       )
       .map(hit => {
         const article = new Article();
