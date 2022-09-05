@@ -18,7 +18,7 @@ export class MenuService {
   }
 
   async menuSave(menu: Menu) {
-    menu.id = this.idGenerate.generate().toString();
+    menu.id = this.idGenerate.nextId().toString();
     return this.menuModel.save(menu);
   }
 }

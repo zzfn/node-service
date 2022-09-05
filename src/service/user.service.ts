@@ -39,7 +39,7 @@ export class UserService extends BaseService<User> {
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(user.password, salt);
     return await this.userModel.save({
-      id: this.idGenerate.generate().toString(),
+      id: this.idGenerate.nextId().toString(),
       username: user.username,
       password: hash,
     });

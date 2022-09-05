@@ -15,7 +15,7 @@ export class ReportMiddleware implements IMiddleware<Context, NextFunction> {
       // 执行下一个 Web 中间件，最后执行到控制器
       // 这里可以拿到下一个中间件或者控制器的返回值
       const result = await next();
-      const traceId = this.idGenerate.generate().toString();
+      const traceId = this.idGenerate.nextId().toString();
       ctx.res.setHeader('traceId', traceId);
       // 控制器之后执行的逻辑
       ctx.logger.info(`traceId = ${traceId}, rt = ${Date.now() - startTime}ms`);

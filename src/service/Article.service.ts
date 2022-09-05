@@ -30,7 +30,7 @@ export class ArticleService extends BaseService<Article> {
   @Logger()
   logger: ILogger;
 
-  async getArticle(pageVo: PageVo, id: string = '') {
+  async getArticle(pageVo: PageVo, id = '') {
     return {
       records: await this.articleModel.find({
         ...page2sql(pageVo),
@@ -50,7 +50,7 @@ export class ArticleService extends BaseService<Article> {
       });
       return await this.articleModel.save(article);
     } else {
-      article.id = this.idGenerate.generate().toString();
+      article.id = this.idGenerate.nextId().toString();
       await this.articleModel.save(article);
       await this.rabbitmqService.sendToQueue(this.mqConfig.queue, {
         id: article.id,

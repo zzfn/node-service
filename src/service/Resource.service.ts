@@ -34,7 +34,7 @@ export class ResourceService {
   }
 
   async resourceSave(resource: Resource) {
-    resource.id = this.idGenerate.generate().toString();
+    resource.id = this.idGenerate.nextId().toString();
     resource.createBy = this.ctx.state.user.uid;
     return await this.model.save(resource);
   }

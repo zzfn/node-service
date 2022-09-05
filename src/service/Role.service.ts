@@ -24,7 +24,7 @@ export class RoleService {
   }
 
   async roleSave(role: Role) {
-    role.id = this.idGenerate.generate().toString();
+    role.id = this.idGenerate.nextId().toString();
     role.createBy = this.ctx.state.user.uid;
     return await this.roleModel.save(role);
   }
