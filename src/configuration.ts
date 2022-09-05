@@ -28,6 +28,7 @@ import * as upload from '@midwayjs/upload';
 import * as oss from '@midwayjs/oss';
 import * as redis from '@midwayjs/redis';
 import * as rabbitmq from '@midwayjs/rabbitmq';
+import * as prometheus from '@midwayjs/prometheus';
 import { CustomFilter } from './filter/Custom.filter';
 import { MidwayDecoratorService } from '@midwayjs/core';
 import { RedisService } from '@midwayjs/redis';
@@ -53,6 +54,7 @@ dotenv.config();
     oss,
     redis,
     rabbitmq,
+    prometheus,
   ],
   importConfigs: [join(__dirname, './config')],
 })
