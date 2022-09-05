@@ -10,6 +10,7 @@ import {
 import { ArticleService } from '../service/Article.service';
 import { PageVo } from '../vo/PageVo';
 import { Article } from '../entity/Article';
+import { AnonymousMiddleware } from '../middleware/anonymous.middleware';
 
 @Controller('/article')
 export class ArticleController {
@@ -21,7 +22,7 @@ export class ArticleController {
     return await this.articleService.getArticle(pageVo, id);
   }
 
-  @Get('/page')
+  @Get('/page', { middleware: [AnonymousMiddleware] })
   async articlePage(@Queries() pageVo: PageVo, id: string) {
     return await this.articleService.page({}, pageVo.current, pageVo.pageSize);
   }
