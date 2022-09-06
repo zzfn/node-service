@@ -18,7 +18,7 @@ steps:
         from_secret: webhook
       secret:
         from_secret: secret
-      text: {url:$DRONE_BUILD_LINK,repo:$DRONE_REPO}
+      text: url:$DRONE_BUILD_LINK,repo:$DRONE_REPO
   - name: clone
     image: alpine/git
     volumes:
