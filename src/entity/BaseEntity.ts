@@ -16,12 +16,27 @@ export abstract class BaseEntity {
   @Column({ width: 32, nullable: true })
   updateBy: string;
 
-  @UpdateDateColumn({ type: 'timestamp', nullable: true })
+  @UpdateDateColumn({
+    type: 'timestamp',
+    precision: 0,
+    nullable: true,
+    default: () => 'CURRENT_TIMESTAMP(0)',
+    onUpdate: 'CURRENT_TIMESTAMP(0)',
+  })
   updateTime: Date;
 
-  @CreateDateColumn({ type: 'timestamp', nullable: true })
+  @CreateDateColumn({
+    type: 'timestamp',
+    precision: 0,
+    nullable: true,
+    default: () => 'CURRENT_TIMESTAMP(0)',
+  })
   createTime: Date;
 
-  @DeleteDateColumn({ type: 'timestamp', nullable: true })
+  @DeleteDateColumn({
+    type: 'timestamp',
+    precision: 0,
+    nullable: true,
+  })
   deleteTime: Date;
 }

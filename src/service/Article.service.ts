@@ -3,12 +3,14 @@ import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Article } from '../entity/Article';
 import { PageVo } from '../vo/PageVo';
 import { ILogger } from '@midwayjs/logger';
-import { page2sql } from '../vo/page2sql';
 import { BaseService } from './BaseService';
 import { Repository } from 'typeorm';
 import { ElasticsearchServiceFactory } from '@midway/elasticsearch';
 import { SnowflakeIdGenerate } from './Snowflake';
 import { RabbitmqService } from './rabbitmq';
+import { page2sql } from '../vo/page2sql';
+import { RedisService } from '@midwayjs/redis';
+import { DictionaryService } from './Dictionary.service';
 
 @Provide()
 export class ArticleService extends BaseService<Article> {
@@ -22,6 +24,10 @@ export class ArticleService extends BaseService<Article> {
   idGenerate: SnowflakeIdGenerate;
   @Config('rabbitmq')
   mqConfig;
+  @Inject()
+  redisService: RedisService;
+  @Inject()
+  dictionaryService: DictionaryService;
 
   getModel(): Repository<Article> {
     return this.articleModel;
@@ -30,16 +36,71 @@ export class ArticleService extends BaseService<Article> {
   @Logger()
   logger: ILogger;
 
-  async getArticle(pageVo: PageVo, id = '') {
+  async pageArticle(pageVo: PageVo, id = '') {
+    const [records, total] = await this.articleModel.findAndCount({
+      ...page2sql(pageVo),
+      relations: { tag: true },
+      order: {
+        orderNum: 'DESC',
+        createTime: 'DESC',
+      },
+    });
+    return { records, total };
+  }
+
+  async lastUpdated() {
+    return this.articleModel.find({
+      order: {
+        updateTime: 'DESC',
+      },
+      take: 5,
+    });
+  }
+
+  async articleCount() {
+    const r = await this.articleModel
+      .createQueryBuilder('article')
+      .groupBy('article.tagId')
+      .getMany();
     return {
-      records: await this.articleModel.find({
-        ...page2sql(pageVo),
-        where: {
-          id,
-        },
-      }),
-      total: await this.articleModel.count({ where: { id } }),
+      article: await this.articleModel.count({}),
+      tag: r.length,
     };
+  }
+
+  async articleList(code: string) {
+    let where = {};
+    if (code) {
+      where = { tagId: code };
+    }
+    const dictionary = await this.dictionaryService.list(code);
+    return {
+      title: dictionary.name,
+      articleList: await this.articleModel.findBy(where),
+    };
+  }
+
+  async articleTags() {
+    return await this.articleModel
+      .createQueryBuilder('article')
+      .select('COUNT(article.id)', 'count')
+      .leftJoin('article.tag', 'tag')
+      .addSelect('tag.name', 'tag')
+      .addSelect('article.tagId', 'code')
+      .groupBy('article.tagId')
+      .printSql()
+      .getRawMany();
+  }
+
+  async getArticle(id: string) {
+    const article = await this.articleModel.findOne({
+      where: {
+        id,
+      },
+      relations: { tag: true },
+    });
+    article.viewCount = await this.redisService.zscore('viewCount', id);
+    return article;
   }
 
   async saveArticle(article: Article) {
