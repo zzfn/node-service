@@ -47,8 +47,11 @@ export class CommentService {
 
   async commentSave(comment: Comment) {
     const ip =
-      (this.ctx.headers['x-forwarded-for'] as string) || this.ctx.request.ip;
+      '180.108.180.246' ||
+      (this.ctx.headers['x-forwarded-for'] as string) ||
+      this.ctx.request.ip;
     const exists = await this.redisService.hexists('address', ip);
+    console.log('exists', exists);
     let address;
     if (!exists) {
       const result = await makeHttpRequest(
@@ -58,9 +61,10 @@ export class CommentService {
           dataType: 'json',
         }
       );
+      console.log(result.data);
       const { province, city } = result.data;
       address = `${province}${city}`;
-      await this.redisService.exists('address', ip, address);
+      await this.redisService.hsetnx('address', ip, address);
     } else {
       address = await this.redisService.hget('address', ip);
     }
