@@ -4,8 +4,8 @@ import { ILogger } from '@midwayjs/logger';
 import { SnowflakeIdGenerate } from './Snowflake';
 import { Comment } from '../entity/Comment';
 import { Context } from '@midwayjs/koa';
-
-// import { Reply } from '../entity/Reply';
+import { makeHttpRequest } from '@midwayjs/core';
+import { RedisService } from '@midwayjs/redis';
 
 @Provide()
 export class CommentService {
@@ -17,6 +17,8 @@ export class CommentService {
   idGenerate: SnowflakeIdGenerate;
   @Inject()
   ctx: Context;
+  @Inject()
+  redisService: RedisService;
 
   async list(id: string) {
     // return await this.commentModel
@@ -44,10 +46,28 @@ export class CommentService {
   }
 
   async commentSave(comment: Comment) {
+    const ip =
+      (this.ctx.headers['x-forwarded-for'] as string) || this.ctx.request.ip;
+    const exists = await this.redisService.hexists('address', ip);
+    let address;
+    if (!exists) {
+      const result = await makeHttpRequest(
+        `https://restapi.amap.com/v3/ip?key=${process.env.map_key}&ip=${ip}`,
+        {
+          method: 'GET',
+          dataType: 'json',
+        }
+      );
+      const { province, city } = result.data;
+      address = `${province}${city}`;
+      await this.redisService.exists('address', ip, address);
+    } else {
+      address = await this.redisService.hget('address', ip);
+    }
     comment.id = this.idGenerate.nextId();
     comment.createBy = this.ctx.state.user.uid;
-    comment.ip =
-      (this.ctx.headers['x-forwarded-for'] as string) || this.ctx.request.ip;
+    comment.ip = ip;
+    comment.address = address;
     return this.commentModel.save(comment);
   }
 }
