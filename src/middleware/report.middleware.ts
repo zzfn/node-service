@@ -18,7 +18,11 @@ export class ReportMiddleware implements IMiddleware<Context, NextFunction> {
       const traceId = this.idGenerate.nextId().toString();
       ctx.res.setHeader('traceId', traceId);
       // 控制器之后执行的逻辑
-      ctx.logger.info(`traceId = ${traceId}, rt = ${Date.now() - startTime}ms`);
+      ctx.logger.info(
+        `url = ${ctx.request.url}, traceId = ${traceId}, rt = ${
+          Date.now() - startTime
+        }ms,ip = ${ctx.headers['x-forwarded-for'] || ctx.request.ip}`
+      );
       // 返回给上一个中间件的结果
       return result;
     };

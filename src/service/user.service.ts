@@ -50,14 +50,14 @@ export class UserService extends BaseService<User> {
       where: { username: username },
     });
     if (!user) {
-      throw new CustomError(username);
+      throw new CustomError('账号或密码错误');
     }
     if (await bcrypt.compare(password, user.password)) {
       return {
         token: await this.JwtService.sign({ uid: user.id, username }),
       };
     } else {
-      throw new CustomError(username);
+      throw new CustomError('账号或密码错误');
     }
   }
 

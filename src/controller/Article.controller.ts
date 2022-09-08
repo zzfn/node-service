@@ -26,7 +26,10 @@ export class ArticleController {
   async lastUpdated() {
     return await this.articleService.lastUpdated();
   }
-
+  @Get('/updateViewed', { middleware: [AnonymousMiddleware] })
+  async updateViewed() {
+    return true;
+  }
   @Get('/tags', { middleware: [AnonymousMiddleware] })
   async tags() {
     return await this.articleService.articleTags();

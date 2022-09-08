@@ -16,7 +16,7 @@ export default {
         username: process.env.mysql_username,
         password: process.env.mysql_password,
         database: process.env.mysql_database,
-        synchronize: false,
+        synchronize: true,
         logging: true,
         cache: true,
         dateStrings: true,

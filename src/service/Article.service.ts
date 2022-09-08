@@ -76,7 +76,13 @@ export class ArticleService extends BaseService<Article> {
     const dictionary = await this.dictionaryService.list(code);
     return {
       title: dictionary.name,
-      articleList: await this.articleModel.findBy(where),
+      articleList: await this.articleModel.find({
+        where,
+        select: ['id', 'title', 'createTime'],
+        order: {
+          createTime: 'DESC',
+        },
+      }),
     };
   }
 
