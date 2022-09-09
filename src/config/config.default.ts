@@ -46,11 +46,9 @@ export default {
     },
   },
   upload: {
-    // mode: UploadMode, 默认为file，即上传到服务器临时目录，可以配置为 stream
-    mode: 'file',
-    // fileSize: string, 最大上传文件大小，默认为 10mb
+    mode: 'stream',
     fileSize: '10mb',
-    // whitelist: string[]，文件扩展名白名单
+    whitelist: null,
     tmpdir: path.join(__dirname, 'files'),
     cleanTimeout: 10 * 1000,
     base64: false,
@@ -68,6 +66,7 @@ export default {
   },
   oss: {
     client: {
+      cname: true,
       accessKeyId: process.env.oss_accessKeyId,
       accessKeySecret: process.env.oss_accessKeySecret,
       bucket: process.env.oss_bucket,

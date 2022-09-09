@@ -42,6 +42,7 @@ export class CommentService {
         'userInfo',
         'userInfo.id = comment.createBy'
       )
+      .where('comment.interfaceId = :interfaceId', { interfaceId: id })
       .getMany();
   }
 

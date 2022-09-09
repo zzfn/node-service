@@ -34,7 +34,7 @@ export abstract class BaseService<T> {
     return await this.getModel().findOneBy({ id });
   }
 
-  async list() {
-    return await this.getModel().findBy({});
+  async list(options = {}) {
+    return await this.getModel().find(options);
   }
 }

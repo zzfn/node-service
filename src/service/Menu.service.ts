@@ -21,4 +21,8 @@ export class MenuService {
     menu.id = this.idGenerate.nextId().toString();
     return this.menuModel.save(menu);
   }
+
+  async getOne(id: string) {
+    return this.menuModel.findOneBy({ id });
+  }
 }

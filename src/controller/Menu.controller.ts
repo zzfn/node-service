@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Inject, Post } from '@midwayjs/decorator';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Query,
+} from '@midwayjs/decorator';
 import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/koa';
 import { MenuService } from '../service/Menu.service';
@@ -28,6 +35,11 @@ export class APIController {
   @Get('/list')
   async menuList() {
     return this.menuService.menuList();
+  }
+
+  @Get('/getOne')
+  async getOne(@Query('id') id: string) {
+    return this.menuService.getOne(id);
   }
 
   @Post('/save')

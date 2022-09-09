@@ -61,8 +61,8 @@ export class ArticleController {
     return result.id;
   }
 
-  @Post('/resetEs')
-  async resetEs() {
+  @Post('/resetElastic')
+  async resetElastic() {
     return await this.articleService.resetEs();
   }
 }
