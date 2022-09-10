@@ -27,7 +27,6 @@ export class APIController {
             should: [
               { match_phrase: { content: keyword } },
               { match_phrase: { title: keyword } },
-              { match_phrase: { tag_desc: keyword } },
             ],
           },
         },
@@ -58,7 +57,8 @@ export class APIController {
           }
         }
         return article;
-      });
+      })
+      .filter(article => article.isRelease && !article.deleteTime);
   }
 
   @Get('/log')

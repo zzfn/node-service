@@ -161,24 +161,15 @@ export class ArticleService extends BaseService<Article> {
       index: 'blog',
       body: {
         properties: {
-          id: {
-            type: 'long',
-          },
           title: {
             type: 'text',
             analyzer: 'ik_max_word',
             search_analyzer: 'ik_smart',
           },
           tag: {
-            type: 'keyword',
-          },
-          tag_desc: {
             type: 'text',
             analyzer: 'ik_max_word',
             search_analyzer: 'ik_smart',
-          },
-          is_delete: {
-            type: 'short',
           },
           is_release: {
             type: 'short',
@@ -191,13 +182,26 @@ export class ArticleService extends BaseService<Article> {
         },
       },
     });
-    const list = await this.articleModel.find({});
+    const list = await this.articleModel.find({
+      relations: { tag: true },
+      withDeleted: true,
+    });
+    console.log(list.length);
     await elasticsearch.bulk({
       body: list.flatMap(doc => [
         { index: { _index: 'blog', _id: doc.id } },
-        doc,
+        {
+          title: doc.title,
+          tag: doc.tag.name,
+          summary: doc.summary,
+          isRelease: doc.isRelease,
+          createTime: doc.createTime,
+          updateTime: doc.updateTime,
+          deleteTime: doc.deleteTime,
+          content: doc.content,
+        },
       ]),
     });
-    return '';
+    return true;
   }
 }
