@@ -149,6 +149,10 @@ export class ArticleService extends BaseService<Article> {
     }
   }
 
+  async topSearch() {
+    return this.redisService.zrange('searchKeywords', 0, 10, 'REV');
+  }
+
   async resetEs() {
     const elasticsearch = this.elasticsearchService.get();
     await elasticsearch.indices.delete({

@@ -17,8 +17,11 @@ export class APIController {
 
   @Get('/article', { middleware: [AnonymousMiddleware] })
   async searchArticle(@Query('keyword') keyword: string) {
+    if (!keyword) {
+      return [];
+    }
     const elasticsearch = this.elasticsearchService.get();
-    this.redisService.zadd('searchKeywords', 'INCR', 1, `"${keyword}"`);
+    this.redisService.zadd('searchKeywords', 'INCR', 1, keyword);
     const result = await elasticsearch.search({
       index: 'blog',
       body: {

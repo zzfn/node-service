@@ -26,10 +26,12 @@ export class ArticleController {
   async lastUpdated() {
     return await this.articleService.lastUpdated();
   }
+
   @Get('/updateViewed', { middleware: [AnonymousMiddleware] })
   async updateViewed() {
     return true;
   }
+
   @Get('/tags', { middleware: [AnonymousMiddleware] })
   async tags() {
     return await this.articleService.articleTags();
@@ -59,6 +61,11 @@ export class ArticleController {
   async saveArticle(@Body() article: Article) {
     const result = await this.articleService.saveArticle(article);
     return result.id;
+  }
+
+  @Get('/topSearch', { middleware: [AnonymousMiddleware] })
+  async topSearch() {
+    return await this.articleService.topSearch();
   }
 
   @Post('/resetElastic')
