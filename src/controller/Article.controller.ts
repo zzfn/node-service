@@ -43,7 +43,7 @@ export class ArticleController {
   }
 
   @Get('/page', { middleware: [AnonymousMiddleware] })
-  async articlePage(@Queries() pageVo: PageVo, id: string) {
+  async articlePage(@Queries() pageVo: PageVo, @Query('id') id: string) {
     return await this.articleService.pageArticle(pageVo, id);
   }
 

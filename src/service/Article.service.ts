@@ -11,6 +11,7 @@ import { RabbitmqService } from './rabbitmq';
 import { page2sql } from '../vo/page2sql';
 import { RedisService } from '@midwayjs/redis';
 import { DictionaryService } from './Dictionary.service';
+import { Context } from '@midwayjs/koa';
 
 @Provide()
 export class ArticleService extends BaseService<Article> {
@@ -35,10 +36,22 @@ export class ArticleService extends BaseService<Article> {
 
   @Logger()
   logger: ILogger;
+  @Inject()
+  ctx: Context;
 
   async pageArticle(pageVo: PageVo, id = '') {
+    const where = {};
+    if (id) {
+      where['id'] = id;
+    }
+
+    if (this.ctx.headers.system !== 'admin') {
+      where['isRelease'] = true;
+    }
+    console.log(where);
     const [records, total] = await this.articleModel.findAndCount({
       ...page2sql(pageVo),
+      where,
       relations: { tag: true },
       order: {
         orderNum: 'DESC',
