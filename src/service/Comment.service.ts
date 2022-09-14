@@ -6,6 +6,7 @@ import { Comment } from '../entity/Comment';
 import { Context } from '@midwayjs/koa';
 import { makeHttpRequest } from '@midwayjs/core';
 import { RedisService } from '@midwayjs/redis';
+import {getUserIp} from "../util/httpUtil";
 
 @Provide()
 export class CommentService {
@@ -47,12 +48,8 @@ export class CommentService {
   }
 
   async commentSave(comment: Comment) {
-    const ip =
-      '180.108.180.246' ||
-      (this.ctx.headers['x-forwarded-for'] as string) ||
-      this.ctx.request.ip;
+    const ip = getUserIp(this.ctx);
     const exists = await this.redisService.hexists('address', ip);
-    console.log('exists', exists);
     let address;
     if (!exists) {
       const result = await makeHttpRequest(

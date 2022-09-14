@@ -2,6 +2,7 @@ import { IMiddleware } from '@midwayjs/core';
 import { Inject, Middleware } from '@midwayjs/decorator';
 import { NextFunction, Context } from '@midwayjs/koa';
 import { SnowflakeIdGenerate } from '../service/Snowflake';
+import { getUserIp } from '../util/httpUtil';
 
 @Middleware()
 export class ReportMiddleware implements IMiddleware<Context, NextFunction> {
@@ -21,7 +22,7 @@ export class ReportMiddleware implements IMiddleware<Context, NextFunction> {
       ctx.logger.info(
         `url = ${ctx.request.url}, traceId = ${traceId}, rt = ${
           Date.now() - startTime
-        }ms,ip = ${ctx.headers['x-forwarded-for'] || ctx.request.ip}`
+        }ms,ip = ${getUserIp(ctx)}`
       );
       // 返回给上一个中间件的结果
       return result;

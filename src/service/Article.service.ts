@@ -12,6 +12,7 @@ import { page2sql } from '../vo/page2sql';
 import { RedisService } from '@midwayjs/redis';
 import { DictionaryService } from './Dictionary.service';
 import { Context } from '@midwayjs/koa';
+import { getUserIp } from '../util/httpUtil';
 
 @Provide()
 export class ArticleService extends BaseService<Article> {
@@ -70,14 +71,18 @@ export class ArticleService extends BaseService<Article> {
     });
   }
 
+  async articleAside() {
+    return {};
+  }
+
   async articleCount() {
-    const r = await this.articleModel
+    const result = await this.articleModel
       .createQueryBuilder('article')
       .groupBy('article.tagId')
       .getMany();
     return {
       article: await this.articleModel.count({}),
-      tag: r.length,
+      tag: result.length,
     };
   }
 
@@ -118,8 +123,24 @@ export class ArticleService extends BaseService<Article> {
       },
       relations: { tag: true },
     });
-    article.viewCount = await this.redisService.zscore('viewCount', id);
+    article.viewCount = (await this.redisService.zscore('viewCount', id)) || 1;
     return article;
+  }
+
+  async updateViewed(id: string) {
+    const exists = await this.redisService.exists(
+      `isViewed::${id}::${getUserIp(this.ctx)}`
+    );
+    if (!exists) {
+      await this.redisService.set(
+        `isViewed::${id}::${getUserIp(this.ctx)}`,
+        Date.now(),
+        'EX',
+        60 * 30
+      );
+      await this.redisService.zadd('viewCount', 'INCR', 1, id);
+    }
+    return true;
   }
 
   async saveArticle(article: Article) {

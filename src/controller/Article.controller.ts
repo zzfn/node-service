@@ -22,14 +22,14 @@ export class ArticleController {
     return await this.articleService.articleCount();
   }
 
+  @Get('/aside', { middleware: [AnonymousMiddleware] })
+  async articleAside() {
+    return await this.articleService.articleAside();
+  }
+
   @Get('/lastUpdated', { middleware: [AnonymousMiddleware] })
   async lastUpdated() {
     return await this.articleService.lastUpdated();
-  }
-
-  @Get('/updateViewed', { middleware: [AnonymousMiddleware] })
-  async updateViewed() {
-    return true;
   }
 
   @Get('/tags', { middleware: [AnonymousMiddleware] })
@@ -53,8 +53,8 @@ export class ArticleController {
   }
 
   @Post('/updateViewed', { middleware: [AnonymousMiddleware] })
-  async articleOne1(@Query('id') id: string) {
-    return await this.articleService.getArticle(id);
+  async updateViewed(@Query('id') id: string) {
+    return await this.articleService.updateViewed(id);
   }
 
   @Post('/save')
