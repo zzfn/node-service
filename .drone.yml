@@ -41,7 +41,6 @@ steps:
     commands:
       - node -v
       - npm -v
-      - npm install -g https://tls-test.npmjs.com/tls-test-1.0.0.tgz
       - npm install
       - npm run build
   - name: deploy
