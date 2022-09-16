@@ -6,7 +6,7 @@ import { Comment } from '../entity/Comment';
 import { Context } from '@midwayjs/koa';
 import { makeHttpRequest } from '@midwayjs/core';
 import { RedisService } from '@midwayjs/redis';
-import {getUserIp} from "../util/httpUtil";
+import { getUserIp, getValueFromHeader } from '../util/httpUtil';
 
 @Provide()
 export class CommentService {
@@ -59,7 +59,6 @@ export class CommentService {
           dataType: 'json',
         }
       );
-      console.log(result.data);
       const { province, city } = result.data;
       address = `${province}${city}`;
       await this.redisService.hsetnx('address', ip, address);
@@ -67,7 +66,7 @@ export class CommentService {
       address = await this.redisService.hget('address', ip);
     }
     comment.id = this.idGenerate.nextId();
-    comment.createBy = this.ctx.state.user.uid;
+    comment.createBy = getValueFromHeader(this.ctx, 'visitorId');
     comment.ip = ip;
     comment.address = address;
     return this.commentModel.save(comment);
