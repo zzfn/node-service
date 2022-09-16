@@ -39,11 +39,10 @@ steps:
       - name: node_modules
         path: /drone/src/node_modules
     commands:
-      - pwd
-      - ls -a
+      - node -v
+      - npm -v
       - npm install
       - npm run build
-      - ls -a
   - name: deploy
     image: appleboy/drone-scp
     depends_on:
