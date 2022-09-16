@@ -19,12 +19,12 @@ export class CommentController {
   @Inject()
   replyService: ReplyService;
 
-  @Post('/save',{ middleware: [AnonymousMiddleware] })
+  @Post('/save', { middleware: [AnonymousMiddleware] })
   async save(@Body() comment: Comment): Promise<string> {
     return this.commentService.commentSave(comment);
   }
 
-  @Post('/reply',{ middleware: [AnonymousMiddleware] })
+  @Post('/reply', { middleware: [AnonymousMiddleware] })
   async reply(@Body() reply: Reply): Promise<string> {
     return this.replyService.replySave(reply);
   }
