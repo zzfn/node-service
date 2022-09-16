@@ -2,12 +2,6 @@ import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 import { Dictionary } from './Dictionary';
 
-export enum ARTICLE_TAG {
-  ADMIN = 'admin',
-  EDITOR = 'editor',
-  GHOST = 'ghost',
-}
-
 @Entity()
 export class Article extends BaseEntity {
   @Column()

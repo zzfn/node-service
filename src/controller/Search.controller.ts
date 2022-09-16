@@ -106,6 +106,15 @@ export class APIController {
       body: {
         query: {
           bool: {
+            must: [
+              {
+                range: {
+                  time: {
+                    gte: 'now-15d/d',
+                  },
+                },
+              },
+            ],
             should: [
               { term: { name: 'Next.js-render' } },
               { term: { name: 'Next.js-hydration' } },
