@@ -7,6 +7,7 @@ import { page2sql } from '../vo/page2sql';
 import * as dayjs from 'dayjs';
 import { RedisService } from '@midwayjs/redis';
 import { AnonymousMiddleware } from '../middleware/anonymous.middleware';
+import { SearchVo } from '../vo/searchVo';
 
 @Controller('/search')
 export class APIController {
@@ -67,15 +68,34 @@ export class APIController {
   @Get('/log')
   async searchLog(
     @Query('keyword') keyword: string,
-    @Queries() pageVo: PageVo
+    @Queries() pageVo: PageVo,
+    @Queries() searchVo: SearchVo
   ) {
+    console.log(
+      Object.entries(searchVo)
+        .filter(
+          ([key, value]) => value && !['current', 'pageSize'].includes(key)
+        )
+        .map(([key, value]) => ({
+          match_phrase: { [key]: value },
+        }))
+    );
     const { skip, take } = page2sql(pageVo);
     const elasticsearch = this.elasticsearchService.get();
     const result = await elasticsearch.search({
       index: 'log-performance',
       body: {
         query: {
-          match_all: {},
+          bool: {
+            should: Object.entries(searchVo)
+              .filter(
+                ([key, value]) =>
+                  value && !['current', 'pageSize'].includes(key)
+              )
+              .map(([key, value]) => ({
+                match_phrase: { [key]: value },
+              })),
+          },
         },
         from: skip,
         size: take,
