@@ -64,6 +64,9 @@ export class ArticleService extends BaseService<Article> {
 
   async lastUpdated() {
     return this.articleModel.find({
+      where: {
+        isRelease: true,
+      },
       order: {
         updateTime: 'DESC',
       },
@@ -78,10 +81,11 @@ export class ArticleService extends BaseService<Article> {
   async articleCount() {
     const result = await this.articleModel
       .createQueryBuilder('article')
+      .where('article.isRelease', true)
       .groupBy('article.tagId')
       .getMany();
     return {
-      article: await this.articleModel.count({}),
+      article: await this.articleModel.count({ where: { isRelease: true } }),
       tag: result.length,
     };
   }
@@ -114,7 +118,7 @@ export class ArticleService extends BaseService<Article> {
       .addSelect('tag.name', 'tag')
       .addSelect('article.tagId', 'code')
       .groupBy('article.tagId')
-      .printSql()
+      .where('article.isRelease', true)
       .getRawMany();
   }
 
