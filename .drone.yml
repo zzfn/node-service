@@ -24,7 +24,7 @@ steps:
       - git fetch
       - git checkout origin/$DRONE_COMMIT_BRANCH -ft
   - name: build
-    image: node:lts-alpine
+    image: registry.cn-shanghai.aliyuncs.com/zzf2001/pnpm
     depends_on:
       - clone
     volumes:
@@ -32,9 +32,9 @@ steps:
         path: /drone/src/node_modules
     commands:
       - node -v
-      - npm -v
-      - npm install
-      - npm run build
+      - pnpm -v
+      - pnpm install
+      - pnpm run build
   - name: deploy
     image: appleboy/drone-scp
     depends_on:
