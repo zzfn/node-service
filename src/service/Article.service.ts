@@ -87,7 +87,9 @@ export class ArticleService extends BaseService<Article> {
   }
 
   async articleList(code: string) {
-    let where = {};
+    let where: Record<string, any> = {
+      isRelease: true,
+    };
     if (code) {
       where = { tagId: code };
     }
