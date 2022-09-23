@@ -22,29 +22,14 @@ export class CommentService {
   redisService: RedisService;
 
   async list(id: string) {
-    // return await this.commentModel
-    //   .createQueryBuilder('comment')
-    //   .leftJoinAndSelect(Reply, 'reply', 'reply.commentId=comment.id')
-    //   .where('comment.interfaceId = :interfaceId', { interfaceId: id })
-    //   .getRawMany();
-    return await this.commentModel
-      .createQueryBuilder('comment')
-      .leftJoinAndSelect('comment.replyInfos', 'replyInfos')
-      .leftJoinAndMapOne(
-        'replyInfos.userInfo',
-        'user',
-        'userInfo1',
-        'userInfo1.id = replyInfos.createBy'
-      )
-      // .leftJoinAndSelect(User, 'user', 'user.id = comment.createBy')
-      .leftJoinAndMapOne(
-        'comment.userInfo',
-        'user',
-        'userInfo',
-        'userInfo.id = comment.createBy'
-      )
-      .where('comment.interfaceId = :interfaceId', { interfaceId: id })
-      .getMany();
+    return await this.commentModel.find({
+      where: {
+        interfaceId: id,
+      },
+      order: {
+        createTime: 'DESC',
+      },
+    });
   }
 
   async commentSave(comment: Comment) {

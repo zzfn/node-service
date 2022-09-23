@@ -12,6 +12,8 @@ export class User extends BaseEntity {
   avatar: string;
   @Column()
   nickname: string;
+  @Column()
+  isAdmin: boolean;
 
   @ManyToMany(() => Role, { createForeignKeyConstraints: false })
   @JoinTable({
