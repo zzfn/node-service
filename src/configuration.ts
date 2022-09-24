@@ -1,6 +1,6 @@
 import {
-  Configuration,
   App,
+  Configuration,
   Inject,
   JoinPoint,
   Logger,
@@ -13,6 +13,7 @@ import * as orm from '@midwayjs/typeorm';
 import * as task from '@midwayjs/task';
 import * as passport from '@midwayjs/passport';
 import * as jwt from '@midwayjs/jwt';
+import { JwtService } from '@midwayjs/jwt';
 import { ReportMiddleware } from './middleware/report.middleware';
 import { NotFoundFilter } from './filter/notfound.filter';
 import { DefaultErrorFilter } from './filter/default.filter';
@@ -27,11 +28,11 @@ import * as dotenv from 'dotenv';
 import * as upload from '@midwayjs/upload';
 import * as oss from '@midwayjs/oss';
 import * as redis from '@midwayjs/redis';
+import { RedisService } from '@midwayjs/redis';
 import * as rabbitmq from '@midwayjs/rabbitmq';
 import * as prometheus from '@midwayjs/prometheus';
 import { CustomFilter } from './filter/Custom.filter';
-import { MidwayDecoratorService } from '@midwayjs/core';
-import { RedisService } from '@midwayjs/redis';
+import { httpError, MidwayDecoratorService } from '@midwayjs/core';
 
 dotenv.config();
 
@@ -63,19 +64,19 @@ export class ContainerLifeCycle {
   app: koa.Application;
   @Inject()
   decoratorService: MidwayDecoratorService;
+  @Inject()
+  jwtService: JwtService;
   @Logger()
   logger;
   @Inject()
   redisService: RedisService;
 
   async onReady() {
-    // add middleware
     this.app.useMiddleware([
       ReportMiddleware,
       RouterMiddleware,
       FormatMiddleware,
     ]);
-    // add filter
     this.app.useFilter([
       DefaultErrorFilter,
       UnauthorizedFilter,
@@ -100,6 +101,39 @@ export class ContainerLifeCycle {
               60 * 60
             );
             return result;
+          }
+        },
+      };
+    });
+    this.decoratorService.registerMethodHandler('Authorize', options => {
+      return {
+        around: async (joinPoint: JoinPoint) => {
+          const { request } = joinPoint.args[0];
+          if (!request.header['authorization']) {
+            throw new httpError.UnauthorizedError();
+          }
+          const parts = request.get('authorization').trim().split(' ');
+          if (parts.length !== 2) {
+            throw new httpError.UnauthorizedError();
+          }
+          const [scheme, token] = parts;
+          if (/^Bearer$/i.test(scheme)) {
+            try {
+              const verifyResult: any = await this.jwtService.verify(token);
+              if (options.metadata.onlyAdmin) {
+                if (verifyResult.isAdmin) {
+                  return await joinPoint.proceed(...joinPoint.args);
+                } else {
+                  return Promise.reject(new httpError.ForbiddenError());
+                }
+              } else {
+                return await joinPoint.proceed(...joinPoint.args);
+              }
+            } catch (e) {
+              throw new httpError.UnauthorizedError();
+            }
+          } else {
+            throw new httpError.UnauthorizedError();
           }
         },
       };

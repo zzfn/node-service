@@ -9,6 +9,7 @@ export class AnonymousMiddleware {
 
   resolve() {
     return async (ctx: Context, next: NextFunction) => {
+      console.log(ctx, next);
       await next();
     };
   }
