@@ -11,6 +11,7 @@ import { ArticleService } from '../service/Article.service';
 import { PageVo } from '../vo/PageVo';
 import { Article } from '../entity/Article';
 import { AnonymousMiddleware } from '../middleware/anonymous.middleware';
+import { Authorize } from '../decorator/Authorize';
 
 @Controller('/article')
 export class ArticleController {
@@ -58,6 +59,7 @@ export class ArticleController {
   }
 
   @Post('/save')
+  @Authorize()
   async saveArticle(@Body() article: Article) {
     const result = await this.articleService.saveArticle(article);
     return result.id;
