@@ -120,6 +120,7 @@ export class UserService extends BaseService<User> {
   }
 
   async getUserInfo() {
+    console.log(2222, this.ctx.state);
     const { uid } = this.ctx.state.user;
     return await this.userModel.findOneBy({ id: uid });
   }
