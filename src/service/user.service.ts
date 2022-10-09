@@ -110,19 +110,9 @@ export class UserService extends BaseService<User> {
           .remove(item.id)
       )
     );
-    await Promise.all(
-      user.role.map(item =>
-        this.userModel
-          .createQueryBuilder()
-          .relation(User, 'role')
-          .of(user.id)
-          .add(item)
-      )
-    );
   }
 
   async getUserInfo() {
-    console.log(2222, this.ctx.state);
     const { uid } = this.ctx.state.user;
     return await this.userModel.findOneBy({ id: uid });
   }

@@ -10,9 +10,6 @@ import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/koa';
 import { MenuService } from '../service/Menu.service';
 import { SnowflakeIdGenerate } from '../service/Snowflake';
-import { Role } from '../entity/Role';
-import { InjectEntityModel } from '@midwayjs/typeorm';
-import { Resource } from '../entity/Resource';
 import { Menu } from '../entity/Menu';
 
 @Controller('/menu')
@@ -23,10 +20,6 @@ export class APIController {
   @Inject()
   menuService: MenuService;
 
-  @InjectEntityModel(Role)
-  profileModel;
-  @InjectEntityModel(Resource)
-  resourceModel;
   @Inject()
   ctx: Context;
   @Inject()

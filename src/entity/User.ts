@@ -1,6 +1,5 @@
-import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
-import { Role } from './Role';
 
 @Entity()
 export class User extends BaseEntity {
@@ -14,12 +13,4 @@ export class User extends BaseEntity {
   nickname: string;
   @Column()
   isAdmin: boolean;
-
-  @ManyToMany(() => Role, { createForeignKeyConstraints: false })
-  @JoinTable({
-    name: 'user_role',
-    joinColumn: { name: 'userId' },
-    inverseJoinColumn: { name: 'roleId' },
-  })
-  role: Role[];
 }
