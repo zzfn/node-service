@@ -13,7 +13,6 @@ import { Context } from '@midwayjs/koa';
 import { LoginVo } from '../vo/LoginVo';
 import { User } from '../entity/User';
 import { PageVo } from '../vo/PageVo';
-import { AnonymousMiddleware } from '../middleware/anonymous.middleware';
 
 @Controller('/user')
 export class APIController {
@@ -26,12 +25,12 @@ export class APIController {
   @Inject()
   ctx: Context;
 
-  @Post('/register', { middleware: [AnonymousMiddleware] })
+  @Post('/register')
   async register(@Body() user: LoginVo) {
     return await this.userService.register(user);
   }
 
-  @Post('/login', { middleware: [AnonymousMiddleware] })
+  @Post('/login')
   async saveUser(@Body() user: LoginVo) {
     return await this.userService.login(user);
   }

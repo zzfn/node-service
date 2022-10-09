@@ -12,7 +12,6 @@ import {
 import { ArticleService } from '../service/Article.service';
 import { PageVo } from '../vo/PageVo';
 import { Article } from '../entity/Article';
-import { AnonymousMiddleware } from '../middleware/anonymous.middleware';
 import { Authorize } from '../decorator/Authorize';
 
 @Controller('/article')
@@ -20,42 +19,42 @@ export class ArticleController {
   @Inject()
   articleService: ArticleService;
 
-  @Get('/count', { middleware: [AnonymousMiddleware] })
+  @Get('/count')
   async articleCount() {
     return await this.articleService.articleCount();
   }
 
-  @Get('/aside', { middleware: [AnonymousMiddleware] })
+  @Get('/aside')
   async articleAside() {
     return await this.articleService.articleAside();
   }
 
-  @Get('/lastUpdated', { middleware: [AnonymousMiddleware] })
+  @Get('/lastUpdated')
   async lastUpdated() {
     return await this.articleService.lastUpdated();
   }
 
-  @Get('/tags', { middleware: [AnonymousMiddleware] })
+  @Get('/tags')
   async tags() {
     return await this.articleService.articleTags();
   }
 
-  @Get('/list', { middleware: [AnonymousMiddleware] })
+  @Get('/list')
   async articleList(@Query('code') code: string) {
     return await this.articleService.articleList(code);
   }
 
-  @Get('/page', { middleware: [AnonymousMiddleware] })
+  @Get('/page')
   async articlePage(@Queries() pageVo: PageVo, @Query('id') id: string) {
     return await this.articleService.pageArticle(pageVo, id);
   }
 
-  @Get('/getOne', { middleware: [AnonymousMiddleware] })
+  @Get('/getOne')
   async articleOne(@Query('id') id: string) {
     return await this.articleService.getArticle(id);
   }
 
-  @Post('/updateViewed', { middleware: [AnonymousMiddleware] })
+  @Post('/updateViewed')
   async updateViewed(@Query('id') id: string) {
     return await this.articleService.updateViewed(id);
   }
@@ -67,7 +66,7 @@ export class ArticleController {
     return result.id;
   }
 
-  @Get('/topSearch', { middleware: [AnonymousMiddleware] })
+  @Get('/topSearch')
   async topSearch() {
     return await this.articleService.topSearch();
   }

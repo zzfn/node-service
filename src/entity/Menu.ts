@@ -15,6 +15,8 @@ export class Menu extends BaseEntity {
   orderNum: number;
   @Column()
   isShow: boolean;
+  @Column()
+  isAdmin: boolean;
   @Column({ nullable: true })
   parentId: string;
 }

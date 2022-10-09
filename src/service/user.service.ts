@@ -40,6 +40,8 @@ export class UserService extends BaseService<User> {
     const hash = await bcrypt.hash(user.password, salt);
     return await this.userModel.save({
       id: this.idGenerate.nextId().toString(),
+      isAdmin: false,
+      nickname: user.username,
       username: user.username,
       password: hash,
     });

@@ -6,7 +6,6 @@ import { PageVo } from '../vo/PageVo';
 import { page2sql } from '../vo/page2sql';
 import * as dayjs from 'dayjs';
 import { RedisService } from '@midwayjs/redis';
-import { AnonymousMiddleware } from '../middleware/anonymous.middleware';
 import { SearchVo } from '../vo/searchVo';
 
 @Controller('/search')
@@ -16,7 +15,7 @@ export class APIController {
   @Inject()
   redisService: RedisService;
 
-  @Get('/article', { middleware: [AnonymousMiddleware] })
+  @Get('/article')
   async searchArticle(@Query('keyword') keyword: string) {
     if (!keyword) {
       return [];
