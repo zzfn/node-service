@@ -33,6 +33,7 @@ import * as rabbitmq from '@midwayjs/rabbitmq';
 import * as prometheus from '@midwayjs/prometheus';
 import { CustomFilter } from './filter/Custom.filter';
 import { httpError, MidwayDecoratorService } from '@midwayjs/core';
+import { REQUEST_OBJ_CTX_KEY } from '@midwayjs/core';
 
 dotenv.config();
 
@@ -108,11 +109,12 @@ export class ContainerLifeCycle {
     this.decoratorService.registerMethodHandler('Authorize', options => {
       return {
         around: async (joinPoint: JoinPoint) => {
-          const { request } = joinPoint.args[0];
-          if (!request.header['authorization']) {
+          const instance = joinPoint.target;
+          const ctx = instance[REQUEST_OBJ_CTX_KEY];
+          if (!ctx.headers['authorization']) {
             throw new httpError.UnauthorizedError();
           }
-          const parts = request.get('authorization').trim().split(' ');
+          const parts = ctx.headers['authorization'].trim().split(' ');
           if (parts.length !== 2) {
             throw new httpError.UnauthorizedError();
           }

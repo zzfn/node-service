@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Del,
   Get,
   Inject,
+  Param,
   Post,
   Queries,
   Query,
@@ -73,5 +75,10 @@ export class ArticleController {
   @Post('/resetElastic')
   async resetElastic() {
     return await this.articleService.resetEs();
+  }
+
+  @Del('/:id')
+  async deleteArticle(@Param('id') id: string) {
+    return await this.articleService.deleteArticle(id);
   }
 }

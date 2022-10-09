@@ -192,7 +192,9 @@ export class ArticleService extends BaseService<Article> {
   async topSearch() {
     return this.redisService.zrange('searchKeywords', 0, 10, 'REV');
   }
-
+  async deleteArticle(id: string) {
+    return this.articleModel.softDelete(id);
+  }
   async resetEs() {
     const elasticsearch = this.elasticsearchService.get();
     await elasticsearch.indices.delete({
