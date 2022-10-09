@@ -16,7 +16,6 @@ specifiers:
   '@midwayjs/logger': ^2.17.0
   '@midwayjs/mock': ^3.5.3
   '@midwayjs/oss': ^3.5.3
-  '@midwayjs/passport': ^3.5.3
   '@midwayjs/prometheus': ^3.5.3
   '@midwayjs/rabbitmq': ^3.5.3
   '@midwayjs/redis': ^3.5.3
@@ -32,7 +31,6 @@ specifiers:
   '@types/jsonwebtoken': ^8.5.9
   '@types/koa': ^2.13.5
   '@types/node': ^18.8.3
-  '@types/passport-jwt': ^3.0.7
   amqp-connection-manager: ^4.1.7
   amqplib: ^0.10.3
   bcrypt: ^5.1.0
@@ -44,7 +42,6 @@ specifiers:
   jest: ^26.6.3
   mwts: ^1.3.0
   mysql2: ^2.3.3
-  passport-jwt: ^4.0.0
   ts-jest: ^26.5.6
   typeorm: ^0.3.10
   typescript: ~4.8.4
@@ -63,7 +60,6 @@ dependencies:
   '@midwayjs/koa': 3.5.3_@midwayjs+decorator@3.4.11
   '@midwayjs/logger': 2.17.0
   '@midwayjs/oss': 3.5.3
-  '@midwayjs/passport': 3.5.3
   '@midwayjs/prometheus': 3.5.3
   '@midwayjs/rabbitmq': 3.5.3_jezs3xlhvn6ccrhiuqc2bnfg2e
   '@midwayjs/redis': 3.5.3
@@ -79,7 +75,6 @@ dependencies:
   dayjs: 1.11.5
   dotenv: 16.0.3
   mysql2: 2.3.3
-  passport-jwt: 4.0.0
   typeorm: 0.3.10_mysql2@2.3.3
 
 devDependencies:
@@ -93,7 +88,6 @@ devDependencies:
   '@types/jsonwebtoken': 8.5.9
   '@types/koa': 2.13.5
   '@types/node': 18.8.3
-  '@types/passport-jwt': 3.0.7
   cross-env: 7.0.3
   jest: 26.6.3
   mwts: 1.3.0_typescript@4.8.4
@@ -1251,10 +1245,6 @@ packages:
       - supports-color
     dev: false
 
-  /@midwayjs/passport/3.5.3:
-    resolution: {integrity: sha512-SYYTXWcVpUr7LPG6VPeQBeHHDqHyjwaO+W+Y+2gGUILnvc/UUdiNl2ac/exfsAocDLpd0hgem9da1I/POtCDnA==}
-    dev: false
-
   /@midwayjs/prometheus/3.5.3:
     resolution: {integrity: sha512-XEzvBuqLgb914BEQqQZIQlsE6W0bruq9GDq5UpLwYPJyTGJdIWbJ1grPARKEWcsJ73yWG/F0Z8n8G+SffKNdQw==}
     engines: {node: '>=12'}
@@ -1693,27 +1683,6 @@ packages:
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
-    dev: true
-
-  /@types/passport-jwt/3.0.7:
-    resolution: {integrity: sha512-qRQ4qlww1Yhs3IaioDKrsDNmKy6gLDLgFsGwpCnc2YqWovO2Oxu9yCQdWHMJafQ7UIuOba4C4/TNXcGkQfEjlQ==}
-    dependencies:
-      '@types/express': 4.17.14
-      '@types/jsonwebtoken': 8.5.9
-      '@types/passport-strategy': 0.2.35
-    dev: true
-
-  /@types/passport-strategy/0.2.35:
-    resolution: {integrity: sha512-o5D19Jy2XPFoX2rKApykY15et3Apgax00RRLf0RUotPDUsYrQa7x4howLYr9El2mlUApHmCMv5CZ1IXqKFQ2+g==}
-    dependencies:
-      '@types/express': 4.17.14
-      '@types/passport': 1.0.11
-    dev: true
-
-  /@types/passport/1.0.11:
-    resolution: {integrity: sha512-pz1cx9ptZvozyGKKKIPLcVDVHwae4hrH5d6g5J+DkMRRjR3cVETb4jMabhXAUbg3Ov7T22nFHEgaK2jj+5CBpw==}
-    dependencies:
-      '@types/express': 4.17.14
     dev: true
 
   /@types/prettier/2.7.1:
@@ -6455,18 +6424,6 @@ packages:
     resolution: {integrity: sha512-XHXfu/yOQRy9vYOtUDVMN60OEJjW013GoObG1o+xwQTpB9eYJX/BjXMsdW13ZDPruFhYYn0AG22w0xgQMwl3Nw==}
     engines: {node: '>=0.10.0'}
     dev: true
-
-  /passport-jwt/4.0.0:
-    resolution: {integrity: sha512-BwC0n2GP/1hMVjR4QpnvqA61TxenUMlmfNjYNgK0ZAs0HK4SOQkHcSv4L328blNTLtHq7DbmvyNJiH+bn6C5Mg==}
-    dependencies:
-      jsonwebtoken: 8.5.1
-      passport-strategy: 1.0.0
-    dev: false
-
-  /passport-strategy/1.0.0:
-    resolution: {integrity: sha512-CB97UUvDKJde2V0KDWWB3lyf6PC3FaZP7YxZ2G8OAtn9p4HI9j9JLP9qjOGZFvyl8uwNT8qM+hGnz/n16NI7oA==}
-    engines: {node: '>= 0.4.0'}
-    dev: false
 
   /path-exists/4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}

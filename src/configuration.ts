@@ -11,7 +11,6 @@ import * as info from '@midwayjs/info';
 import { join } from 'path';
 import * as orm from '@midwayjs/typeorm';
 import * as task from '@midwayjs/task';
-import * as passport from '@midwayjs/passport';
 import * as jwt from '@midwayjs/jwt';
 import { JwtService } from '@midwayjs/jwt';
 import { ReportMiddleware } from './middleware/report.middleware';
@@ -48,7 +47,6 @@ dotenv.config();
     orm,
     task,
     jwt,
-    passport,
     crossDomain,
     elasticsearch,
     cache,
