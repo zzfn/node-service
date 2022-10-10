@@ -108,6 +108,7 @@ export class ArticleService extends BaseService<Article> {
     return await this.articleModel
       .createQueryBuilder('article')
       .select('COUNT(article.id)', 'count')
+      .addSelect('article.tag', 'tag')
       .groupBy('article.tag')
       .where('article.isRelease', true)
       .getRawMany();
@@ -117,7 +118,7 @@ export class ArticleService extends BaseService<Article> {
     const article = await this.articleModel.findOne({
       where: {
         id,
-      }
+      },
     });
     article.viewCount = (await this.redisService.zscore('viewCount', id)) || 1;
     return article;
