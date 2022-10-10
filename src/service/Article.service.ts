@@ -77,7 +77,7 @@ export class ArticleService extends BaseService<Article> {
     const result = await this.articleModel
       .createQueryBuilder('article')
       .where('article.isRelease', true)
-      .groupBy('article.tagId')
+      .groupBy('article.tag')
       .getMany();
     return {
       article: await this.articleModel.count({ where: { isRelease: true } }),
@@ -108,10 +108,7 @@ export class ArticleService extends BaseService<Article> {
     return await this.articleModel
       .createQueryBuilder('article')
       .select('COUNT(article.id)', 'count')
-      .leftJoin('article.tag', 'tag')
-      .addSelect('tag.name', 'tag')
-      .addSelect('article.tagId', 'code')
-      .groupBy('article.tagId')
+      .groupBy('article.tag')
       .where('article.isRelease', true)
       .getRawMany();
   }
@@ -120,8 +117,7 @@ export class ArticleService extends BaseService<Article> {
     const article = await this.articleModel.findOne({
       where: {
         id,
-      },
-      relations: { tag: true },
+      }
     });
     article.viewCount = (await this.redisService.zscore('viewCount', id)) || 1;
     return article;
