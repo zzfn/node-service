@@ -220,7 +220,6 @@ export class ArticleService extends BaseService<Article> {
       },
     });
     const list = await this.articleModel.find({
-      relations: { tag: true },
       withDeleted: true,
     });
     await elasticsearch.bulk({
