@@ -90,7 +90,7 @@ export class ArticleService extends BaseService<Article> {
       isRelease: true,
     };
     if (code) {
-      where = { tagId: code };
+      where = { tag: code };
     }
     return {
       title: code,
