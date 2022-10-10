@@ -1,6 +1,5 @@
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
-import { Dictionary } from './Dictionary';
 
 @Entity()
 export class Article extends BaseEntity {
@@ -13,9 +12,6 @@ export class Article extends BaseEntity {
   @Column()
   summary: string;
   @Column()
-  tagId: string;
-  @OneToOne(() => Dictionary, { createForeignKeyConstraints: false })
-  @JoinColumn()
   tag: string;
   @Column()
   orderNum: number;

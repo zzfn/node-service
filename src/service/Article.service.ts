@@ -10,7 +10,6 @@ import { SnowflakeIdGenerate } from './Snowflake';
 import { RabbitmqService } from './rabbitmq';
 import { page2sql } from '../vo/page2sql';
 import { RedisService } from '@midwayjs/redis';
-import { DictionaryService } from './Dictionary.service';
 import { Context } from '@midwayjs/koa';
 import { getUserIp } from '../util/httpUtil';
 
@@ -28,8 +27,6 @@ export class ArticleService extends BaseService<Article> {
   mqConfig;
   @Inject()
   redisService: RedisService;
-  @Inject()
-  dictionaryService: DictionaryService;
 
   getModel(): Repository<Article> {
     return this.articleModel;
@@ -49,11 +46,9 @@ export class ArticleService extends BaseService<Article> {
     if (this.ctx.headers.system !== 'admin') {
       where['isRelease'] = true;
     }
-    console.log(where);
     const [records, total] = await this.articleModel.findAndCount({
       ...page2sql(pageVo),
       where,
-      relations: { tag: true },
       order: {
         orderNum: 'DESC',
         createTime: 'DESC',
@@ -97,9 +92,8 @@ export class ArticleService extends BaseService<Article> {
     if (code) {
       where = { tagId: code };
     }
-    const dictionary = await this.dictionaryService.list(code);
     return {
-      title: dictionary.name,
+      title: code,
       articleList: await this.articleModel.find({
         where,
         select: ['id', 'title', 'createTime'],
@@ -232,7 +226,6 @@ export class ArticleService extends BaseService<Article> {
       relations: { tag: true },
       withDeleted: true,
     });
-    console.log(list.length);
     await elasticsearch.bulk({
       body: list.flatMap(doc => [
         { index: { _index: 'blog', _id: doc.id } },
