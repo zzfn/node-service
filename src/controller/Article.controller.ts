@@ -60,7 +60,7 @@ export class ArticleController {
   }
 
   @Post('/save')
-  @Authorize()
+  @Authorize(true)
   async saveArticle(@Body() article: Article) {
     const result = await this.articleService.saveArticle(article);
     return result.id;
@@ -72,6 +72,7 @@ export class ArticleController {
   }
 
   @Post('/resetElastic')
+  @Authorize(true)
   async resetElastic() {
     return await this.articleService.resetEs();
   }

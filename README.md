@@ -1,29 +1,20 @@
-# my_midway_project
+# node-service
 
-## QuickStart
-
-<!-- add docs here for user -->
-
-see [midway docs][midway] for more detail.
-
-### Development
+### 本地开发
 
 ```bash
-$ npm i
-$ npm run dev
+$ pnpm i
+$ pnpm run dev
 $ open http://localhost:7001/
 ```
 
-### Deploy
+### 部署
 
 ```bash
-$ npm start
+$ pnpm start
 ```
 
-### npm scripts
+### 内置指令
 
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-
-
-[midway]: https://midwayjs.org
+- 使用 `npm run lint` 来做代码风格检查。
+- 使用 `npm test` 来执行单元测试。

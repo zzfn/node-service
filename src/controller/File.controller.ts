@@ -8,6 +8,7 @@ import {
   Query,
 } from '@midwayjs/decorator';
 import { OSSService } from '@midwayjs/oss';
+import { Authorize } from '../decorator/Authorize';
 
 @Controller('/file')
 export class APIController {
@@ -15,6 +16,7 @@ export class APIController {
   ossService: OSSService;
 
   @Post('/upload')
+  @Authorize(true)
   async upload(@Files() files, @Fields() fields) {
     let path = 'midway';
     if (fields.path) {
