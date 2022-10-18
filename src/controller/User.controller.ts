@@ -55,13 +55,6 @@ export class APIController {
     return await this.userService.infoById(id);
   }
 
-  @Post('/changeRoleByUserId')
-  async changeRoleByUserId(
-    @Body() userRole: { userId: string; roleId: string; isAdd: boolean }
-  ) {
-    return await this.userService.updateRole(userRole);
-  }
-
   @Post('/changeUser')
   async changeUser(@Body() user: User) {
     return await this.userService.update(user);
