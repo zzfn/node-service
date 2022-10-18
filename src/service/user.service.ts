@@ -10,7 +10,6 @@ import { BaseService } from './BaseService';
 import { Repository } from 'typeorm';
 
 @Provide()
-// @ts-ignore
 export class UserService extends BaseService<User> {
   @InjectEntityModel(User)
   model: Repository<User>;

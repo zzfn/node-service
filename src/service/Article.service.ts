@@ -114,16 +114,6 @@ export class ArticleService extends BaseService<Article> {
       .getRawMany();
   }
 
-  async getArticle(id: string) {
-    const article = await this.articleModel.findOne({
-      where: {
-        id,
-      },
-    });
-    article.viewCount = (await this.redisService.zscore('viewCount', id)) || 1;
-    return article;
-  }
-
   async updateViewed(id: string) {
     const exists = await this.redisService.exists(
       `isViewed::${id}::${getUserIp(this.ctx)}`

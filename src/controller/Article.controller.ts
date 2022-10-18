@@ -51,7 +51,7 @@ export class ArticleController {
 
   @Get('/getOne')
   async articleOne(@Query('id') id: string) {
-    return await this.articleService.getArticle(id);
+    return await this.articleService.getById(id);
   }
 
   @Post('/updateViewed')
