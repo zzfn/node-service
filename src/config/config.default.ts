@@ -1,5 +1,4 @@
 import { MidwayConfig } from '@midwayjs/core';
-import * as path from 'path';
 import * as redisStore from 'cache-manager-ioredis';
 
 export default {
@@ -47,10 +46,6 @@ export default {
   upload: {
     mode: 'stream',
     fileSize: '10mb',
-    whitelist: null,
-    tmpdir: path.join(__dirname, 'files'),
-    cleanTimeout: 10 * 1000,
-    base64: false,
   },
   cache: {
     store: redisStore,
