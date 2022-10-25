@@ -13,4 +13,6 @@ export class Comment extends BaseEntity {
   address: string;
   @Column()
   reply: string;
+  @Column()
+  replyId: string;
 }
