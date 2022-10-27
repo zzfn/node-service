@@ -5,7 +5,7 @@ import { PageVo } from '../vo/PageVo';
 import { ILogger } from '@midwayjs/logger';
 import { BaseService } from './BaseService';
 import { Repository } from 'typeorm';
-import { ElasticsearchServiceFactory } from '@midway/elasticsearch';
+import { ElasticsearchServiceFactory } from '@oc/midway-es';
 import { SnowflakeIdGenerate } from './Snowflake';
 import { RabbitmqService } from './rabbitmq';
 import { page2sql } from '../vo/page2sql';

@@ -21,7 +21,7 @@ import { ForbiddenFilter } from './filter/forbidden.filter';
 import { RouterMiddleware } from './middleware/router.middleware';
 import { FormatMiddleware } from './middleware/FormatMiddleware';
 import * as crossDomain from '@midwayjs/cross-domain';
-import * as elasticsearch from '@midway/elasticsearch';
+import * as elasticsearch from '@oc/midway-es';
 import * as cache from '@midwayjs/cache';
 import * as dotenv from 'dotenv';
 import * as upload from '@midwayjs/upload';
