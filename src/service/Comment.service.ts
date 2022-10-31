@@ -1,10 +1,9 @@
-import { Inject, Logger, Provide } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { ILogger } from '@midwayjs/logger';
 import { SnowflakeIdGenerate } from './Snowflake';
 import { Comment } from '../entity/Comment';
 import { Context } from '@midwayjs/koa';
-import { makeHttpRequest } from '@midwayjs/core';
+import { Inject, Logger, Provide, makeHttpRequest } from '@midwayjs/core';
 import { RedisService } from '@midwayjs/redis';
 import { getUserIp, getValueFromHeader } from '../util/httpUtil';
 

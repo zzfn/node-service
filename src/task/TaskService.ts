@@ -1,9 +1,13 @@
-import { FORMAT, Provide, TaskLocal } from '@midwayjs/decorator';
+import { FORMAT, Inject, Provide, TaskLocal } from '@midwayjs/core';
+import { SearchService } from '../service/Search.service';
 
 @Provide()
 export class UserService {
-  @TaskLocal(FORMAT.CRONTAB.EVERY_PER_5_MINUTE)
+  @Inject()
+  searchService: SearchService;
+
+  @TaskLocal(FORMAT.CRONTAB.EVERY_DAY_ONE_FIFTEEN)
   async test() {
-    console.log('this.helloService.getName()');
+    await this.searchService.delete30d();
   }
 }
