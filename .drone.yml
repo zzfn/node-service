@@ -24,7 +24,7 @@ steps:
       - git fetch
       - git checkout origin/$DRONE_COMMIT_BRANCH -ft
   - name: build
-    image: registry.cn-shanghai.aliyuncs.com/zzf2001/pnpm:16
+    image: registry.cn-shanghai.aliyuncs.com/zzf2001/pnpm
     depends_on:
       - clone
     volumes:
