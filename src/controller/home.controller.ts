@@ -1,9 +1,10 @@
-import { Controller, Get } from '@midwayjs/decorator';
+import { Body, Controller, Post } from '@midwayjs/decorator';
 
 @Controller('/')
 export class HomeController {
-  @Get('/')
-  async home(): Promise<string> {
+  @Post('/')
+  async home(@Body() req: any): Promise<string> {
+    console.log(JSON.stringify(req));
     return 'Hello Midwayjs!';
   }
 }
