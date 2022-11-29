@@ -6,7 +6,7 @@ specifiers:
   '@midwayjs/bootstrap': ^3.7.1
   '@midwayjs/bull': ^3.7.1
   '@midwayjs/cache': ^3.7.1
-  '@midwayjs/cli': ^1.3.16
+  '@midwayjs/cli': ^1.3.19
   '@midwayjs/core': ^3.7.0
   '@midwayjs/cross-domain': ^3.7.1
   '@midwayjs/decorator': ^3.7.0
@@ -79,7 +79,7 @@ dependencies:
   typeorm: 0.3.10_mysql2@2.3.3
 
 devDependencies:
-  '@midwayjs/cli': 1.3.16_cf3zgnjuzpwyat2vh7rgxufz7q
+  '@midwayjs/cli': 1.3.19_cf3zgnjuzpwyat2vh7rgxufz7q
   '@midwayjs/mock': 3.7.1
   '@types/ali-oss': 6.16.6
   '@types/amqplib': 0.8.2
@@ -635,7 +635,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.2.1
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       chalk: 4.1.2
       jest-message-util: 29.2.1
       jest-util: 29.2.1
@@ -690,7 +690,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 29.2.2
       '@jest/types': 29.2.1
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       jest-mock: 29.2.2
     dev: true
 
@@ -717,7 +717,7 @@ packages:
     dependencies:
       '@jest/types': 29.2.1
       '@sinonjs/fake-timers': 9.1.2
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       jest-message-util: 29.2.1
       jest-mock: 29.2.2
       jest-util: 29.2.1
@@ -750,7 +750,7 @@ packages:
       '@jest/transform': 29.2.2
       '@jest/types': 29.2.1
       '@jridgewell/trace-mapping': 0.3.17
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       chalk: 4.1.2
       collect-v8-coverage: 1.0.1
       exit: 0.1.2
@@ -957,48 +957,49 @@ packages:
       cache-manager: 3.6.3
     dev: false
 
-  /@midwayjs/cli-plugin-build/1.3.16:
-    resolution: {integrity: sha512-o5dc0lq1zvH8aBktbQKCxbpF3ymd/AXLGS8E4t0fY13k2YLCbLYr93z4yD17iqkul+enrJy+8UkOLTLIK58UEA==}
+  /@midwayjs/cli-plugin-build/1.3.19:
+    resolution: {integrity: sha512-dd6cLgYko+B+p17bKO2l9grJx3hataIovJ1DDZCJW2hw4a5EL2HFH1pHofkNIpRQy42sQywJkDW1X5hL9BHiPw==}
     engines: {node: '>= 10'}
     dependencies:
-      '@midwayjs/command-core': 1.3.16
-      '@midwayjs/faas-code-analysis': 1.3.14
+      '@midwayjs/command-core': 1.3.19
+      '@midwayjs/faas-code-analysis': 1.3.19
       '@midwayjs/mwcc': 0.8.0
       '@vercel/ncc': 0.30.0
       fs-extra: 8.1.0
       globby: 10.0.2
     dev: true
 
-  /@midwayjs/cli-plugin-check/1.3.16:
-    resolution: {integrity: sha512-4a3NV2Sc3P0m9j4u6Wz5hiR6G4ZP0DSTgFBwqhMEOMVqZT9zisV0u4Kdtjw0QbGMSTATdsXniIEaHro8VOkZTQ==}
+  /@midwayjs/cli-plugin-check/1.3.19:
+    resolution: {integrity: sha512-Jsq+vAEpHiqbSmlutHmW3Kifyew7JAb6p2sPR9vX/yIsBXq4BKHJaADECKVwTgVIKp6f/ChJB1nTjplOcV8+eQ==}
     engines: {node: '>= 10'}
     dependencies:
-      '@midwayjs/command-core': 1.3.16
+      '@midwayjs/command-core': 1.3.19
       '@midwayjs/locate': 1.8.1
       '@midwayjs/luckyeye': 1.1.0
       chalk: 4.1.2
       fs-extra: 8.1.0
       globby: 10.0.2
       js-yaml: 4.1.0
+      midway-version: 1.1.2
     dev: true
 
-  /@midwayjs/cli-plugin-clean/1.3.16:
-    resolution: {integrity: sha512-pHBts+aI40a0/20UlsJwkkkZckNkxGOKRVpkEGMPQHDZT39edEqRGsMp0rysAcPi6zfYcev8zShrAbXaqcT9fA==}
+  /@midwayjs/cli-plugin-clean/1.3.19:
+    resolution: {integrity: sha512-fxm6yG7GEPOpausgzT3ap4Df14b36KIIf4uFxNO8A53jfKfYYk6MaqQg8dH3ovZ+u0MgUV/rBwCqK2xOLzb9CA==}
     engines: {node: '>= 10'}
     dependencies:
-      '@midwayjs/command-core': 1.3.16
-      '@midwayjs/serverless-spec-builder': 1.3.14
+      '@midwayjs/command-core': 1.3.19
+      '@midwayjs/serverless-spec-builder': 1.3.19
       fs-extra: 8.1.0
     dev: true
 
-  /@midwayjs/cli-plugin-dev/1.3.16_@midwayjs+mock@3.7.1:
-    resolution: {integrity: sha512-dfaibyNQKO0JvdlPD/JRmRW6yrLhHuCamVV6U9j9KTxaeH2w/EA3gk75yndjJ/Skxuarz1LJ1dW5nkdrzU4TsQ==}
+  /@midwayjs/cli-plugin-dev/1.3.19_@midwayjs+mock@3.7.1:
+    resolution: {integrity: sha512-/3I0HN8Lo/QZrZkA2nTFNroVmLZjhENuhjc+5uPWpieF/c0rCkiGtLA8GEPf/nn3Dtn32urgFhFc2rMdne7D5A==}
     engines: {node: '>= 10'}
     peerDependencies:
       '@midwayjs/mock': '*'
     dependencies:
       '@koa/router': 10.1.1
-      '@midwayjs/command-core': 1.3.16
+      '@midwayjs/command-core': 1.3.19
       '@midwayjs/debugger': 1.0.9
       '@midwayjs/mock': 3.7.1
       chalk: 4.1.2
@@ -1018,11 +1019,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@midwayjs/cli-plugin-test/1.3.16_@types+node@18.11.8:
-    resolution: {integrity: sha512-SBqWp2v4/6A1s9DkqZ+tFREJ/e2Yj6QFaHQNbONputYG2c9eZ0MynzO+/GsDtk08/WtiJOfyfIf8RkXZydeghw==}
+  /@midwayjs/cli-plugin-test/1.3.19_@types+node@18.11.8:
+    resolution: {integrity: sha512-KGgaFM80O/95g7PYEm4gC+AObt1c40lVcFyC3r/IbzdV8QSQK819wh6vCNOIbK2IkGZifiq6hP991k7EoajE/w==}
     engines: {node: '>= 10'}
     dependencies:
-      '@midwayjs/command-core': 1.3.16
+      '@midwayjs/command-core': 1.3.19
       globby: 10.0.2
       ts-node: 10.9.1_7jzoohtnaegavowzoeccrsbhty
       typescript: 4.8.4
@@ -1032,18 +1033,18 @@ packages:
       - '@types/node'
     dev: true
 
-  /@midwayjs/cli/1.3.16_cf3zgnjuzpwyat2vh7rgxufz7q:
-    resolution: {integrity: sha512-dDVsxA/SprV4FVO3PUdL7pa3maoVbsxeoaqoEaYE3PqxmJGnmftO0qOtFITArYhlEWgJvCHaLx4zNGqdCXGe9A==}
+  /@midwayjs/cli/1.3.19_cf3zgnjuzpwyat2vh7rgxufz7q:
+    resolution: {integrity: sha512-Y3BRvk5AvWdSldCRUaAb4HrziZQXhsqOLBVBHB0Jx57eYlhRoRE+7eLsuMZq4ckoaznqxC7R1XM9VJx73E2HAw==}
     engines: {node: '>= 10.0.0'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@midwayjs/cli-plugin-build': 1.3.16
-      '@midwayjs/cli-plugin-check': 1.3.16
-      '@midwayjs/cli-plugin-clean': 1.3.16
-      '@midwayjs/cli-plugin-dev': 1.3.16_@midwayjs+mock@3.7.1
-      '@midwayjs/cli-plugin-test': 1.3.16_@types+node@18.11.8
-      '@midwayjs/command-core': 1.3.16
+      '@midwayjs/cli-plugin-build': 1.3.19
+      '@midwayjs/cli-plugin-check': 1.3.19
+      '@midwayjs/cli-plugin-clean': 1.3.19
+      '@midwayjs/cli-plugin-dev': 1.3.19_@midwayjs+mock@3.7.1
+      '@midwayjs/cli-plugin-test': 1.3.19_@types+node@18.11.8
+      '@midwayjs/command-core': 1.3.19
       enquirer: 2.3.6
       minimist: 1.2.7
       mod-info: 1.0.2
@@ -1061,8 +1062,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@midwayjs/command-core/1.3.16:
-    resolution: {integrity: sha512-pet67718Z7//PW8Ui3F9e3W8iSIVXFeJM2KONnizsjEmv98SqXLjLpgkFw2KID9p4Czwh4L5by/AefLwRxL91Q==}
+  /@midwayjs/command-core/1.3.19:
+    resolution: {integrity: sha512-hPfbZJuBJpgBzn+1hc/v5W+Sh3Gj5sNK0nK8uxkBiJidXjBWZYj7RN4eXYQoHz6KwBFvRmp9psLImKouqae+HQ==}
     engines: {node: '>= 10'}
     dependencies:
       fs-extra: 8.1.0
@@ -1115,8 +1116,8 @@ packages:
       '@midwayjs/core': 3.7.0
     dev: false
 
-  /@midwayjs/faas-code-analysis/1.3.14:
-    resolution: {integrity: sha512-F0uSvYDdkAespFSuDAVgQB8fwUkFHzxSYOWJckHIKykiy0979fMzk11ibRuVyGuIdY+ek9FXD+lAwwmELw0RMg==}
+  /@midwayjs/faas-code-analysis/1.3.19:
+    resolution: {integrity: sha512-gZIGQbeXISy2B2InkvuYBRM3MrV/x/pRc75eX4pMTeUhgdSha6mx028WxVSWc36jAulmmTxff/okx9i37oAhAg==}
     dependencies:
       '@midwayjs/mwcc': 0.8.0
       fs-extra: 8.1.0
@@ -1258,8 +1259,8 @@ packages:
       - supports-color
     dev: false
 
-  /@midwayjs/serverless-spec-builder/1.3.14:
-    resolution: {integrity: sha512-EuGkPHZYAopgvhFMOolJ6b6b8SevFMnV0oHi3ziUe6d2cR9MwphP+1LY2buGmDQ7kgUbX+dwaItynPhnaJa8gw==}
+  /@midwayjs/serverless-spec-builder/1.3.19:
+    resolution: {integrity: sha512-pUq+VAlhJtsCt4mrEaSz7Md5RSPA4lwS8w/klg8lIH63jPQmGOf/FrbMQaMDlmBiDxH4GQli7RuHEsm8KTGmyw==}
     engines: {node: '>= 10'}
     dependencies:
       ejs: 3.1.8
@@ -1304,48 +1305,52 @@ packages:
       joi: 17.6.4
     dev: false
 
-  /@msgpackr-extract/msgpackr-extract-darwin-arm64/2.1.2:
-    resolution: {integrity: sha512-TyVLn3S/+ikMDsh0gbKv2YydKClN8HaJDDpONlaZR+LVJmsxLFUgA+O7zu59h9+f9gX1aj/ahw9wqa6rosmrYQ==}
+  /@midwayjs/version/3.8.3:
+    resolution: {integrity: sha512-sQoL86M9V6g7xS2U1psMGJ21pZy9hOT490Fj84LJd2NnpzGhm+GyCHaaPDk+SdP4lzAx6/PlbeVGxneDrmCywg==}
+    dev: true
+
+  /@msgpackr-extract/msgpackr-extract-darwin-arm64/2.2.0:
+    resolution: {integrity: sha512-Z9LFPzfoJi4mflGWV+rv7o7ZbMU5oAU9VmzCgL240KnqDW65Y2HFCT3MW06/ITJSnbVLacmcEJA8phywK7JinQ==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@msgpackr-extract/msgpackr-extract-darwin-x64/2.1.2:
-    resolution: {integrity: sha512-YPXtcVkhmVNoMGlqp81ZHW4dMxK09msWgnxtsDpSiZwTzUBG2N+No2bsr7WMtBKCVJMSD6mbAl7YhKUqkp/Few==}
+  /@msgpackr-extract/msgpackr-extract-darwin-x64/2.2.0:
+    resolution: {integrity: sha512-vq0tT8sjZsy4JdSqmadWVw6f66UXqUCabLmUVHZwUFzMgtgoIIQjT4VVRHKvlof3P/dMCkbMJ5hB1oJ9OWHaaw==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@msgpackr-extract/msgpackr-extract-linux-arm/2.1.2:
-    resolution: {integrity: sha512-42R4MAFeIeNn+L98qwxAt360bwzX2Kf0ZQkBBucJ2Ircza3asoY4CDbgiu9VWklq8gWJVSJSJBwDI+c/THiWkA==}
+  /@msgpackr-extract/msgpackr-extract-linux-arm/2.2.0:
+    resolution: {integrity: sha512-SaJ3Qq4lX9Syd2xEo9u3qPxi/OB+5JO/ngJKK97XDpa1C587H9EWYO6KD8995DAjSinWvdHKRrCOXVUC5fvGOg==}
     cpu: [arm]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@msgpackr-extract/msgpackr-extract-linux-arm64/2.1.2:
-    resolution: {integrity: sha512-vHZ2JiOWF2+DN9lzltGbhtQNzDo8fKFGrf37UJrgqxU0yvtERrzUugnfnX1wmVfFhSsF8OxrfqiNOUc5hko1Zg==}
+  /@msgpackr-extract/msgpackr-extract-linux-arm64/2.2.0:
+    resolution: {integrity: sha512-hlxxLdRmPyq16QCutUtP8Tm6RDWcyaLsRssaHROatgnkOxdleMTgetf9JsdncL8vLh7FVy/RN9i3XR5dnb9cRA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@msgpackr-extract/msgpackr-extract-linux-x64/2.1.2:
-    resolution: {integrity: sha512-RjRoRxg7Q3kPAdUSC5EUUPlwfMkIVhmaRTIe+cqHbKrGZ4M6TyCA/b5qMaukQ/1CHWrqYY2FbKOAU8Hg0pQFzg==}
+  /@msgpackr-extract/msgpackr-extract-linux-x64/2.2.0:
+    resolution: {integrity: sha512-94y5PJrSOqUNcFKmOl7z319FelCLAE0rz/jPCWS+UtdMZvpa4jrQd+cJPQCLp2Fes1yAW/YUQj/Di6YVT3c3Iw==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@msgpackr-extract/msgpackr-extract-win32-x64/2.1.2:
-    resolution: {integrity: sha512-rIZVR48zA8hGkHIK7ED6+ZiXsjRCcAVBJbm8o89OKAMTmEAQ2QvoOxoiu3w2isAaWwzgtQIOFIqHwvZDyLKCvw==}
+  /@msgpackr-extract/msgpackr-extract-win32-x64/2.2.0:
+    resolution: {integrity: sha512-XrC0JzsqQSvOyM3t04FMLO6z5gCuhPE6k4FXuLK5xf52ZbdvcFe1yBmo7meCew9B8G2f0T9iu9t3kfTYRYROgA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -1500,7 +1505,7 @@ packages:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
     dev: true
 
   /@types/cache-manager/3.4.3:
@@ -1514,7 +1519,7 @@ packages:
   /@types/connect/3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
     dev: true
 
   /@types/content-disposition/0.5.5:
@@ -1537,7 +1542,7 @@ packages:
   /@types/express-serve-static-core/4.17.31:
     resolution: {integrity: sha512-DxMhY+NAsTwMMFHBTtJFNp5qiHKJ7TeqOo23zVEM9alT1Ml27Q3xcTH0xwxn7Q0BbMcVEJOs/7aQtUWupUQN3Q==}
     dependencies:
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
     dev: true
@@ -1555,13 +1560,13 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
     dev: true
 
   /@types/graceful-fs/4.1.5:
     resolution: {integrity: sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw==}
     dependencies:
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
     dev: true
 
   /@types/http-assert/1.5.3:
@@ -1616,7 +1621,7 @@ packages:
   /@types/keyv/3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
     dev: true
 
   /@types/koa-compose/3.2.5:
@@ -1661,6 +1666,9 @@ packages:
   /@types/node/18.11.8:
     resolution: {integrity: sha512-uGwPWlE0Hj972KkHtCDVwZ8O39GmyjfMane1Z3GUBGGnkZ2USDq7SxLpVIiIHpweY9DS0QTDH0Nw7RNBsAAZ5A==}
 
+  /@types/node/18.11.9:
+    resolution: {integrity: sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==}
+
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
     dev: true
@@ -1680,7 +1688,7 @@ packages:
   /@types/responselike/1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
     dev: true
 
   /@types/semver/7.3.13:
@@ -1691,7 +1699,7 @@ packages:
     resolution: {integrity: sha512-z5xyF6uh8CbjAu9760KDKsH2FcDxZ2tFCsA4HIMWE6IkiYMXfVoa+4f9KX+FN0ZLsaMw1WNG2ETLA6N+/YA+cg==}
     dependencies:
       '@types/mime': 3.0.1
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
     dev: true
 
   /@types/stack-utils/2.0.1:
@@ -1714,7 +1722,7 @@ packages:
   /@types/xml2js/0.4.11:
     resolution: {integrity: sha512-JdigeAKmCyoJUiQljjr7tQG3if9NkqGUgwEUqBvV0N7LM4HyQk7UXCnusRa1lnvXAEYJ8mw8GtZWioagNztOwA==}
     dependencies:
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
     dev: false
 
   /@types/yargs-parser/21.0.0:
@@ -2031,6 +2039,14 @@ packages:
 
   /anymatch/3.1.2:
     resolution: {integrity: sha512-P43ePfOAIupkguHUycrc4qJ9kz8ZiuOUijaETwX7THt0Y/GNK7v0aa8rY816xWjZ7rJdA5XdMcpVFTKMq+RvWg==}
+    engines: {node: '>= 8'}
+    dependencies:
+      normalize-path: 3.0.0
+      picomatch: 2.3.1
+    dev: true
+
+  /anymatch/3.1.3:
+    resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
     dependencies:
       normalize-path: 3.0.0
@@ -2465,7 +2481,7 @@ packages:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
     dependencies:
-      anymatch: 3.1.2
+      anymatch: 3.1.3
       braces: 3.0.2
       glob-parent: 5.1.2
       is-binary-path: 2.1.0
@@ -3622,7 +3638,7 @@ packages:
       dir-glob: 3.0.1
       fast-glob: 3.2.12
       glob: 7.2.3
-      ignore: 5.2.0
+      ignore: 5.2.1
       merge2: 1.4.1
       slash: 3.0.0
     dev: true
@@ -3634,7 +3650,7 @@ packages:
       array-union: 2.1.0
       dir-glob: 3.0.1
       fast-glob: 3.2.12
-      ignore: 5.2.0
+      ignore: 5.2.1
       merge2: 1.4.1
       slash: 3.0.0
     dev: true
@@ -3847,6 +3863,11 @@ packages:
 
   /ignore/5.2.0:
     resolution: {integrity: sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==}
+    engines: {node: '>= 4'}
+    dev: true
+
+  /ignore/5.2.1:
+    resolution: {integrity: sha512-d2qQLzTJ9WxQftPAuEQpSPmKqzxePjzVbpAVv62AQ64NTL+wR4JkrVqR/LqFsFEUsHDAiId52mJteHDFuDkElA==}
     engines: {node: '>= 4'}
     dev: true
 
@@ -4176,7 +4197,7 @@ packages:
       '@jest/expect': 29.2.2
       '@jest/test-result': 29.2.1
       '@jest/types': 29.2.1
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       chalk: 4.1.2
       co: 4.6.0
       dedent: 0.7.0
@@ -4297,7 +4318,7 @@ packages:
       '@jest/environment': 29.2.2
       '@jest/fake-timers': 29.2.2
       '@jest/types': 29.2.1
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       jest-mock: 29.2.2
       jest-util: 29.2.1
     dev: true
@@ -4313,7 +4334,7 @@ packages:
     dependencies:
       '@jest/types': 29.2.1
       '@types/graceful-fs': 4.1.5
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       anymatch: 3.1.2
       fb-watchman: 2.0.2
       graceful-fs: 4.2.10
@@ -4364,7 +4385,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.2.1
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       jest-util: 29.2.1
     dev: true
 
@@ -4419,7 +4440,7 @@ packages:
       '@jest/test-result': 29.2.1
       '@jest/transform': 29.2.2
       '@jest/types': 29.2.1
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       chalk: 4.1.2
       emittery: 0.13.1
       graceful-fs: 4.2.10
@@ -4450,7 +4471,7 @@ packages:
       '@jest/test-result': 29.2.1
       '@jest/transform': 29.2.2
       '@jest/types': 29.2.1
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       chalk: 4.1.2
       cjs-module-lexer: 1.2.2
       collect-v8-coverage: 1.0.1
@@ -4531,7 +4552,7 @@ packages:
     dependencies:
       '@jest/test-result': 29.2.1
       '@jest/types': 29.2.1
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       emittery: 0.13.1
@@ -4543,7 +4564,7 @@ packages:
     resolution: {integrity: sha512-ROHTZ+oj7sBrgtv46zZ84uWky71AoYi0vEV9CdEtc1FQunsoAGe5HbQmW76nI5QWdvECVPrSi1MCVUmizSavMg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@types/node': 18.11.8
+      '@types/node': 18.11.9
       jest-util: 29.2.1
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -5033,6 +5054,13 @@ packages:
       picomatch: 2.3.1
     dev: true
 
+  /midway-version/1.1.2:
+    resolution: {integrity: sha512-SqwN41Arc5iBz35pSB1z+Wm3zHndvhkfOFD1xYaN3vwxzJNqGYTI0C6LX5CZEJ1UKFInU7FnD902lDTl6S3umw==}
+    hasBin: true
+    dependencies:
+      '@midwayjs/version': 3.8.3
+    dev: true
+
   /mime-db/1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
@@ -5138,26 +5166,26 @@ packages:
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  /msgpackr-extract/2.1.2:
-    resolution: {integrity: sha512-cmrmERQFb19NX2JABOGtrKdHMyI6RUyceaPBQ2iRz9GnDkjBWFjNJC0jyyoOfZl2U/LZE3tQCCQc4dlRyA8mcA==}
+  /msgpackr-extract/2.2.0:
+    resolution: {integrity: sha512-0YcvWSv7ZOGl9Od6Y5iJ3XnPww8O7WLcpYMDwX+PAA/uXLDtyw94PJv9GLQV/nnp3cWlDhMoyKZIQLrx33sWog==}
     hasBin: true
     requiresBuild: true
     dependencies:
       node-gyp-build-optional-packages: 5.0.3
     optionalDependencies:
-      '@msgpackr-extract/msgpackr-extract-darwin-arm64': 2.1.2
-      '@msgpackr-extract/msgpackr-extract-darwin-x64': 2.1.2
-      '@msgpackr-extract/msgpackr-extract-linux-arm': 2.1.2
-      '@msgpackr-extract/msgpackr-extract-linux-arm64': 2.1.2
-      '@msgpackr-extract/msgpackr-extract-linux-x64': 2.1.2
-      '@msgpackr-extract/msgpackr-extract-win32-x64': 2.1.2
+      '@msgpackr-extract/msgpackr-extract-darwin-arm64': 2.2.0
+      '@msgpackr-extract/msgpackr-extract-darwin-x64': 2.2.0
+      '@msgpackr-extract/msgpackr-extract-linux-arm': 2.2.0
+      '@msgpackr-extract/msgpackr-extract-linux-arm64': 2.2.0
+      '@msgpackr-extract/msgpackr-extract-linux-x64': 2.2.0
+      '@msgpackr-extract/msgpackr-extract-win32-x64': 2.2.0
     dev: false
     optional: true
 
   /msgpackr/1.7.2:
     resolution: {integrity: sha512-mWScyHTtG6TjivXX9vfIy2nBtRupaiAj0HQ2mtmpmYujAmqZmaaEVPaSZ1NKLMvicaMLFzEaMk0ManxMRg8rMQ==}
     optionalDependencies:
-      msgpackr-extract: 2.1.2
+      msgpackr-extract: 2.2.0
     dev: false
 
   /mute-stream/0.0.8:
