@@ -26,6 +26,19 @@ steps:
       - git remote add origin $DRONE_GIT_SSH_URL
       - git fetch
       - git checkout origin/$DRONE_COMMIT_BRANCH -ft
+  - name: build_docker
+    image: plugins/docker
+    depends_on:
+      - build
+    pull: if-not-exists
+    settings:
+      registry: hub.oocc.es
+      username:
+        from_secret: nexus_docker_username
+      password:
+        from_secret: nexus_docker_password
+      repo: hub.oocc.es/home/node-service
+      tags: latest
   - name: ssh
     image: appleboy/drone-ssh
     depends_on:
