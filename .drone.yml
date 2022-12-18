@@ -26,54 +26,70 @@ steps:
       - git remote add origin $DRONE_GIT_SSH_URL
       - git fetch
       - git checkout origin/$DRONE_COMMIT_BRANCH -ft
-  - name: build
-    image: registry.cn-shanghai.aliyuncs.com/zzf2001/pnpm
-    depends_on:
-      - clone
-    volumes:
-      - name: node_modules
-        path: /drone/src/node_modules
-    commands:
-      - node -v
-      - pnpm -v
-      - pnpm install
-      - pnpm run build
-  - name: deploy
-    image: appleboy/drone-scp
-    depends_on:
-      - build
-    settings:
-      host:
-        from_secret: server_host
-      port: 22
-      username:
-        from_secret: username
-      password:
-        from_secret: server_password
-      overwrite: true
-      target: /root/node-service
-      source:
-        - dist
-        - .npmrc
-        - package.json
-        - pnpm-lock.yaml
-        - bootstrap.js
-        - tsconfig.json
   - name: ssh
     image: appleboy/drone-ssh
     depends_on:
-      - deploy
+      - build_docker
     settings:
       host:
-        from_secret: server_host
+        from_secret: k8s_host
       username:
-        from_secret: username
+        from_secret: k8s_username
       password:
-        from_secret: server_password
+        from_secret: k8s_password
       port: 22
       command_timeout: 2m
       script:
-        - cd /root/node-service
-        - pnpm i --frozen-lockfile
-        - pm2 del node-service
-        - pm2 start npm --name node-service -i max -- run start
+        - kubectl scale --replicas=0 -f https://git.oocc.es/oocc/k3s/raw/branch/master/node-service.yaml
+        - kubectl apply -f https://git.oocc.es/oocc/k3s/raw/branch/master/node-service.yaml
+#  - name: build
+#    image: registry.cn-shanghai.aliyuncs.com/zzf2001/pnpm
+#    depends_on:
+#      - clone
+#    volumes:
+#      - name: node_modules
+#        path: /drone/src/node_modules
+#    commands:
+#      - node -v
+#      - pnpm -v
+#      - pnpm install
+#      - pnpm run build
+#  - name: deploy
+#    image: appleboy/drone-scp
+#    depends_on:
+#      - build
+#    settings:
+#      host:
+#        from_secret: server_host
+#      port: 22
+#      username:
+#        from_secret: username
+#      password:
+#        from_secret: server_password
+#      overwrite: true
+#      target: /root/node-service
+#      source:
+#        - dist
+#        - .npmrc
+#        - package.json
+#        - pnpm-lock.yaml
+#        - bootstrap.js
+#        - tsconfig.json
+#  - name: ssh
+#    image: appleboy/drone-ssh
+#    depends_on:
+#      - deploy
+#    settings:
+#      host:
+#        from_secret: server_host
+#      username:
+#        from_secret: username
+#      password:
+#        from_secret: server_password
+#      port: 22
+#      command_timeout: 2m
+#      script:
+#        - cd /root/node-service
+#        - pnpm i --frozen-lockfile
+#        - pm2 del node-service
+#        - pm2 start npm --name node-service -i max -- run start
