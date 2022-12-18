@@ -18,8 +18,6 @@ COPY --from=build /app/bootstrap.js ./
 COPY --from=build /app/package.json ./
 COPY --from=build /app/.npmrc ./
 
-RUN apk add --no-cache tzdata
-
 ENV TZ="Asia/Shanghai"
 
 RUN yarn global add pnpm && pnpm i --production;
