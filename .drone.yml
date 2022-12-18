@@ -1,10 +1,6 @@
 kind: pipeline
 type: docker
 name: ci/cd
-volumes:
-  - name: node_modules
-    host:
-      path: /root/drone/node-service/node_modules
 clone:
   disable: true
 steps:
