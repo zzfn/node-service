@@ -123,7 +123,7 @@ export class ArticleService extends BaseService<Article> {
         `isViewed::${id}::${getUserIp(this.ctx)}`,
         Date.now(),
         'EX',
-        60 * 30
+        60 * 10
       );
       await this.redisService.zadd('viewCount', 'INCR', 1, id);
     }
