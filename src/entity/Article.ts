@@ -14,6 +14,8 @@ export class Article extends BaseEntity {
   @Column()
   tag: string;
   @Column()
+  viewCount: number;
+  @Column()
   orderNum: number;
   @Column()
   isRelease: boolean;

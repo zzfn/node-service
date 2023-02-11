@@ -30,6 +30,7 @@ import * as redis from '@midwayjs/redis';
 import { RedisService } from '@midwayjs/redis';
 import * as rabbitmq from '@midwayjs/rabbitmq';
 import * as prometheus from '@midwayjs/prometheus';
+import * as bull from '@midwayjs/bull';
 import { CustomFilter } from './filter/Custom.filter';
 import { httpError, MidwayDecoratorService } from '@midwayjs/core';
 import { REQUEST_OBJ_CTX_KEY } from '@midwayjs/core';
@@ -55,6 +56,7 @@ dotenv.config();
     redis,
     rabbitmq,
     prometheus,
+    bull,
   ],
   importConfigs: [join(__dirname, './config')],
 })

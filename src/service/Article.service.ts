@@ -125,7 +125,16 @@ export class ArticleService extends BaseService<Article> {
         'EX',
         60 * 10
       );
-      await this.redisService.zadd('viewCount', 'INCR', 1, id);
+      await this.articleModel
+        .createQueryBuilder('article')
+        .update(Article)
+        .set({
+          viewCount: () => 'viewCount + 1',
+          updateTime: () => 'updateTime',
+        })
+        .where('id = :id', { id })
+        .execute();
+      // await this.redisService.zadd('viewCount', 'INCR', 1, id);
     }
     return true;
   }
@@ -173,9 +182,11 @@ export class ArticleService extends BaseService<Article> {
   async topSearch() {
     return this.redisService.zrange('searchKeywords', 0, 10, 'REV');
   }
+
   async deleteArticle(id: string) {
     return this.articleModel.softDelete(id);
   }
+
   async resetEs() {
     const elasticsearch = this.elasticsearchService.get();
     await elasticsearch.indices.delete({

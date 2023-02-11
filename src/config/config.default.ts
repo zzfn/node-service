@@ -87,4 +87,13 @@ export default {
     url: process.env.mq_url,
     queue: process.env.mq_queue,
   },
+  bull: {
+    defaultQueueOptions: {
+      redis: {
+        port: Number.parseInt(process.env.redis_port),
+        host: process.env.redis_host,
+        password: process.env.redis_password,
+      },
+    },
+  },
 } as MidwayConfig;
