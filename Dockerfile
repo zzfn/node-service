@@ -19,7 +19,7 @@ COPY --from=build /app/package.json ./
 COPY --from=build /app/.npmrc ./
 
 ENV TZ="Asia/Shanghai"
-
+ENV NODE_ENV="production"
 RUN yarn global add pnpm && pnpm i --production;
 
 # 如果端口更换，这边可以更新一下
