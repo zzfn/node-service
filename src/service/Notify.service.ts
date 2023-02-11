@@ -9,7 +9,7 @@ type BarkReq = {
 };
 
 @Provide()
-export class NotifyService {
+export class Notify {
   async bark({ title, body, group, icon }: BarkReq): Promise<any> {
     const { data } = await makeHttpRequest(process.env.BARK_URL, {
       method: 'POST',
