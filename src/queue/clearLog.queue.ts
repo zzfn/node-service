@@ -5,7 +5,7 @@ import { NotifyService } from '../service/NotifyService.service';
 import { Logger } from '@midwayjs/decorator';
 import { ILogger } from '@midwayjs/logger';
 
-@Processor('clearLog', {
+@Processor(`clearLog_${process.env.NODE_ENV}`, {
   repeat: {
     cron: FORMAT.CRONTAB.EVERY_DAY_ONE_FIFTEEN,
   },
