@@ -68,7 +68,7 @@ export class SignIn {
       body: isSuccess
         ? `获得矿石${data.data.incr_point},现有矿石${data.data.sum_point}`
         : err_msg,
-      icon: 'https://cdn.zzfzzf.com/midway/juejin.png',
+      icon: 'https://cdn.zzfzzf.com/midway/juejin.png?v=1',
     });
     return isSuccess;
   }
