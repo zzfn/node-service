@@ -6,6 +6,7 @@ import { Context } from '@midwayjs/koa';
 import { Inject, Logger, Provide, makeHttpRequest } from '@midwayjs/core';
 import { RedisService } from '@midwayjs/redis';
 import { getUserIp, getValueFromHeader } from '../util/httpUtil';
+import { Notify } from './Notify.service';
 
 @Provide()
 export class CommentService {
@@ -19,6 +20,8 @@ export class CommentService {
   ctx: Context;
   @Inject()
   redisService: RedisService;
+  @Inject()
+  notify: Notify;
 
   async list(id: string) {
     return await this.commentModel.find({
@@ -53,6 +56,10 @@ export class CommentService {
     comment.createBy = getValueFromHeader(this.ctx, 'visitorId');
     comment.ip = ip;
     comment.address = address;
+    await this.notify.bark({
+      title: `来自${address}的用户评论了你`,
+      body: `在${comment.interfaceId}中评论了${comment.content}`,
+    });
     return this.commentModel.save(comment);
   }
 }
