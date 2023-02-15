@@ -65,7 +65,7 @@ export class ArticleService extends BaseService<Article> {
       order: {
         updateTime: 'DESC',
       },
-      take: 5,
+      take: 6,
     });
   }
 
