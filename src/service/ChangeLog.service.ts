@@ -12,4 +12,13 @@ export class ChangeLogService extends BaseService<ChangeLog> {
   getModel(): Repository<ChangeLog> {
     return this.model;
   }
+
+  async getLatest() {
+    return await this.model
+      .createQueryBuilder('changelog')
+      .select('max(updateTime)')
+      .where('changelog.updateTime<:currentTime', { currentTime: Date.now() })
+      .groupBy('changelog.title')
+      .getOne();
+  }
 }
