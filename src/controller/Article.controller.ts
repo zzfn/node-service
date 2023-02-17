@@ -33,7 +33,10 @@ export class ArticleController {
   async lastUpdated() {
     return await this.articleService.lastUpdated();
   }
-
+  @Get('/lastCreated')
+  async lastCreated() {
+    return await this.articleService.lastCreated();
+  }
   @Get('/tags')
   async tags() {
     return await this.articleService.articleTags();

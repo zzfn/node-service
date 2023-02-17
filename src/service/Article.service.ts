@@ -69,6 +69,17 @@ export class ArticleService extends BaseService<Article> {
     });
   }
 
+  async lastCreated() {
+    return this.articleModel.find({
+      where: {
+        isRelease: true,
+      },
+      order: {
+        createTime: 'DESC',
+      },
+      take: 6,
+    });
+  }
   async articleAside() {
     return {};
   }
