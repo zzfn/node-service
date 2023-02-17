@@ -48,8 +48,8 @@ export class ArticleController {
   }
 
   @Get('/page')
-  async articlePage(@Queries() pageVo: PageVo, @Query('id') id: string) {
-    return await this.articleService.pageArticle(pageVo, id);
+  async articlePage(@Queries() pageVo: PageVo, @Query('id') id: string,@Query('isRelease') isRelease: string) {
+    return await this.articleService.pageArticle(pageVo, id, isRelease);
   }
 
   @Get('/getOne')

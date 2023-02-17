@@ -37,18 +37,24 @@ export class ArticleService extends BaseService<Article> {
   @Inject()
   ctx: Context;
 
-  async pageArticle(pageVo: PageVo, id = '') {
-    const where = {};
-    if (id) {
-      where['id'] = id;
-    }
-
-    if (this.ctx.headers.system !== 'admin') {
-      where['isRelease'] = true;
+  async pageArticle(pageVo: PageVo, id = '', scope = 'all') {
+    let isRelease = undefined;
+    if (this.ctx.headers.system === 'admin' || scope !== 'published') {
+      if (scope === 'all') {
+        isRelease = undefined;
+      }
+      if (scope === 'unpublished') {
+        isRelease = false;
+      }
+    } else {
+      isRelease = true;
     }
     const [records, total] = await this.articleModel.findAndCount({
       ...page2sql(pageVo),
-      where,
+      where: {
+        id: id || undefined,
+        isRelease,
+      },
       order: {
         orderNum: 'DESC',
         createTime: 'DESC',
@@ -80,6 +86,7 @@ export class ArticleService extends BaseService<Article> {
       take: 6,
     });
   }
+
   async articleAside() {
     return {};
   }
