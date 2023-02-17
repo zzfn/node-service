@@ -39,7 +39,7 @@ export class ArticleService extends BaseService<Article> {
 
   async pageArticle(pageVo: PageVo, id = '', scope = 'all') {
     let isRelease = undefined;
-    if (this.ctx.headers.system === 'admin' || scope !== 'published') {
+    if (this.ctx.headers.system === 'admin' && scope !== 'published') {
       if (scope === 'all') {
         isRelease = undefined;
       }
