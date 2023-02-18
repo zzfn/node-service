@@ -47,7 +47,7 @@ export class CommentService {
         }
       );
       const { province, city }: any = result.data;
-      address = `${province}${city}`;
+      address = `${province}${city}` || '未知';
       await this.redisService.hsetnx('address', ip, address);
     } else {
       address = await this.redisService.hget('address', ip);
