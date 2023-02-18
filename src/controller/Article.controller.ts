@@ -24,9 +24,9 @@ export class ArticleController {
     return await this.articleService.articleCount();
   }
 
-  @Get('/aside')
-  async articleAside() {
-    return await this.articleService.articleAside();
+  @Get('/sortByField')
+  async sortByField(@Query('field') field: string) {
+    return await this.articleService.sortByField(field);
   }
 
   @Get('/lastUpdated')
@@ -48,7 +48,11 @@ export class ArticleController {
   }
 
   @Get('/page')
-  async articlePage(@Queries() pageVo: PageVo, @Query('id') id: string,@Query('isRelease') isRelease: string) {
+  async articlePage(
+    @Queries() pageVo: PageVo,
+    @Query('id') id: string,
+    @Query('isRelease') isRelease: string
+  ) {
     return await this.articleService.pageArticle(pageVo, id, isRelease);
   }
 

@@ -87,8 +87,13 @@ export class ArticleService extends BaseService<Article> {
     });
   }
 
-  async articleAside() {
-    return {};
+  async sortByField(field: string) {
+    return this.articleModel
+      .createQueryBuilder('article')
+      .where('article.isRelease', true)
+      .orderBy(field, 'DESC')
+      .limit(6)
+      .getMany();
   }
 
   async articleCount() {
