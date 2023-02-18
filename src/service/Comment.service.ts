@@ -46,7 +46,7 @@ export class CommentService {
           dataType: 'json',
         }
       );
-      const { province, city } = result.data;
+      const { province, city }: any = result.data;
       address = `${province}${city}`;
       await this.redisService.hsetnx('address', ip, address);
     } else {

@@ -34,7 +34,7 @@ export class SignIn {
   }
 
   private async freeDrawCheck() {
-    const { data } = await makeHttpRequest(juejinInfo.freeDrawCheckUrl, {
+    const { data }: any = await makeHttpRequest(juejinInfo.freeDrawCheckUrl, {
       method: 'GET',
       headers: juejinInfo.headers,
       dataType: 'json',
@@ -43,7 +43,7 @@ export class SignIn {
   }
 
   private async freeDraw() {
-    const { data } = await makeHttpRequest(juejinInfo.freeDrawUrl, {
+    const { data }: any = await makeHttpRequest(juejinInfo.freeDrawUrl, {
       method: 'POST',
       headers: juejinInfo.headers,
       dataType: 'json',
@@ -56,7 +56,7 @@ export class SignIn {
   }
 
   private async checkIn(): Promise<any> {
-    const { data } = await makeHttpRequest(juejinInfo.checkInUrl, {
+    const { data }: any = await makeHttpRequest(juejinInfo.checkInUrl, {
       method: 'POST',
       headers: juejinInfo.headers,
       dataType: 'json',

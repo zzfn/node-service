@@ -33,7 +33,7 @@ export class APIController {
   @Get('/files')
   async list(@Query('prefix') prefix: string): Promise<any> {
     const result = await this.ossService.list(
-      { prefix, 'max-keys': '100', delimiter: '/' },
+      { prefix, 'max-keys': '50', delimiter: '/' },
       {}
     );
     return {
