@@ -11,13 +11,14 @@ export class TrackController {
   rabbitmqService: RabbitmqService;
 
   @Get('/log.gif')
-  async home(@Query('q') q: string): Promise<string> {
+  async home(@Query('q') q: string): Promise<Buffer> {
     await this.rabbitmqService.sendToQueue(`log_${process.env.NODE_ENV}`, {
       ...JSON.parse(Buffer.from(q, 'base64').toString('ascii')),
       ip: getUserIp(this.ctx),
       time: new Date(),
     });
     this.ctx.response.set('content-type', 'image/gif');
-    return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+    const base64Str = 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+    return Buffer.from(base64Str, 'base64');
   }
 }
