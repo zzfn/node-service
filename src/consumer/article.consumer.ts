@@ -18,10 +18,9 @@ export class UserConsumer {
 
   @RabbitMQListener(`article_${process.env.NODE_ENV}`)
   async gotData(msg: ConsumeMessage) {
-    console.log(
-      `mq收到队列${`article_${process.env.NODE_ENV}`}消息`,
-      msg.content.toString()
-    );
+    this.ctx.logger.info(`
+          mq收到队列${`article_${process.env.NODE_ENV}`}消息,${msg.content.toString()}
+    `);
     const payload = JSON.parse(msg.content.toString());
     const { id } = payload;
     await this.articleService.db2es(id);
