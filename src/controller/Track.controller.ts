@@ -15,6 +15,6 @@ export class TrackController {
       q: q,
     });
     this.ctx.response.set('content-type', 'image/gif');
-    return 'data:image/gif;base64,R0lGODlhAQABAAAAACw=';
+    return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
   }
 }
