@@ -1,30 +1,30 @@
 import {
   Consumer,
+  Inject,
   MSListenerType,
   RabbitMQListener,
-  Inject,
 } from '@midwayjs/decorator';
 import { Context } from '@midwayjs/rabbitmq';
 import { ConsumeMessage } from 'amqplib';
-import { ArticleService } from '../service/Article.service';
+import { SearchService } from '../service/Search.service';
 
 @Consumer(MSListenerType.RABBITMQ)
-export class UserConsumer {
+export class TrackConsumer {
   @Inject()
   ctx: Context;
 
   @Inject()
-  articleService: ArticleService;
+  searchService: SearchService;
 
-  @RabbitMQListener(`article_${process.env.NODE_ENV}`)
+  @RabbitMQListener(`log_${process.env.NODE_ENV}`)
   async gotData(msg: ConsumeMessage) {
     console.log(
-      `mq收到队列${`article_${process.env.NODE_ENV}`}消息`,
+      `mq收到队列${`log_${process.env.NODE_ENV}`}消息`,
       msg.content.toString()
     );
     const payload = JSON.parse(msg.content.toString());
-    const { id } = payload;
-    await this.articleService.db2es(id);
+    const { q } = payload;
+    await this.searchService.save(q);
     this.ctx.channel.ack(msg);
   }
 }

@@ -10,4 +10,8 @@ export class FormatMiddleware implements IMiddleware<Context, NextFunction> {
       return { success: true, code: 0, message: 'OK', data: result };
     };
   }
+
+  ignore(ctx: Context): boolean {
+    return ctx.path.startsWith('/track/log');
+  }
 }

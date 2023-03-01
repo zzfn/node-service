@@ -85,7 +85,6 @@ export default {
   },
   rabbitmq: {
     url: process.env.mq_url,
-    queue: process.env.mq_queue,
   },
   bull: {
     defaultQueueOptions: {

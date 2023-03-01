@@ -1,4 +1,4 @@
-import { Config, Inject, Logger, Provide } from '@midwayjs/decorator';
+import { Inject, Logger, Provide } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Article } from '../entity/Article';
 import { PageVo } from '../vo/PageVo';
@@ -23,8 +23,6 @@ export class ArticleService extends BaseService<Article> {
   rabbitmqService: RabbitmqService;
   @Inject()
   idGenerate: SnowflakeIdGenerate;
-  @Config('rabbitmq')
-  mqConfig;
   @Inject()
   redisService: RedisService;
 
@@ -164,18 +162,24 @@ export class ArticleService extends BaseService<Article> {
 
   async saveArticle(article: Article) {
     if (article.id) {
-      await this.rabbitmqService.sendToQueue(this.mqConfig.queue, {
-        id: article.id,
-        action: 'update',
-      });
+      await this.rabbitmqService.sendToQueue(
+        `article_${process.env.NODE_ENV}`,
+        {
+          id: article.id,
+          action: 'update',
+        }
+      );
       return await this.articleModel.save(article);
     } else {
       article.id = this.idGenerate.nextId().toString();
       await this.articleModel.save(article);
-      await this.rabbitmqService.sendToQueue(this.mqConfig.queue, {
-        id: article.id,
-        action: 'add',
-      });
+      await this.rabbitmqService.sendToQueue(
+        `article_${process.env.NODE_ENV}`,
+        {
+          id: article.id,
+          action: 'add',
+        }
+      );
       return article;
     }
   }

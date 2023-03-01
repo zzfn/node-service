@@ -1,4 +1,12 @@
-import { Controller, Get, Inject, Queries, Query } from '@midwayjs/decorator';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Queries,
+  Query,
+} from '@midwayjs/decorator';
 import { Article } from '../entity/Article';
 import { ElasticsearchServiceFactory } from '@oc/midway-es';
 import { toHump } from '../util/common';
@@ -62,6 +70,16 @@ export class APIController {
         return article;
       })
       .filter(article => article.isRelease && !article.deleteTime);
+  }
+
+  @Post('/delete')
+  async deleteLogById(@Body() { id }: { id: string }): Promise<any> {
+    const elasticsearch = this.elasticsearchService.get();
+    const data = await elasticsearch.delete({
+      index: 'log-performance',
+      id,
+    });
+    return data.statusCode;
   }
 
   @Get('/log')
