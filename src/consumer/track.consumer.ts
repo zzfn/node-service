@@ -23,8 +23,7 @@ export class TrackConsumer {
       ${msg.content.toString()}`
     );
     const payload = JSON.parse(msg.content.toString());
-    const { q } = payload;
-    await this.searchService.save(q);
+    await this.searchService.save(payload);
     this.ctx.channel.ack(msg);
   }
 }

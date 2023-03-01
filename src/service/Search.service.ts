@@ -1,6 +1,5 @@
 import { Inject, Provide } from '@midwayjs/decorator';
 import { ElasticsearchServiceFactory } from '@oc/midway-es';
-import { getUserIp } from '../util/httpUtil';
 import { Context } from '@midwayjs/koa';
 
 @Provide()
@@ -37,11 +36,7 @@ export class SearchService {
     const elasticsearch = this.elasticsearchService.get();
     elasticsearch.index({
       index: 'log-performance',
-      body: {
-        ...JSON.parse(Buffer.from(body, 'base64').toString('ascii')),
-        ip: getUserIp(this.ctx),
-        time: new Date(),
-      },
+      body,
     });
   }
 }
