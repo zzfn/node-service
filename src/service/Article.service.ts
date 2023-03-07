@@ -90,7 +90,7 @@ export class ArticleService extends BaseService<Article> {
       .createQueryBuilder('article')
       .where('article.isRelease', true)
       .orderBy(field, 'DESC')
-      .limit(6)
+      .limit(8)
       .getMany();
   }
 
