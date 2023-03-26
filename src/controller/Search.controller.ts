@@ -29,30 +29,29 @@ export class APIController {
       return [];
     }
     const elasticsearch = this.elasticsearchService.get();
-    this.redisService.zadd('searchKeywords', 'INCR', 1, keyword);
+    await this.redisService.zadd('searchKeywords', 'INCR', 1, keyword);
     const result = await elasticsearch.search({
       index: 'blog',
-      body: {
-        query: {
-          bool: {
-            should: [
-              { match_phrase: { content: keyword } },
-              { match_phrase: { title: keyword } },
-            ],
-          },
+      query: {
+        bool: {
+          should: [
+            { match_phrase: { content: keyword } },
+            { match_phrase: { title: keyword } },
+          ],
         },
-        highlight: {
-          fields: {
-            content: {},
-            title: {},
-            tag_desc: {},
-          },
+      },
+      highlight: {
+        fields: {
+          content: {},
+          title: {},
+          tag_desc: {},
         },
       },
     });
-    return result.body.hits.hits
+    return result.hits.hits
       .filter(
-        hit => hit._source.isRelease === true && hit._source.deleteTime === null
+        (hit: any) =>
+          hit._source.isRelease === true && hit._source.deleteTime === null
       )
       .map(hit => {
         const article = new Article();
@@ -79,7 +78,7 @@ export class APIController {
       index: 'log-performance',
       id,
     });
-    return data.statusCode;
+    return data;
   }
 
   @Get('/log')
@@ -126,12 +125,12 @@ export class APIController {
       },
     });
     return {
-      records: result.body.hits.hits.map(hit => ({
+      records: (result as any).hits.hits.map(hit => ({
         id: hit._id,
         ...hit._source,
         time: dayjs(hit._source.time).format('YYYY/MM/DD HH:mm:ss'),
       })),
-      total: result.body.hits.total.value,
+      total: (result as any).hits.total.value,
     };
   }
 
@@ -162,7 +161,7 @@ export class APIController {
           records: {
             date_histogram: {
               field: 'time',
-              interval: 'day',
+              calendar_interval: 'day',
               format: 'yyyy-MM-dd',
               time_zone: '+08:00',
             },
@@ -177,7 +176,7 @@ export class APIController {
         },
       },
     });
-    return result.body.aggregations.records.buckets.map(item => ({
+    return (result as any).aggregations.records.buckets.map(item => ({
       key: item.key_as_string,
       pv: item.doc_count,
       uv: item.uv.value,

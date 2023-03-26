@@ -187,27 +187,27 @@ export class ArticleService extends BaseService<Article> {
   async db2es(id: string) {
     const elasticsearch = this.elasticsearchService.get();
     const article = await this.articleModel.findOneBy({ id });
-    const { body } = await elasticsearch.exists({
+    const hasExists = await elasticsearch.exists({
       index: 'blog',
       id,
     });
-    if (body) {
-      elasticsearch.update({
+    if (hasExists) {
+      await elasticsearch.update({
         index: 'blog',
         id: article.id,
-        body: { doc: article },
+        doc: article,
       });
     } else {
-      elasticsearch.index({
+      await elasticsearch.index({
         index: 'blog',
         id: article.id,
-        body: article,
+        document: article,
       });
     }
   }
 
   async topSearch() {
-    return this.redisService.zrange('searchKeywords', 0, 10, 'REV');
+    return this.redisService.zrevrange('searchKeywords', 0, 10);
   }
 
   async deleteArticle(id: string) {
@@ -222,28 +222,26 @@ export class ArticleService extends BaseService<Article> {
     await elasticsearch.indices.create({
       index: 'blog',
     });
-    elasticsearch.indices.put_mapping({
+    await elasticsearch.indices.putMapping({
       index: 'blog',
-      body: {
-        properties: {
-          title: {
-            type: 'text',
-            analyzer: 'ik_max_word',
-            search_analyzer: 'ik_smart',
-          },
-          tag: {
-            type: 'text',
-            analyzer: 'ik_max_word',
-            search_analyzer: 'ik_smart',
-          },
-          is_release: {
-            type: 'short',
-          },
-          content: {
-            type: 'text',
-            analyzer: 'ik_max_word',
-            search_analyzer: 'ik_smart',
-          },
+      properties: {
+        title: {
+          type: 'text',
+          // analyzer: 'ik_max_word',
+          // search_analyzer: 'ik_smart',
+        },
+        tag: {
+          type: 'text',
+          // analyzer: 'ik_max_word',
+          // search_analyzer: 'ik_smart',
+        },
+        is_release: {
+          type: 'short',
+        },
+        content: {
+          type: 'text',
+          // analyzer: 'ik_max_word',
+          // search_analyzer: 'ik_smart',
         },
       },
     });
@@ -251,7 +249,7 @@ export class ArticleService extends BaseService<Article> {
       withDeleted: true,
     });
     await elasticsearch.bulk({
-      body: list.flatMap(doc => [
+      operations: list.flatMap(doc => [
         { index: { _index: 'blog', _id: doc.id } },
         {
           title: doc.title,

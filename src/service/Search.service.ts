@@ -9,27 +9,24 @@ export class SearchService {
   @Inject()
   ctx: Context;
 
-  async delete30d() {
+  async deleteOverMonth(): Promise<any> {
     const elasticsearch = this.elasticsearchService.get();
-    const result = await elasticsearch.deleteByQuery({
+    return elasticsearch.deleteByQuery({
       index: 'log-performance',
-      body: {
-        query: {
-          bool: {
-            must: [
-              {
-                range: {
-                  time: {
-                    lt: 'now-30d/d',
-                  },
+      query: {
+        bool: {
+          must: [
+            {
+              range: {
+                time: {
+                  lt: 'now-30d/d',
                 },
               },
-            ],
-          },
+            },
+          ],
         },
       },
     });
-    return result.body.deleted;
   }
 
   async save(body: any) {

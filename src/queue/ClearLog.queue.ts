@@ -17,10 +17,10 @@ export class ClearLogQueue implements IProcessor {
   notify: Notify;
   @Logger()
   logger: ILogger;
-
+月
   async execute() {
     this.logger.info('开始执行清除日志');
-    const count = await this.searchService.delete30d();
+    const count = await this.searchService.deleteOverMonth();
     await this.notify.bark({
       title: '定时删除日志成功',
       body: `共计删除日志${count}条`,
