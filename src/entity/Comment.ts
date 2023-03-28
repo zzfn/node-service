@@ -4,7 +4,7 @@ import { BaseEntity } from './BaseEntity';
 @Entity()
 export class Comment extends BaseEntity {
   @Column()
-  interfaceId: string;
+  postId: string;
   @Column()
   content: string;
   @Column()
@@ -12,7 +12,7 @@ export class Comment extends BaseEntity {
   @Column()
   address: string;
   @Column()
-  reply: string;
+  replyUserId: string;
   @Column()
-  replyId: string;
+  parentCommentId: string;
 }

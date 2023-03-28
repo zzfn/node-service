@@ -26,7 +26,7 @@ export class CommentService {
   async list(id: string) {
     return await this.commentModel.find({
       where: {
-        interfaceId: id,
+        postId: id,
       },
       order: {
         createTime: 'DESC',
@@ -58,7 +58,7 @@ export class CommentService {
     comment.address = address;
     await this.notify.bark({
       title: `来自${address}的用户评论了你`,
-      body: `在${comment.interfaceId}中评论了${comment.content}`,
+      body: `在${comment.postId}中评论了${comment.content}`,
     });
     return this.commentModel.save(comment);
   }
