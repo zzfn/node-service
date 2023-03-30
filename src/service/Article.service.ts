@@ -216,9 +216,13 @@ export class ArticleService extends BaseService<Article> {
 
   async resetEs() {
     const elasticsearch = this.elasticsearchService.get();
-    await elasticsearch.indices.delete({
-      index: 'blog',
-    });
+    try {
+      await elasticsearch.indices.delete({
+        index: 'blog',
+      });
+    } catch (error) {
+      
+    }
     await elasticsearch.indices.create({
       index: 'blog',
     });
