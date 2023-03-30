@@ -6,11 +6,12 @@ type BarkReq = {
   body: string;
   group?: string;
   icon?: string;
+  url?: string;
 };
 
 @Provide()
 export class Notify {
-  async bark({ title, body, group, icon }: BarkReq): Promise<any> {
+  async bark({ title, body, group, icon, url }: BarkReq): Promise<any> {
     const { data } = await makeHttpRequest(process.env.BARK_URL, {
       method: 'POST',
       data: {
@@ -18,6 +19,7 @@ export class Notify {
         body,
         group,
         icon,
+        url,
       },
       dataType: 'json',
       contentType: 'json',

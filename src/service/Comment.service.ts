@@ -59,6 +59,7 @@ export class CommentService {
     await this.notify.bark({
       title: `来自${address}的用户评论了你`,
       body: `在${comment.postId}中评论了${comment.content}`,
+      url: `https://zzfzzf.com/article/${comment.postId}`,
     });
     return this.commentModel.save(comment);
   }
