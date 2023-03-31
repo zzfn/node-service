@@ -107,22 +107,19 @@ export class ArticleService extends BaseService<Article> {
   }
 
   async articleList(code: string) {
-    let where: Record<string, any> = {
+    const where: Record<string, any> = {
       isRelease: true,
     };
     if (code) {
-      where = { tag: code };
+      where.tag = code;
     }
-    return {
-      title: code,
-      articleList: await this.articleModel.find({
-        where,
-        select: ['id', 'title', 'createTime'],
-        order: {
-          createTime: 'DESC',
-        },
-      }),
-    };
+    return this.articleModel.find({
+      where,
+      select: ['id', 'title', 'createTime'],
+      order: {
+        createTime: 'DESC',
+      },
+    })
   }
 
   async articleTags() {
@@ -220,9 +217,7 @@ export class ArticleService extends BaseService<Article> {
       await elasticsearch.indices.delete({
         index: 'blog',
       });
-    } catch (error) {
-      
-    }
+    } catch (error) {}
     await elasticsearch.indices.create({
       index: 'blog',
     });
