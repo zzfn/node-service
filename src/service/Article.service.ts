@@ -226,21 +226,21 @@ export class ArticleService extends BaseService<Article> {
       properties: {
         title: {
           type: 'text',
-          // analyzer: 'ik_max_word',
-          // search_analyzer: 'ik_smart',
+          analyzer: 'ik_max_word',
+          search_analyzer: 'ik_smart',
         },
         tag: {
           type: 'text',
-          // analyzer: 'ik_max_word',
-          // search_analyzer: 'ik_smart',
+          analyzer: 'ik_max_word',
+          search_analyzer: 'ik_smart',
         },
         is_release: {
           type: 'short',
         },
         content: {
           type: 'text',
-          // analyzer: 'ik_max_word',
-          // search_analyzer: 'ik_smart',
+          analyzer: 'ik_max_word',
+          search_analyzer: 'ik_smart',
         },
       },
     });

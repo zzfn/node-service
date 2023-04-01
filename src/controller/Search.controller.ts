@@ -139,37 +139,35 @@ export class APIController {
     const elasticsearch = this.elasticsearchService.get();
     const result = await elasticsearch.search({
       index: 'log-performance',
-      body: {
-        query: {
-          bool: {
-            must: [
-              {
-                range: {
-                  time: {
-                    gte: 'now-15d/d',
-                  },
+      query: {
+        bool: {
+          must: [
+            {
+              range: {
+                time: {
+                  gte: 'now-15d/d',
                 },
               },
-            ],
-            should: [
-              { term: { name: 'Next.js-render' } },
-              { term: { name: 'Next.js-hydration' } },
-            ],
-          },
-        },
-        aggs: {
-          records: {
-            date_histogram: {
-              field: 'time',
-              calendar_interval: 'day',
-              format: 'yyyy-MM-dd',
-              time_zone: '+08:00',
             },
-            aggs: {
-              uv: {
-                cardinality: {
-                  field: 'visitorId',
-                },
+          ],
+          should: [
+            { term: { name: 'Next.js-render' } },
+            { term: { name: 'Next.js-hydration' } },
+          ],
+        },
+      },
+      aggs: {
+        records: {
+          date_histogram: {
+            field: 'time',
+            calendar_interval: 'day',
+            format: 'yyyy-MM-dd',
+            time_zone: '+08:00',
+          },
+          aggs: {
+            uv: {
+              cardinality: {
+                field: 'visitorId',
               },
             },
           },
