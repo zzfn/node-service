@@ -74,11 +74,10 @@ export class APIController {
   @Post('/delete')
   async deleteLogById(@Body() { id }: { id: string }): Promise<any> {
     const elasticsearch = this.elasticsearchService.get();
-    const data = await elasticsearch.delete({
+    return elasticsearch.delete({
       index: 'log-performance',
       id,
     });
-    return data;
   }
 
   @Get('/log')
@@ -87,42 +86,30 @@ export class APIController {
     @Queries() pageVo: PageVo,
     @Queries() searchVo: SearchVo
   ) {
-    console.log(
-      Object.entries(searchVo)
-        .filter(
-          ([key, value]) => value && !['current', 'pageSize'].includes(key)
-        )
-        .map(([key, value]) => ({
-          match_phrase: { [key]: value },
-        }))
-    );
     const { skip, take } = page2sql(pageVo);
     const elasticsearch = this.elasticsearchService.get();
     const result = await elasticsearch.search({
       index: 'log-performance',
-      body: {
-        query: {
-          bool: {
-            should: Object.entries(searchVo)
-              .filter(
-                ([key, value]) =>
-                  value && !['current', 'pageSize'].includes(key)
-              )
-              .map(([key, value]) => ({
-                match_phrase: { [key]: value },
-              })),
+      query: {
+        bool: {
+          should: Object.entries(searchVo)
+            .filter(
+              ([key, value]) => value && !['current', 'pageSize'].includes(key)
+            )
+            .map(([key, value]) => ({
+              match_phrase: { [key]: value },
+            })),
+        },
+      },
+      from: skip,
+      size: take,
+      sort: [
+        {
+          time: {
+            order: 'desc',
           },
         },
-        from: skip,
-        size: take,
-        sort: [
-          {
-            time: {
-              order: 'desc',
-            },
-          },
-        ],
-      },
+      ],
     });
     return {
       records: (result as any).hits.hits.map(hit => ({

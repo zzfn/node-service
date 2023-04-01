@@ -119,7 +119,7 @@ export class ArticleService extends BaseService<Article> {
       order: {
         createTime: 'DESC',
       },
-    })
+    });
   }
 
   async articleTags() {
@@ -213,11 +213,9 @@ export class ArticleService extends BaseService<Article> {
 
   async resetEs() {
     const elasticsearch = this.elasticsearchService.get();
-    try {
-      await elasticsearch.indices.delete({
-        index: 'blog',
-      });
-    } catch (error) {}
+    await elasticsearch.indices.delete({
+      index: 'blog',
+    });
     await elasticsearch.indices.create({
       index: 'blog',
     });
@@ -247,21 +245,45 @@ export class ArticleService extends BaseService<Article> {
     const list = await this.articleModel.find({
       withDeleted: true,
     });
-    await elasticsearch.bulk({
-      operations: list.flatMap(doc => [
-        { index: { _index: 'blog', _id: doc.id } },
-        {
-          title: doc.title,
-          tag: doc.tag.name,
-          summary: doc.summary,
-          isRelease: doc.isRelease,
-          createTime: doc.createTime,
-          updateTime: doc.updateTime,
-          deleteTime: doc.deleteTime,
-          content: doc.content,
-        },
-      ]),
+    const operations = list.flatMap(doc => [
+      { index: { _index: 'blog', _id: doc.id } },
+      {
+        title: doc.title,
+        tag: doc.tag.name,
+        summary: doc.summary,
+        isRelease: doc.isRelease,
+        createTime: doc.createTime,
+        updateTime: doc.updateTime,
+        deleteTime: doc.deleteTime,
+        content: doc.content,
+      },
+    ]);
+    const bulkResponse = await elasticsearch.bulk({
+      refresh: true,
+      operations,
     });
+    // console.log('error:', bulkResponse);
+    if (bulkResponse.errors) {
+      const erroredDocuments = [];
+      // The items array has the same order of the dataset we just indexed.
+      // The presence of the `error` key indicates that the operation
+      // that we did for the document has failed.
+      bulkResponse.items.forEach((action, i) => {
+        const operation = Object.keys(action)[0];
+        if (action[operation].error) {
+          erroredDocuments.push({
+            // If the status is 429 it means that you can retry the document,
+            // otherwise it's very likely a mapping error, and you should
+            // fix the document before to try it again.
+            status: action[operation].status,
+            error: action[operation].error,
+            operation: operations[i * 2],
+            // document: operations[i * 2 + 1],
+          });
+        }
+      });
+      console.log(erroredDocuments);
+    }
     return true;
   }
 }
