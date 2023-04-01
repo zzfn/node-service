@@ -86,6 +86,15 @@ export default {
   rabbitmq: {
     url: process.env.mq_url,
   },
+  kafka: {
+    kafkaConfig: {
+      clientId: 'my-app',
+      brokers: [process.env.KAFKA_URL || 'localhost:9092'],
+    },
+    consumerConfig: {
+      groupId: 'groupId-test',
+    },
+  },
   bull: {
     defaultQueueOptions: {
       redis: {

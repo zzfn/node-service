@@ -1,10 +1,21 @@
-import { Body, Controller, Post } from '@midwayjs/decorator';
+import { Body, Controller, Get, Inject } from '@midwayjs/decorator';
+import { KafkaService } from '../service/KafkaService';
 
 @Controller('/')
 export class HomeController {
-  @Post('/')
+  @Inject()
+  kafkaService: KafkaService;
+
+  @Get('/')
   async home(@Body() req: any): Promise<string> {
-    console.log(JSON.stringify(req));
-    return 'Hello Midwayjs!';
+    const result = await this.kafkaService.send({
+      topic: 'topic-test0',
+      messages: [
+        {
+          value: JSON.stringify({ messageValue: 'ssssss' }),
+        },
+      ],
+    });
+    return result;
   }
 }

@@ -31,6 +31,9 @@ dependencies:
   '@midwayjs/jwt':
     specifier: ^3.11.0
     version: 3.11.0
+  '@midwayjs/kafka':
+    specifier: ^3.11.0
+    version: 3.11.0
   '@midwayjs/koa':
     specifier: ^3.11.0
     version: 3.11.0
@@ -85,6 +88,9 @@ dependencies:
   dotenv:
     specifier: ^16.0.3
     version: 16.0.3
+  kafkajs:
+    specifier: ^2.2.4
+    version: 2.2.4
   mysql2:
     specifier: ^3.2.0
     version: 3.2.0
@@ -1206,6 +1212,13 @@ packages:
     dependencies:
       '@types/jsonwebtoken': 9.0.1
       jsonwebtoken: 9.0.0
+    dev: false
+
+  /@midwayjs/kafka@3.11.0:
+    resolution: {integrity: sha512-TaAfGKttUKAI7zlHdaZPipvHqLTXVHp3D4PlkwDBvjAGR1s2aj64rr7C+w36yw7ZXtdd/asn/lPDs9oHXk9jdg==}
+    engines: {node: '>=12'}
+    dependencies:
+      kafkajs: 2.2.4
     dev: false
 
   /@midwayjs/koa@3.11.0:
@@ -4786,6 +4799,11 @@ packages:
     dependencies:
       jwa: 1.4.1
       safe-buffer: 5.2.1
+    dev: false
+
+  /kafkajs@2.2.4:
+    resolution: {integrity: sha512-j/YeapB1vfPT2iOIUn/vxdyKEuhuY2PxMBvf5JWux6iSaukAccrMtXEY/Lb7OvavDhOWME589bpLrEdnVHjfjA==}
+    engines: {node: '>=14.0.0'}
     dev: false
 
   /keygrip@1.1.0:

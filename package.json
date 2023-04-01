@@ -14,6 +14,7 @@
     "@midwayjs/decorator": "^3.11.0",
     "@midwayjs/info": "^3.11.0",
     "@midwayjs/jwt": "^3.11.0",
+    "@midwayjs/kafka": "^3.11.0",
     "@midwayjs/koa": "^3.11.0",
     "@midwayjs/logger": "^2.17.0",
     "@midwayjs/oss": "^3.11.0",
@@ -32,6 +33,7 @@
     "cache-manager-ioredis": "^2.1.0",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
+    "kafkajs": "^2.2.4",
     "mysql2": "^3.2.0",
     "typeorm": "^0.3.12"
   },
