@@ -21,7 +21,11 @@ COPY --from=build /app/.npmrc ./
 
 ENV TZ="Asia/Shanghai"
 ENV NODE_ENV="production"
-RUN yarn global add pnpm && pnpm i --production;
+
+RUN corepack enable && corepack prepare pnpm@latest-8 --activate;
+RUN pnpm config set store-dir .pnpm-store 
+RUN pnpm install && npm run build
+RUN pnpm i --production;
 
 # 如果端口更换，这边可以更新一下
 EXPOSE 7001
