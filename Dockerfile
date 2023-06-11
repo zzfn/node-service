@@ -1,4 +1,4 @@
-FROM node:18 AS build
+FROM node:16-alpine AS build
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY . .
 RUN yarn global add pnpm && pnpm i --frozen-lockfile;
 RUN yarn build
 
-FROM node:18-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
