@@ -15,6 +15,7 @@ import { getUserIp } from '../util/httpUtil';
 
 @Provide()
 export class ArticleService extends BaseService<Article> {
+  public entity: Repository<Article>;
   @InjectEntityModel(Article)
   articleModel;
   @Inject()

@@ -6,6 +6,7 @@ import { Nav } from '../entity/Nav';
 
 @Provide()
 export class NavService extends BaseService<Nav> {
+  public entity: Repository<Nav>;
   @InjectEntityModel(Nav)
   navModel: Repository<Nav>;
 

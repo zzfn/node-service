@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 
 @Provide()
 export class ChangeLogService extends BaseService<ChangeLog> {
+  public entity: Repository<ChangeLog>;
   @InjectEntityModel(ChangeLog)
   model;
 

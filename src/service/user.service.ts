@@ -11,6 +11,7 @@ import { Repository } from 'typeorm';
 
 @Provide()
 export class UserService extends BaseService<User> {
+  public entity: Repository<User>;
   @InjectEntityModel(User)
   model: Repository<User>;
 
@@ -93,23 +94,23 @@ export class UserService extends BaseService<User> {
     }
   }
 
-  async update(user: User) {
-    await this.userModel.save(user);
-    const res = await this.userModel
-      .createQueryBuilder()
-      .relation(User, 'role')
-      .of({ id: user.id })
-      .loadMany();
-    await Promise.all(
-      res.map(item =>
-        this.userModel
-          .createQueryBuilder()
-          .relation(User, 'role')
-          .of(user.id)
-          .remove(item.id)
-      )
-    );
-  }
+  // async update(user: User) {
+  //   await this.userModel.save(user);
+  //   const res = await this.userModel
+  //     .createQueryBuilder()
+  //     .relation(User, 'role')
+  //     .of({ id: user.id })
+  //     .loadMany();
+  //   await Promise.all(
+  //     res.map(item =>
+  //       this.userModel
+  //         .createQueryBuilder()
+  //         .relation(User, 'role')
+  //         .of(user.id)
+  //         .remove(item.id)
+  //     )
+  //   );
+  // }
 
   async getUserInfo() {
     const { uid } = this.ctx.state.user;
