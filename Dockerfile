@@ -4,8 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN yarn global add pnpm && pnpm i --frozen-lockfile;
-RUN yarn build
+RUN corepack enable && corepack prepare pnpm@latest-8 --activate;
+RUN pnpm config set store-dir .pnpm-store 
+RUN pnpm install && npm run build
 
 FROM node:16-alpine
 
