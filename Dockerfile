@@ -6,9 +6,11 @@ ENV TZ="Asia/Shanghai"
 ENV NODE_ENV="production"
 
 COPY . .
-
-# 如果各公司有自己的私有源，可以替换registry地址
-RUN npm install --registry=https://registry.npm.taobao.org
+RUN corepack enable
+RUN corepack prepare pnpm@latest-8 --activate
+RUN pnpm config set store-dir .pnpm-store
+RUN pnpm -v
+RUN pnpm install
 
 RUN npm run build
 
