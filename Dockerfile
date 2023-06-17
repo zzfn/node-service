@@ -12,7 +12,7 @@ RUN pnpm config set store-dir .pnpm-store
 RUN pnpm -v
 RUN pnpm install
 
-RUN npm run build
+RUN midway-bin build -c
 
 # 如果端口更换，这边可以更新一下
 EXPOSE 7001
