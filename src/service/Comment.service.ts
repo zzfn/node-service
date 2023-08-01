@@ -29,7 +29,7 @@ export class CommentService {
         postId: id,
       },
       order: {
-        createTime: 'DESC',
+        createTime: 'ASC',
       },
     });
   }
