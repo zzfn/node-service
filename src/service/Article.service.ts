@@ -224,29 +224,23 @@ export class ArticleService extends BaseService<Article> {
     await elasticsearch.indices.create({
       index: 'blog',
     });
-    await elasticsearch.indices.putMapping({
-      index: 'blog',
-      properties: {
-        title: {
-          type: 'text',
-          analyzer: 'ik_max_word',
-          search_analyzer: 'ik_smart',
-        },
-        tag: {
-          type: 'text',
-          analyzer: 'ik_max_word',
-          search_analyzer: 'ik_smart',
-        },
-        is_release: {
-          type: 'short',
-        },
-        content: {
-          type: 'text',
-          analyzer: 'ik_max_word',
-          search_analyzer: 'ik_smart',
-        },
-      },
-    });
+    // await elasticsearch.indices.putMapping({
+    //   index: 'blog',
+    //   properties: {
+    //     title: {
+    //       type: 'text',
+    //     },
+    //     tag: {
+    //       type: 'text',
+    //     },
+    //     is_release: {
+    //       type: 'short',
+    //     },
+    //     content: {
+    //       type: 'text',
+    //     },
+    //   },
+    // });
     const list = await this.articleModel.find({
       withDeleted: true,
     });
@@ -257,9 +251,9 @@ export class ArticleService extends BaseService<Article> {
         tag: doc.tag.name,
         summary: doc.summary,
         isRelease: doc.isRelease,
-        createTime: doc.createTime,
-        updateTime: doc.updateTime,
-        deleteTime: doc.deleteTime,
+        createTime: new Date(doc.createTime),
+        updateTime: new Date(doc.updateTime),
+        deleteTime: new Date(doc.deleteTime),
         content: doc.content,
       },
     ]);
@@ -267,7 +261,6 @@ export class ArticleService extends BaseService<Article> {
       refresh: true,
       operations,
     });
-    // console.log('error:', bulkResponse);
     if (bulkResponse.errors) {
       const erroredDocuments = [];
       // The items array has the same order of the dataset we just indexed.
@@ -283,7 +276,7 @@ export class ArticleService extends BaseService<Article> {
             status: action[operation].status,
             error: action[operation].error,
             operation: operations[i * 2],
-            // document: operations[i * 2 + 1],
+            document: operations[i * 2 + 1],
           });
         }
       });
