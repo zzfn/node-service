@@ -253,7 +253,7 @@ export class ArticleService extends BaseService<Article> {
         isRelease: doc.isRelease,
         createTime: new Date(doc.createTime),
         updateTime: new Date(doc.updateTime),
-        deleteTime: new Date(doc.deleteTime),
+        deleteTime: doc.deleteTime ? new Date(doc.deleteTime) : null,
         content: doc.content,
       },
     ]);
