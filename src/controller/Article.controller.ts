@@ -29,14 +29,11 @@ export class ArticleController {
     return await this.articleService.sortByField(field);
   }
 
-  @Get('/lastUpdated')
-  async lastUpdated() {
-    return await this.articleService.lastUpdated();
-  }
   @Get('/lastCreated')
   async lastCreated() {
     return await this.articleService.lastCreated();
   }
+
   @Get('/tags')
   async tags() {
     return await this.articleService.articleTags();

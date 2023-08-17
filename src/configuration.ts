@@ -34,7 +34,7 @@ import * as bull from '@midwayjs/bull';
 import { CustomFilter } from './filter/Custom.filter';
 import { httpError, MidwayDecoratorService } from '@midwayjs/core';
 import { REQUEST_OBJ_CTX_KEY } from '@midwayjs/core';
-import * as kafka from '@midwayjs/kafka';
+import * as ws from '@midwayjs/ws';
 
 dotenv.config();
 
@@ -58,7 +58,7 @@ dotenv.config();
     rabbitmq,
     prometheus,
     bull,
-    kafka,
+    ws,
   ],
   importConfigs: [join(__dirname, './config')],
 })
