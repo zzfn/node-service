@@ -27,7 +27,7 @@ export class SocketController {
   @OnWSMessage('message')
   @WSBroadCast()
   async gotMyMessage(data) {
-    console.log(data)
+    console.log(data);
     return this.redisService.incrby('online', 1);
   }
 
