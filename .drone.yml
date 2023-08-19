@@ -42,7 +42,7 @@ steps:
         from_secret: nexus_docker_password
       repo: hub.ccw.es/home/node-service
       tags:
-        - ${DRONE_COMMIT=latest}${DRONE_BUILD_NUMBER}
+        - ${DRONE_COMMIT_SHA:0:8}
         - latest
   - name: ssh
     image: appleboy/drone-ssh
@@ -58,6 +58,6 @@ steps:
       port: 22
       command_timeout: 2m
       script:
-        - echo ${DRONE_COMMIT}${DRONE_BUILD_NUMBER}
+        - echo ${DRONE_COMMIT}
         - kubectl apply -f https://git.ccw.es/ccw/yaml/raw/branch/master/node-service.yaml
-        - kubectl set image deployment/midway-deploy midway-app=hub.ccw.es/home/node-service:${DRONE_COMMIT}${DRONE_BUILD_NUMBER}
+        - kubectl set image deployment/midway-deploy midway-app=hub.ccw.es/home/node-service:${DRONE_COMMIT_SHA:0:8}
