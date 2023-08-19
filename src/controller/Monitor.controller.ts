@@ -33,14 +33,18 @@ export class CommentController {
       .forEach((_: any) => {
         hashMap.set(_.instance, _.name);
       });
-    return statusTarget.data.result.map(_ => {
-      return {
-        ..._,
-        metric: {
-          ..._.metric,
-          name: hashMap.get(_.metric.instance),
-        },
-      };
+    const resultMap = new Map();
+    statusTarget.data.result.forEach((_: any) => {
+      if (resultMap.has(hashMap.get(_.metric.instance))) {
+        resultMap.set(hashMap.get(_.metric.instance), [
+          ...resultMap.get(hashMap.get(_.metric.instance)),
+          ..._.values,
+        ]);
+      } else {
+        resultMap.set(hashMap.get(_.metric.instance), _.values);
+      }
     });
+    console.log(resultMap);
+    return Array.from(resultMap);
   }
 }
