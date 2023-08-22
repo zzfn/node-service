@@ -1,7 +1,9 @@
 import { Context } from '@midwayjs/koa';
 
 export function getUserIp(ctx: Context): string {
-  const ip = (ctx.headers['x-forwarded-for'] as string) || ctx.request.ip;
+  const forwardedIps = ctx.headers['x-forwarded-for'] as string;
+  const ips = forwardedIps?.split(',').map(ip => ip.trim()) || [];
+  const ip = ips.at(0) || ctx.request.ip;
   return process.env.NODE_ENV === 'local' ? '127.0.0.1' : ip;
 }
 
