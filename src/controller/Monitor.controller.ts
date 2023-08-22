@@ -35,16 +35,8 @@ export class CommentController {
       });
     const resultMap = new Map();
     statusTarget.data.result.forEach((_: any) => {
-      if (resultMap.has(hashMap.get(_.metric.instance))) {
-        resultMap.set(hashMap.get(_.metric.instance), [
-          ...resultMap.get(hashMap.get(_.metric.instance)),
-          ..._.values,
-        ]);
-      } else {
-        resultMap.set(hashMap.get(_.metric.instance), _.values);
-      }
+      resultMap.set(hashMap.get(_.metric.instance), _.values);
     });
-    console.log(resultMap);
     return Array.from(resultMap);
   }
 }
