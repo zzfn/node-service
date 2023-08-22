@@ -1,37 +1,37 @@
+# Build Stage
 FROM node:lts-alpine AS build
 
 WORKDIR /app
 
+# Copy files and install dependencies
 COPY . .
-
 RUN corepack enable && \
-    corepack prepare pnpm@latest --activate \
+    corepack prepare pnpm@latest --activate && \
+    pnpm i --frozen-lockfile && \
+    pnpm run build
 
-RUN pnpm i --frozen-lockfile
-
-RUN pnpm run build
-
+# Production Stage
 FROM node:lts-alpine
 
 WORKDIR /app
 
+# Copy necessary files from build stage
 COPY --from=build /app/dist ./dist
-# 把源代码复制过去， 以便报错能报对行
 COPY --from=build /app/src ./src
 COPY --from=build /app/bootstrap.js ./
 COPY --from=build /app/package.json ./
 COPY --from=build /app/.npmrc ./
 COPY --from=build /app/pnpm-lock.yaml ./
 
-RUN apk add --no-cache tzdata
-RUN corepack enable && \
-    corepack prepare pnpm@latest --activate \
+# Install necessary packages and prepare environment
+RUN apk add --no-cache tzdata && \
+    corepack enable && \
+    corepack prepare pnpm@latest --activate && \
+    pnpm install --frozen-lockfile --production
 
 ENV TZ="Asia/Shanghai"
 
-RUN pnpm install --frozen-lockfile --production
-
-# 如果端口更换，这边可以更新一下
+# If you change the port, update this value
 EXPOSE 7001
 
 CMD ["npm", "run", "start"]
