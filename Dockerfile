@@ -4,9 +4,12 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN corepack enable && \
+    corepack prepare pnpm@latest --activate \
 
-RUN npm run build
+RUN pnpm i --frozen-lockfile
+
+RUN pnpm run build
 
 FROM node:lts-alpine
 
@@ -19,10 +22,12 @@ COPY --from=build /app/bootstrap.js ./
 COPY --from=build /app/package.json ./
 
 RUN apk add --no-cache tzdata
+RUN corepack enable && \
+    corepack prepare pnpm@latest --activate \
 
 ENV TZ="Asia/Shanghai"
 
-RUN npm install --production
+RUN pnpm install --production
 
 # 如果端口更换，这边可以更新一下
 EXPOSE 7001
