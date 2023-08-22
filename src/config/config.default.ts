@@ -86,15 +86,15 @@ export default {
   rabbitmq: {
     url: process.env.mq_url,
   },
-  kafka: {
-    kafkaConfig: {
-      clientId: 'my-app',
-      brokers: [process.env.KAFKA_URL || 'localhost:9092'],
-    },
-    consumerConfig: {
-      groupId: 'groupId-test',
-    },
-  },
+  // kafka: {
+  //   kafkaConfig: {
+  //     clientId: 'my-app',
+  //     brokers: [process.env.KAFKA_URL || 'localhost:9092'],
+  //   },
+  //   consumerConfig: {
+  //     groupId: 'groupId-test',
+  //   },
+  // },
   bull: {
     defaultQueueOptions: {
       redis: {
@@ -102,6 +102,12 @@ export default {
         host: process.env.redis_host,
         password: process.env.redis_password,
       },
+    },
+  },
+  socketIO: {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST'],
     },
   },
 } as MidwayConfig;

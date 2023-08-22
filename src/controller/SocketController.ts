@@ -2,13 +2,12 @@ import {
   OnWSConnection,
   OnWSDisConnection,
   OnWSMessage,
-  WSBroadCast,
   WSController,
+  WSEmit,
 } from '@midwayjs/core';
-import { Context } from '@midwayjs/ws';
-import { App, Inject } from '@midwayjs/decorator';
+import { Context } from '@midwayjs/socketio';
+import { Inject } from '@midwayjs/decorator';
 import { RedisService } from '@midwayjs/redis';
-import { Application } from '@midwayjs/ws';
 
 @WSController('/')
 export class SocketController {
@@ -16,28 +15,31 @@ export class SocketController {
   ctx: Context;
   @Inject()
   redisService: RedisService;
-  @App('webSocket')
-  wsApp: Application;
 
   @OnWSConnection()
   async onConnectionMethod() {
-    console.log('on client connect', this.ctx.readyState);
+    console.log('on online connect', this.ctx.id);
+    await this.redisService.sadd(
+      'online',
+      this.ctx.handshake.query.userId as string
+    );
+    this.ctx.nsp.emit('online', await this.redisService.scard('online'));
   }
 
-  @OnWSMessage('message')
-  @WSBroadCast()
-  async gotMyMessage(data) {
-    console.log(data);
-    return this.redisService.incrby('online', 1);
+  @OnWSMessage('online')
+  @WSEmit('onlineResult')
+  async gotMessage(data) {
+    console.log('on data got', this.ctx.id, data);
+    return 'hello world';
   }
 
   @OnWSDisConnection()
-  async disconnect(id: number) {
-    await this.redisService.decrby('online', 1);
-    const count = await this.redisService.get('online');
-    this.wsApp.clients.forEach(ws => {
-      ws.send(count);
-    });
-    this.ctx.send('message ' + id);
+  async onDisConnectionMethod() {
+    console.log('on disconnect', this.ctx.id);
+    await this.redisService.srem(
+      'online',
+      this.ctx.handshake.query.userId as string
+    );
+    this.ctx.nsp.emit('online', await this.redisService.scard('online'));
   }
 }
