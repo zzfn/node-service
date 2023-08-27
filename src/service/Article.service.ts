@@ -191,13 +191,23 @@ export class ArticleService extends BaseService<Article> {
       await elasticsearch.update({
         index: 'blog',
         id: article.id,
-        doc: article,
+        doc: {
+          ...article,
+          createTime: new Date(article.createTime),
+          updateTime: new Date(article.updateTime),
+          deleteTime: article.deleteTime ? new Date(article.deleteTime) : null,
+        },
       });
     } else {
       await elasticsearch.index({
         index: 'blog',
         id: article.id,
-        document: article,
+        document: {
+          ...article,
+          createTime: new Date(article.createTime),
+          updateTime: new Date(article.updateTime),
+          deleteTime: article.deleteTime ? new Date(article.deleteTime) : null,
+        },
       });
     }
   }
