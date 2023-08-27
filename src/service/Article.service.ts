@@ -11,7 +11,6 @@ import { RabbitmqService } from './rabbitmq';
 import { page2sql } from '../vo/page2sql';
 import { RedisService } from '@midwayjs/redis';
 import { Context } from '@midwayjs/koa';
-import { getUserIp } from '../util/httpUtil';
 
 @Provide()
 export class ArticleService extends BaseService<Article> {
@@ -133,13 +132,12 @@ export class ArticleService extends BaseService<Article> {
       .getRawMany();
   }
 
-  async updateViewed(id: string) {
-    const exists = await this.redisService.exists(
-      `isViewed::${id}::${getUserIp(this.ctx)}`
-    );
+  async updateViewed(id: string, ip: string) {
+    console.log('updateViewed', id, ip);
+    const exists = await this.redisService.exists(`isViewed::${id}::${ip}`);
     if (!exists) {
       await this.redisService.set(
-        `isViewed::${id}::${getUserIp(this.ctx)}`,
+        `isViewed::${id}::${ip}`,
         Date.now(),
         'EX',
         60 * 10
@@ -153,7 +151,6 @@ export class ArticleService extends BaseService<Article> {
         })
         .where('id = :id', { id })
         .execute();
-      // await this.redisService.zadd('viewCount', 'INCR', 1, id);
     }
     return true;
   }

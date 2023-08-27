@@ -1,5 +1,5 @@
 import { ServiceFactory } from '@midwayjs/core';
-import { Config, Init, Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
+import { Config, Init, Provide, Scope, ScopeEnum } from '@midwayjs/core';
 import * as Core from '@alicloud/pop-core';
 
 @Provide()

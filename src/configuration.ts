@@ -35,6 +35,7 @@ import { CustomFilter } from './filter/Custom.filter';
 import { httpError, MidwayDecoratorService } from '@midwayjs/core';
 import { REQUEST_OBJ_CTX_KEY } from '@midwayjs/core';
 import * as socketio from '@midwayjs/socketio';
+import * as kafka from '@midwayjs/kafka';
 
 dotenv.config();
 
@@ -59,6 +60,7 @@ dotenv.config();
     prometheus,
     bull,
     socketio,
+    kafka,
   ],
   importConfigs: [join(__dirname, './config')],
 })

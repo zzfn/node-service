@@ -13,11 +13,18 @@ import { ArticleService } from '../service/Article.service';
 import { PageVo } from '../vo/PageVo';
 import { Article } from '../entity/Article';
 import { Authorize } from '../decorator/Authorize';
+import { getUserIp } from '../util/httpUtil';
+import { KafkaService } from '../service/KafkaService';
+import { Context } from '@midwayjs/koa';
 
 @Controller('/article')
 export class ArticleController {
   @Inject()
   articleService: ArticleService;
+  @Inject()
+  kafkaService: KafkaService;
+  @Inject()
+  ctx: Context;
 
   @Get('/count')
   async articleCount() {
@@ -59,8 +66,19 @@ export class ArticleController {
   }
 
   @Post('/updateViewed')
-  async updateViewed(@Query('id') id: string) {
-    return await this.articleService.updateViewed(id);
+  async updateViewed(@Body('id') id: string) {
+    return this.kafkaService.send({
+      topic: `update_viewed_${process.env.NODE_ENV}`,
+      messages: [
+        {
+          key: id,
+          value: JSON.stringify({
+            ip: getUserIp(this.ctx),
+            postId: id,
+          }),
+        },
+      ],
+    });
   }
 
   @Post('/save')

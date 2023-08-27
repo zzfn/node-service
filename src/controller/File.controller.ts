@@ -6,7 +6,7 @@ import {
   Inject,
   Post,
   Query,
-} from '@midwayjs/decorator';
+} from '@midwayjs/core';
 import { OSSService } from '@midwayjs/oss';
 import { Authorize } from '../decorator/Authorize';
 

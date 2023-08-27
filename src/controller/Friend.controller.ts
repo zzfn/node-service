@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Post } from '@midwayjs/decorator';
+import { Controller, Get, Inject, Post } from '@midwayjs/core';
 import { FriendService } from '../service/Friend.service';
 
 @Controller('/friend')

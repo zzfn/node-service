@@ -1,4 +1,4 @@
-import { Inject, Logger, Provide } from '@midwayjs/decorator';
+import { Inject, Logger, Provide } from '@midwayjs/core';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { ILogger } from '@midwayjs/logger';
 import { Menu } from '../entity/Menu';

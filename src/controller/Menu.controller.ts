@@ -5,7 +5,7 @@ import {
   Inject,
   Post,
   Query,
-} from '@midwayjs/decorator';
+} from '@midwayjs/core';
 import { JwtService } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/koa';
 import { MenuService } from '../service/Menu.service';

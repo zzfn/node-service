@@ -1,4 +1,4 @@
-import { Inject, Logger, Middleware } from '@midwayjs/decorator';
+import { Inject, Logger, Middleware } from '@midwayjs/core';
 import { Context, NextFunction } from '@midwayjs/koa';
 import { JwtService } from '@midwayjs/jwt';
 import { ILogger } from '@midwayjs/logger';

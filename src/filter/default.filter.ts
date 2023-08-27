@@ -1,4 +1,4 @@
-import { Catch, Logger } from '@midwayjs/decorator';
+import { Catch, Logger } from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { ILogger } from '@midwayjs/logger';
 

@@ -1,5 +1,6 @@
 import { MidwayConfig } from '@midwayjs/core';
 import * as redisStore from 'cache-manager-ioredis';
+import { Partitioners } from 'kafkajs';
 
 export default {
   keys: '1661057321114_1263',
@@ -86,15 +87,18 @@ export default {
   rabbitmq: {
     url: process.env.mq_url,
   },
-  // kafka: {
-  //   kafkaConfig: {
-  //     clientId: 'my-app',
-  //     brokers: [process.env.KAFKA_URL || 'localhost:9092'],
-  //   },
-  //   consumerConfig: {
-  //     groupId: 'groupId-test',
-  //   },
-  // },
+  kafka: {
+    kafkaConfig: {
+      clientId: '1',
+      brokers: [process.env.KAFKA_URL],
+      producerConfig: {
+        createPartitioner: Partitioners.LegacyPartitioner,
+      },
+    },
+    consumerConfig: {
+      groupId: 'cw-group',
+    },
+  },
   bull: {
     defaultQueueOptions: {
       redis: {

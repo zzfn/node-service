@@ -1,5 +1,5 @@
 import { IMiddleware } from '@midwayjs/core';
-import { Inject, Middleware } from '@midwayjs/decorator';
+import { Inject, Middleware } from '@midwayjs/core';
 import { NextFunction, Context } from '@midwayjs/koa';
 import { SnowflakeIdGenerate } from '../service/Snowflake';
 import { getUserIp } from '../util/httpUtil';

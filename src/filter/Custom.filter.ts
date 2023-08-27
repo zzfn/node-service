@@ -1,5 +1,4 @@
-import { Catch } from '@midwayjs/decorator';
-import { MidwayError } from '@midwayjs/core';
+import { Catch, MidwayError } from '@midwayjs/core';
 
 @Catch([MidwayError], {
   matchPrototype: true,
