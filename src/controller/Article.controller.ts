@@ -66,7 +66,7 @@ export class ArticleController {
   }
 
   @Post('/updateViewed')
-  async updateViewed(@Body('id') id: string) {
+  async updateViewed(@Body() { id }: { id: string }) {
     return this.kafkaService.send({
       topic: `update_viewed_${process.env.NODE_ENV}`,
       messages: [
