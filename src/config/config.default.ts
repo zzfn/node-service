@@ -7,6 +7,11 @@ export default {
   koa: {
     port: 7001,
   },
+  midwayLogger:{
+    default: {
+      consoleLevel: 'info'
+    },
+  },
   typeorm: {
     dataSource: {
       default: {
