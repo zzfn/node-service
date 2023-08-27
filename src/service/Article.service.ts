@@ -164,6 +164,7 @@ export class ArticleService extends BaseService<Article> {
           action: 'update',
         }
       );
+      this.ctx.logger.info(`mq发送队列${`article_${process.env.NODE_ENV}`}`);
       return await this.articleModel.save(article);
     } else {
       article.id = this.idGenerate.nextId().toString();

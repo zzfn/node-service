@@ -3,7 +3,7 @@ import {
   MSListenerType,
   RabbitMQListener,
   Inject,
-} from '@midwayjs/decorator';
+} from '@midwayjs/core';
 import { Context } from '@midwayjs/rabbitmq';
 import { ConsumeMessage } from 'amqplib';
 import { ArticleService } from '../service/Article.service';
