@@ -156,28 +156,21 @@ export class ArticleService extends BaseService<Article> {
   }
 
   async saveArticle(article: Article) {
-    if (article.id) {
-      await this.rabbitmqService.sendToQueue(
-        `article_${process.env.NODE_ENV}`,
-        {
-          id: article.id,
-          action: 'update',
-        }
-      );
-      this.ctx.logger.info(`mq发送队列${`article_${process.env.NODE_ENV}`}`);
-      return await this.articleModel.save(article);
-    } else {
+    await this.articleModel.save(article)
+    let action = 'update'
+    if (!article.id) {
       article.id = this.idGenerate.nextId().toString();
-      await this.articleModel.save(article);
-      await this.rabbitmqService.sendToQueue(
-        `article_${process.env.NODE_ENV}`,
-        {
-          id: article.id,
-          action: 'add',
-        }
-      );
-      return article;
+      action = 'add'
     }
+    await this.rabbitmqService.sendToQueue(
+      `article_${process.env.NODE_ENV}`,
+      {
+        id: article.id,
+        action,
+      }
+    );
+    this.ctx.logger.info(`mq发送队列${`article_${process.env.NODE_ENV}`}`);
+    return article;
   }
 
   async db2es(id: string) {
