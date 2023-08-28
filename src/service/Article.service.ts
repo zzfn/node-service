@@ -225,23 +225,34 @@ export class ArticleService extends BaseService<Article> {
     await elasticsearch.indices.create({
       index: 'blog',
     });
-    // await elasticsearch.indices.putMapping({
-    //   index: 'blog',
-    //   properties: {
-    //     title: {
-    //       type: 'text',
-    //     },
-    //     tag: {
-    //       type: 'text',
-    //     },
-    //     is_release: {
-    //       type: 'short',
-    //     },
-    //     content: {
-    //       type: 'text',
-    //     },
-    //   },
-    // });
+    await elasticsearch.indices.putMapping({
+      index: 'blog',
+      properties: {
+        title: {
+          type: 'text',
+          analyzer: 'smartcn',
+          search_analyzer: 'smartcn',
+        },
+        tag: {
+          type: 'text',
+          analyzer: 'smartcn',
+          search_analyzer: 'smartcn',
+        },
+        is_release: {
+          type: 'short',
+        },
+        content: {
+          type: 'text',
+          analyzer: 'smartcn',
+          search_analyzer: 'smartcn',
+        },
+        summary: {
+          type: 'text',
+          analyzer: 'smartcn',
+          search_analyzer: 'smartcn',
+        },
+      },
+    });
     const list = await this.articleModel.find({
       withDeleted: true,
     });

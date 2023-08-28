@@ -37,6 +37,7 @@ export class APIController {
           should: [
             { match_phrase: { content: keyword } },
             { match_phrase: { title: keyword } },
+            { match_phrase: { tag: keyword } },
           ],
         },
       },
@@ -44,7 +45,7 @@ export class APIController {
         fields: {
           content: {},
           title: {},
-          tag_desc: {},
+          tag: {},
         },
       },
     });
