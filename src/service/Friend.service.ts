@@ -1,11 +1,11 @@
-import { Provide } from "@midwayjs/core";
-import { InjectEntityModel } from "@midwayjs/typeorm";
-import { Friend } from "../entity/Friend";
-import { Inject } from "@midwayjs/decorator";
-import { SnowflakeIdGenerate } from "./Snowflake";
-import { RedisService } from "@midwayjs/redis";
-import { getUserIp } from "../util/httpUtil";
-import { Context } from "@midwayjs/koa";
+import { Provide } from '@midwayjs/core';
+import { InjectEntityModel } from '@midwayjs/typeorm';
+import { Friend } from '../entity/Friend';
+import { Inject } from '@midwayjs/decorator';
+import { SnowflakeIdGenerate } from './Snowflake';
+import { RedisService } from '@midwayjs/redis';
+import { getUserIp } from '../util/httpUtil';
+import { Context } from '@midwayjs/koa';
 
 @Provide()
 export class FriendService {
@@ -24,7 +24,9 @@ export class FriendService {
 
   async save(friend: Friend) {
     const ip = getUserIp(this.ctx);
-    const exists = await this.redisService.exists(`applyFriend:${friend.visitorId}:${ip}`);
+    const exists = await this.redisService.exists(
+      `applyFriend:${friend.visitorId}:${ip}`
+    );
     if (exists) {
       return false;
     } else {
