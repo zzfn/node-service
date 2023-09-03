@@ -31,7 +31,7 @@ export class FriendService {
       return false;
     } else {
       await this.redisService.set(
-        `isViewed:${friend.visitorId}:${ip}`,
+        `applyFriend:${friend.visitorId}:${ip}`,
         Date.now(),
         'EX',
         60 * 10
