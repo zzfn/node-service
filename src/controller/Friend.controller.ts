@@ -1,6 +1,7 @@
 import { Controller, Get, Inject, Post } from '@midwayjs/core';
 import { FriendService } from '../service/Friend.service';
 import { Friend } from '../entity/Friend';
+import { Body } from "@midwayjs/decorator";
 
 @Controller('/friend')
 export class FriendController {
@@ -12,7 +13,7 @@ export class FriendController {
     return this.friendService.list();
   }
   @Post('/save')
-  async save(friend: Friend): Promise<any> {
+  async save(@Body() friend: Friend): Promise<any> {
     return this.friendService.save(friend);
   }
 }

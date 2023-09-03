@@ -11,6 +11,8 @@ export class Friend extends BaseEntity {
   logo: string;
   @Column()
   url: string;
+
+  visitorId: string;
   @Column()
   isRelease: boolean;
 }
