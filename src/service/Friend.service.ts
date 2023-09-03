@@ -19,6 +19,6 @@ export class FriendService {
     if (!friend.id) {
       friend.id = this.idGenerate.nextId().toString();
     }
-    return this.friendModel.save(friend);
+    return await this.friendModel.save(friend);
   }
 }
