@@ -6,6 +6,7 @@ import { SnowflakeIdGenerate } from './Snowflake';
 import { RedisService } from '@midwayjs/redis';
 import { getUserIp } from '../util/httpUtil';
 import { Context } from '@midwayjs/koa';
+import { CustomError } from "../error/CustomError";
 
 @Provide()
 export class FriendService {
@@ -28,7 +29,7 @@ export class FriendService {
       `applyFriend:${friend.visitorId}:${ip}`
     );
     if (exists) {
-      return false;
+      throw new CustomError('过于频繁申请');
     } else {
       await this.redisService.set(
         `applyFriend:${friend.visitorId}:${ip}`,
