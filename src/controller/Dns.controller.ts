@@ -9,6 +9,7 @@ import {
 } from '@midwayjs/decorator';
 import { DnsServiceFactory } from '../service/Dns.service';
 import { PageVo } from '../vo/PageVo';
+import { Dns } from '../entity/Dns';
 
 @Controller('/dns')
 export class APIController {
@@ -50,33 +51,40 @@ export class APIController {
       params,
       requestOption
     );
-    const response = {
+    return {
       records: r.DomainRecords.Record,
       total: r.TotalCount,
     };
-    return response;
   }
 
   @Post('/add')
-  async saveUser() {
+  async addDomain(@Body() dns: Dns) {
     const dnsClient = this.dnsService.get();
     const params = {
-      DomainName: 'DomainName',
-      RR: 'testsssss',
-      Type: 'A',
-      Value: 'ip',
+      DomainName: dns.DomainName,
+      RR: dns.RR,
+      Type: dns.Type,
+      Value: dns.Value,
     };
     const requestOption = {
       method: 'POST',
     };
-    dnsClient.request('AddDomainRecord', params, requestOption).then(
-      result => {
-        console.log(JSON.stringify(result));
-      },
-      ex => {
-        console.log(ex);
-      }
-    );
+    return dnsClient.request('AddDomainRecord', params, requestOption);
+  }
+
+  @Post('/update')
+  async updateDomain(@Body() dns: Dns) {
+    const dnsClient = this.dnsService.get();
+    const params = {
+      RecordId: dns.RecordId,
+      RR: dns.RR,
+      Type: dns.Type,
+      Value: dns.Value,
+    };
+    const requestOption = {
+      method: 'POST',
+    };
+    return dnsClient.request('UpdateDomainRecord', params, requestOption);
   }
 
   @Post('/del')
