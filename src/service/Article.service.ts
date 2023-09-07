@@ -260,7 +260,7 @@ export class ArticleService extends BaseService<Article> {
       { index: { _index: 'blog', _id: doc.id } },
       {
         title: doc.title,
-        tag: doc.tag.name,
+        tag: doc.tag,
         summary: doc.summary,
         isRelease: doc.isRelease,
         createTime: new Date(doc.createTime),
