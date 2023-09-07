@@ -15,7 +15,7 @@ export class CommentController {
   commentService: CommentService;
 
   @Post('/save')
-  async save(@Body() comment: Comment): Promise<string> {
+  async save(@Body() comment: Comment): Promise<boolean> {
     return this.commentService.commentSave(comment);
   }
 
