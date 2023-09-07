@@ -16,6 +16,7 @@ import { Authorize } from '../decorator/Authorize';
 import { getUserIp } from '../util/httpUtil';
 import { KafkaService } from '../service/KafkaService';
 import { Context } from '@midwayjs/koa';
+import { makeHttpRequest } from '@midwayjs/core';
 
 @Controller('/article')
 export class ArticleController {
@@ -85,6 +86,14 @@ export class ArticleController {
   @Authorize(true)
   async saveArticle(@Body() article: Article) {
     const result = await this.articleService.saveArticle(article);
+    await makeHttpRequest(`${process.env.WEB_URL}/api/revalidate`, {
+      method: 'POST',
+      dataType: 'json',
+      data: {
+        secret: process.env.REVALIDATE_SECRET,
+        path: ['/post', '/'],
+      },
+    });
     return result.id;
   }
 

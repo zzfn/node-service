@@ -61,6 +61,15 @@ export class CommentService {
       body: `在${comment.postId}中评论了${comment.content}`,
       url: `https://zzfzzf.com/article/${comment.postId}`,
     });
-    return this.commentModel.save(comment);
+    await this.commentModel.save(comment);
+    await makeHttpRequest(`${process.env.WEB_URL}/api/revalidate`, {
+      method: 'POST',
+      dataType: 'json',
+      data: {
+        secret: process.env.REVALIDATE_SECRET,
+        path: ['/feedback'],
+      },
+    });
+    return true;
   }
 }
