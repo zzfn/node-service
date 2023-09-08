@@ -156,19 +156,16 @@ export class ArticleService extends BaseService<Article> {
   }
 
   async saveArticle(article: Article) {
-    await this.articleModel.save(article)
-    let action = 'update'
+    let action = 'update';
     if (!article.id) {
       article.id = this.idGenerate.nextId().toString();
-      action = 'add'
+      action = 'add';
     }
-    await this.rabbitmqService.sendToQueue(
-      `article_${process.env.NODE_ENV}`,
-      {
-        id: article.id,
-        action,
-      }
-    );
+    await this.articleModel.save(article);
+    await this.rabbitmqService.sendToQueue(`article_${process.env.NODE_ENV}`, {
+      id: article.id,
+      action,
+    });
     this.ctx.logger.info(`mq发送队列${`article_${process.env.NODE_ENV}`}`);
     return article;
   }
