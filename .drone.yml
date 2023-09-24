@@ -5,42 +5,22 @@ clone:
   disable: true
 steps:
   - name: clone
-    image: bitnami/git
-    environment:
+    image: wwma/drone-github-clone
+    settings:
       SSH_KEY:
         from_secret: ssh_key
-    commands:
-      - mkdir -p $HOME/.ssh/
-      - echo -n "$SSH_KEY" > $HOME/.ssh/id_ed25519
-      - chmod 600 $HOME/.ssh/id_ed25519
-
-      - touch $HOME/.ssh/known_hosts
-      - chmod 600 $HOME/.ssh/known_hosts
-      - touch $HOME/.ssh/config
-      - chmod 600 $HOME/.ssh/config
-      - echo "Host github.com\n    Hostname ssh.github.com\n    Port 443\n    User git" > $HOME/.ssh/config
-      #      - ssh-keyscan -H github.com > $HOME/.ssh/known_hosts
-      - echo "[ssh.github.com]:443 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" >> $HOME/.ssh/known_hosts
-      #      - git clone --branch $DRONE_COMMIT_BRANCH --single-branch $DRONE_GIT_SSH_URL .
-      #      - git checkout $DRONE_COMMIT
-      - git config --global init.defaultBranch main
-      - git init
-      - git config advice.detachedHead false
-      - git remote add origin $DRONE_GIT_SSH_URL
-      - git fetch --no-tags --prune --no-recurse-submodules origin $DRONE_COMMIT_BRANCH
-      - git checkout $DRONE_COMMIT
   - name: build_docker
     image: plugins/docker
     depends_on:
       - clone
     pull: if-not-exists
     settings:
-      registry: hub.ccw.es
+      registry: hub.ooxo.cc
       username:
         from_secret: nexus_docker_username
       password:
         from_secret: nexus_docker_password
-      repo: hub.ccw.es/home/node-service
+      repo: hub.ooxo.cc/home/node-service
       tags:
         - ${DRONE_COMMIT_SHA:0:8}
         - latest
@@ -59,5 +39,5 @@ steps:
       command_timeout: 2m
       script:
         - echo ${DRONE_COMMIT}
-        - kubectl apply -f https://git.ccw.es/ccw/yaml/raw/branch/master/node-service.yaml
-        - kubectl set image deployment/midway-deploy midway-app=hub.ccw.es/home/node-service:${DRONE_COMMIT_SHA:0:8}
+        - kubectl apply -f https://git.ooxo.cc/ccw/yaml/raw/branch/master/node-service.yaml
+        - kubectl set image deployment/midway-deploy midway-app=hub.ooxo.cc/home/node-service:${DRONE_COMMIT_SHA:0:8}
